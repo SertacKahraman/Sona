@@ -1,0 +1,47 @@
+{
+    "title": "Sona",
+    "subtitle": "App Bloqueada",
+    "description": "Toque el botón abajo para continuar",
+    "remainingAttempts": "Intentos restantes: {{count}}",
+    "unlock": "Desbloquear",
+    "authenticating": "Autenticando...",
+    "hintIOS": "Autenticar con Face ID o Touch ID",
+    "hintAndroid": "Autenticar con huella digital o PIN",
+    "alerts": {
+        "tooManyAttempts": {
+            "title": "Demasiados Intentos Fallidos",
+            "messageLogout": "Se cerrará sesión por razones de seguridad.",
+            "messageLockDisabled": "El bloqueo de la app se desactivará por razones de seguridad.",
+            "ok": "OK"
+        },
+        "noHardware": {
+            "title": "Autenticación Biométrica No Soportada",
+            "message": "Su dispositivo no soporta reconocimiento de huella o facial. El bloqueo de la app se desactivará.",
+            "understood": "Entendido"
+        },
+        "notEnrolled": {
+            "title": "No se Encontraron Datos Bioméytricos",
+            "message": "No hay datos de huella o reconocimiento facial registrados en su dispositivo. Por favor añádalos en la configuración del dispositivo o el bloqueo de la app se desactivará.",
+            "goToSettings": "Ir a Configuración",
+            "disableLock": "Desactivar Bloqueo"
+        },
+        "authFailed": {
+            "title": "Autenticación Fallida",
+            "message": "La autenticación falló.\n\nIntentos restantes: {{count}}",
+            "retry": "Intentar de Nuevo",
+            "cancel": "Cancelar"
+        },
+        "authError": {
+            "title": "Error",
+            "message": "Ocurrió un error durante la autenticación. Por favor inténtelo de nuevo.",
+            "retry": "Intentar de Nuevo",
+            "cancel": "Cancelar"
+        }
+    },
+    "biometric": {
+        "promptMessage": "Autenticar para Abrir App",
+        "fallbackLabelIOS": "Usar Contraseña",
+        "fallbackLabelAndroid": "Usar PIN",
+        "cancelLabel": "Cancelar"
+    }
+}

@@ -1,0 +1,92 @@
+{
+    "terms": {
+        "title": "Terms of Service",
+        "lastUpdated": "Last Updated: December 8, 2024",
+        "intro": "By using the Sona app, you agree to the following terms.",
+        "sections": {
+            "service": {
+                "title": "1. Service Description",
+                "content": "Sona is a mobile application that helps users manage their relationships and receive AI-powered coaching. The app provides advice on personal development and relationship management."
+            },
+            "responsibilities": {
+                "title": "2. User Responsibilities",
+                "content": "• You agree to use the app in compliance with laws.\n• You are responsible for the accuracy of the information you enter.\n• You commit not to misuse the app.\n• You declare that you are over 18 years old."
+            },
+            "scope": {
+                "title": "3. Service Scope",
+                "content": "Sona is a coaching app and does not provide professional therapy or psychological counseling services. For serious psychological issues, please seek professional help."
+            },
+            "intellectual": {
+                "title": "4. Intellectual Property",
+                "content": "All content, design, and software of the app are protected by copyright. Unauthorized use is prohibited."
+            },
+            "disclaimer": {
+                "title": "5. Disclaimer",
+                "content": "Sona is not responsible for the results of the advice given. The app is provided \"as is\" and no warranty is given."
+            },
+            "deletion": {
+                "title": "6. Account Deletion",
+                "content": "You can delete your account and all your data at any time. This action is irreversible."
+            },
+            "changes": {
+                "title": "7. Changes",
+                "content": "This agreement may be updated from time to time. Significant changes will be notified to you."
+            },
+            "contact": {
+                "title": "8. Contact",
+                "content": "For questions: support@sonaapp.com"
+            }
+        }
+    },
+    "privacy": {
+        "title": "Privacy Policy",
+        "lastUpdated": "Last Updated: December 8, 2024",
+        "intro": "Your privacy is important to us. This policy explains how your data is collected, used, and protected.",
+        "sections": {
+            "collected": {
+                "title": "1. Information Collected",
+                "personal": "Personal Information:",
+                "personalList": "• Name\n• Age group\n• Gender\n• Relationship status\n• Coaching goals",
+                "relationship": "Relationship Information:",
+                "relationshipList": "• Partner information\n• Relationship duration\n• Main challenges\n• Chat history"
+            },
+            "usage": {
+                "title": "2. Use of Information",
+                "content": "Your data is used only for the following purposes:\n• To provide you with personalized coaching advice\n• To improve your app experience\n• To perform statistical analysis\n• To improve service quality"
+            },
+            "security": {
+                "title": "3. Data Security",
+                "encryption": "Encryption:",
+                "encryptionText": "All your data is stored encrypted on your device.",
+                "local": "Local Storage:",
+                "localText": "Your data is kept only on your device and is not sent to our servers.",
+                "thirdParty": "Third Party Sharing:",
+                "thirdPartyText": "Your data is never shared with third parties."
+            },
+            "ai": {
+                "title": "4. Artificial Intelligence Use",
+                "content": "Sona uses Google Gemini AI to provide you with advice. Your chat history is sent to AI, but:\n• Your identity information is not shared\n• Data is not used for training\n• It is deleted at the end of the session"
+            },
+            "cookies": {
+                "title": "5. Cookies and Tracking",
+                "content": "The app uses local storage for basic functionality. Third-party tracking tools are not used."
+            },
+            "rights": {
+                "title": "6. Your Rights",
+                "content": "• Right to access your data\n• Right to correct data\n• Right to delete data\n• Right to data portability"
+            },
+            "children": {
+                "title": "7. Children's Privacy",
+                "content": "Our app is not intended for users under 18. We do not knowingly collect data from users under 18."
+            },
+            "policyChanges": {
+                "title": "8. Changes",
+                "content": "This policy may be updated. Significant changes will be announced within the app."
+            },
+            "privacyContact": {
+                "title": "9. Contact",
+                "content": "For privacy questions:\nEmail: privacy@sonaapp.com"
+            }
+        }
+    }
+}

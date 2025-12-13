@@ -1,0 +1,32 @@
+{
+    "buttons": {
+        "continue": "Devam Et",
+        "back": "Geri",
+        "save": "Kaydet",
+        "cancel": "İptal",
+        "delete": "Sil",
+        "edit": "Düzenle",
+        "logout": "Çıkış Yap",
+        "close": "Kapat",
+        "confirm": "Onayla",
+        "add": "Ekle",
+        "update": "Güncelle",
+        "send": "Gönder"
+    },
+    "errors": {
+        "network": "İnternet bağlantınızı kontrol edin",
+        "required": "Bu alan zorunludur",
+        "unknown": "Bir hata oluştu",
+        "tryAgain": "Lütfen tekrar deneyin"
+    },
+    "navigation": {
+        "home": "Ana Sayfa",
+        "chat": "Sohbet",
+        "profile": "Profil"
+    },
+    "loading": "Yükleniyor...",
+    "success": "Başarılı!",
+    "days": "Gün",
+    "messages": "Mesaj",
+    "relationships": "İlişki"
+}

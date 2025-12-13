@@ -1,0 +1,117 @@
+{
+    "greeting": "Merhaba 👋",
+    "stats": {
+        "relationships": "İlişki",
+        "relationshipScore": "İlişki Puanı",
+        "streak": "Gün",
+        "streakLabel": "Seri"
+    },
+    "mood": {
+        "title": "Bugün Nasılsın?",
+        "subtitle": "Günün nasıl geçtiğini kaydet"
+    },
+    "relationships": {
+        "title": "İlişkilerim",
+        "seeAll": "Tümünü Gör →",
+        "empty": {
+            "title": "Henüz İlişki Yok",
+            "subtitle": "İlk ilişkini ekleyerek başla"
+        },
+        "new": "Yeni",
+        "unnamed": "İsimsiz"
+    },
+    "specialDates": {
+        "title": "Yaklaşan Özel Günler",
+        "add": "+ Ekle",
+        "empty": "Henüz özel gün eklenmemiş.",
+        "addNow": "Hemen Ekle",
+        "general": "Genel",
+        "months": [
+            "Oca",
+            "Şub",
+            "Mar",
+            "Nis",
+            "May",
+            "Haz",
+            "Tem",
+            "Ağu",
+            "Eyl",
+            "Eki",
+            "Kas",
+            "Ara"
+        ]
+    },
+    "dailyTip": {
+        "title": "Günün Tavsiyesi",
+        "from": "Sona'dan Not",
+        "focus": "Odak"
+    },
+    "modal": {
+        "addDate": {
+            "title": "Özel Gün Ekle 📅",
+            "titleLabel": "Başlık",
+            "titlePlaceholder": "Örn: Doğum Günü, Yıldönümü",
+            "dayLabel": "Gün",
+            "dayPlaceholder": "GG",
+            "monthLabel": "Ay",
+            "monthPlaceholder": "AA",
+            "selectRelationship": "İlişki Seç",
+            "selectDate": "Tarih Seç",
+            "datePlaceholder": "Tarih Seç",
+            "done": "Tamam",
+            "cancel": "İptal",
+            "save": "Kaydet",
+            "missingInfo": "Eksik Bilgi",
+            "fillAllFields": "Lütfen tüm alanları doldurun.",
+            "error": "Hata",
+            "invalidDate": "Geçersiz tarih.",
+            "success": "Başarılı",
+            "dateAdded": "Özel gün eklendi! 🎉"
+        },
+        "deleteDate": {
+            "title": "Özel Günü Sil",
+            "message": "Bu özel günü silmek istediğinizden emin misiniz?",
+            "cancel": "İptal",
+            "delete": "Sil"
+        },
+        "relationshipDetail": {
+            "duration": "Birliktelik",
+            "focusLabel": "Şu anki Odak Noktası",
+            "chat": "Sohbet Et",
+            "edit": "Düzenle",
+            "delete": "Sil"
+        }
+    },
+    "tips": {
+        "improve": [
+            "Bugün partnerinle 10 dakika sadece onu dinlediğin bir sohbet yap.",
+            "Küçük bir sürpriz bazen büyük bir sorunu çözer. Bugün ona sevdiği bir şeyi al veya yap.",
+            "İlişkini güçlendirmek için bugün birlikte yeni bir şeyler deneyin.",
+            "Ona neden değer verdiğini hatırlatan bir mesaj at."
+        ],
+        "solve": [
+            "Bir tartışma anında 'sen' dili yerine 'ben' dilini kullanmayı dene.",
+            "Sorunları konuşmak için sakin bir anı bekle, öfkeliyken karar verme.",
+            "Bugün partnerinin bakış açısını anlamaya odaklan, haklı olmaya değil.",
+            "Geçmişteki hataları bugüne taşıma, ana odaklan."
+        ],
+        "understand": [
+            "Bugün hissettiğin duyguları bir yere not et ve nedenlerini düşün.",
+            "Kendi sınırlarını belirlemek, sağlıklı bir ilişkinin temelidir.",
+            "Kendine şu soruyu sor: 'Bu ilişkide gerçekten neye ihtiyacım var?'",
+            "Kendi mutluluğunun sorumluluğunu al."
+        ],
+        "find": [
+            "Yeni insanlarla tanışmak için bugün bir adım at.",
+            "Kendinle barışık olmak, doğru kişiyi bulmanın ilk adımıdır.",
+            "Bugün sosyal çevreni genişletecek bir aktiviteye katıl.",
+            "Beklentilerini gözden geçir, belki de aradığın şey sandığından farklıdır."
+        ],
+        "default": [
+            "Gülümsemek bulaşıcıdır, bugün bol bol gülümse! 😊",
+            "Kendine zaman ayırmayı unutma, sen değerlisin.",
+            "Sevdiklerine onları sevdiğini söylemekten çekinme.",
+            "Bugün birine içten bir iltifat et."
+        ]
+    }
+}

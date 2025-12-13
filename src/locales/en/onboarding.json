@@ -1,0 +1,131 @@
+{
+    "steps": {
+        "step1": "1/5",
+        "step2": "2/5",
+        "step3": "3/5",
+        "step4": "4/5",
+        "step5": "5/5",
+        "editing1": "1/3",
+        "editing2": "2/3",
+        "editing3": "3/3",
+        "firstStep": "First Step",
+        "secondStep": "Second Step",
+        "thirdStep": "Third Step",
+        "fourthStep": "Fourth Step",
+        "lastStep": "Last Step",
+        "editing": "Editing"
+    },
+    "legal": {
+        "title": "Privacy & Security",
+        "subtitle": "Your data matters to us",
+        "welcome": "Hello! 👋",
+        "welcomeMessage": "Before you start using Sona, please read and accept the following documents.",
+        "documents": "Legal Documents",
+        "termsTitle": "Terms of Service",
+        "termsSubtitle": "Terms and conditions of use",
+        "privacyTitle": "Privacy Policy",
+        "privacySubtitle": "Data protection and security",
+        "features": {
+            "encrypted": "Your data is encrypted",
+            "notShared": "Not shared with third parties",
+            "protected": "Your privacy is protected"
+        },
+        "accept": "I have read, understood, and accept the Terms of Service and Privacy Policy."
+    },
+    "welcome": {
+        "title": "Welcome to Sona! 👋",
+        "subtitle": "Your AI-Powered Relationship Coach",
+        "description": "Strengthen your relationships, improve communication skills, and increase emotional intelligence.",
+        "features": {
+            "ai": "🤖 Personalized AI Coaching",
+            "relationships": "💕 Multiple Relationship Management",
+            "reminders": "📅 Smart Reminders",
+            "privacy": "🔒 Complete Privacy & Security"
+        }
+    },
+    "name": {
+        "title": "Let's Get to Know You",
+        "subtitle": "What's your name?",
+        "placeholder": "Enter your name",
+        "helper": "What should we call you?"
+    },
+    "personalInfo": {
+        "title": "Personal Information",
+        "subtitle": "To get to know you better",
+        "age": {
+            "label": "Age Group",
+            "18-24": "18-24",
+            "25-34": "25-34",
+            "35-44": "35-44",
+            "45-54": "45-54",
+            "55+": "55+"
+        },
+        "gender": {
+            "label": "Gender",
+            "female": "Female",
+            "male": "Male",
+            "other": "Prefer Not to Say"
+        },
+        "status": {
+            "label": "Relationship Status",
+            "single": "Single",
+            "dating": "Dating",
+            "relationship": "In a Relationship",
+            "married": "Married",
+            "complicated": "It's Complicated"
+        },
+        "goal": {
+            "label": "Coaching Goal",
+            "improve": "Improve Relationship",
+            "solve": "Solve Problems",
+            "understand": "Understand Myself",
+            "find": "Find a Partner"
+        }
+    },
+    "relationshipType": {
+        "title": "Relationship Type",
+        "subtitle": "Which relationship would you like to talk about?",
+        "romantic": "Spouse/Partner",
+        "family": "Family/Relative",
+        "parent_child": "Parent/Child",
+        "friend": "Friend",
+        "professional": "Colleague/Boss"
+    },
+    "partnerInfo": {
+        "title": "Partner Information",
+        "subtitle": "Tell us about your {{partnerType}}",
+        "name": {
+            "label": "Name",
+            "placeholder": "Partner's name"
+        },
+        "duration": {
+            "label": "Relationship Duration",
+            "years": "Years",
+            "months": "Months",
+            "yearsShort": "Year",
+            "monthsShort": "Month"
+        },
+        "age": {
+            "label": "Age Group"
+        },
+        "gender": {
+            "label": "Gender",
+            "female": "Female",
+            "male": "Male",
+            "other": "Prefer Not to Say"
+        },
+        "notes": {
+            "label": "Notes (Optional)",
+            "placeholder": "Is there anything special we should know about your partner?"
+        }
+    },
+    "relationshipContext": {
+        "title": "Relationship Details",
+        "subtitle": "Main challenge?",
+        "durationLabel": "Duration?",
+        "challengeLabel": "What's the main challenge here?",
+        "placeholder": "E.g., Communication issues",
+        "helper": "What would you like help with?",
+        "encrypted": "Encrypted"
+    }
+}

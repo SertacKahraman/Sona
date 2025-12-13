@@ -1,0 +1,114 @@
+{
+    "greeting": "Bonjour 👋",
+    "stats": {
+        "relationships": "Relations",
+        "relationshipScore": "Score",
+        "streak": "Jours",
+        "streakLabel": "Série"
+    },
+    "mood": {
+        "title": "Comment allez-vous aujourd'hui ?",
+        "subtitle": "Suivez le déroulement de votre journée"
+    },
+    "relationships": {
+        "title": "Mes Relations",
+        "seeAll": "Voir Tout →",
+        "empty": {
+            "title": "Pas Encore de Relations",
+            "subtitle": "Ajoutez votre première relation pour commencer"
+        },
+        "new": "Nouveau",
+        "unnamed": "Sans Nom"
+    },
+    "specialDates": {
+        "title": "Dates Spéciales à Venir",
+        "add": "+ Ajouter",
+        "empty": "Aucune date spéciale ajoutée pour le moment.",
+        "addNow": "Ajouter Maintenant",
+        "general": "Général",
+        "months": [
+            "Jan",
+            "Fév",
+            "Mar",
+            "Avr",
+            "Mai",
+            "Juin",
+            "Juil",
+            "Août",
+            "Sep",
+            "Oct",
+            "Nov",
+            "Déc"
+        ]
+    },
+    "dailyTip": {
+        "title": "Conseil du Jour",
+        "from": "Note de Sona",
+        "focus": "Focus"
+    },
+    "modal": {
+        "addDate": {
+            "title": "Ajouter une Date Spéciale 📅",
+            "titleLabel": "Titre",
+            "titlePlaceholder": "Ex., Anniversaire, Fête",
+            "dayLabel": "Jour",
+            "dayPlaceholder": "JJ",
+            "monthLabel": "Mois",
+            "monthPlaceholder": "MM",
+            "selectRelationship": "Sélectionner une Relation",
+            "cancel": "Annuler",
+            "save": "Enregistrer",
+            "missingInfo": "Informations Manquantes",
+            "fillAllFields": "Veuillez remplir tous les champs.",
+            "error": "Erreur",
+            "invalidDate": "Date invalide.",
+            "success": "Succès",
+            "dateAdded": "Date spéciale ajoutée ! 🎉"
+        },
+        "deleteDate": {
+            "title": "Supprimer la Date Spéciale",
+            "message": "Êtes-vous sûr de vouloir supprimer cette date spéciale ?",
+            "cancel": "Annuler",
+            "delete": "Supprimer"
+        },
+        "relationshipDetail": {
+            "duration": "Ensemble",
+            "focusLabel": "Focus Actuel",
+            "chat": "Discuter",
+            "edit": "Modifier",
+            "delete": "Supprimer"
+        }
+    },
+    "tips": {
+        "improve": [
+            "Aujourd'hui, ayez une conversation de 10 minutes où vous écoutez simplement votre partenaire.",
+            "Une petite surprise peut parfois résoudre un gros problème. Procurez-vous ou faites quelque chose qu'ils aiment aujourd'hui.",
+            "Essayez quelque chose de nouveau ensemble aujourd'hui pour renforcer votre relation.",
+            "Envoyez-leur un message leur rappelant pourquoi vous les appréciez."
+        ],
+        "solve": [
+            "Dans une dispute, essayez d'utiliser le langage 'Je' au lieu du langage 'Tu'.",
+            "Attendez un moment calme pour discuter des problèmes, ne décidez pas quand vous êtes en colère.",
+            "Aujourd'hui, concentrez-vous sur la compréhension de la perspective de votre partenaire, pas sur le fait d'avoir raison.",
+            "Ne rapportez pas les erreurs passées dans le présent, concentrez-vous sur le maintenant."
+        ],
+        "understand": [
+            "Écrivez vos sentiments aujourd'hui et réfléchissez à pourquoi vous les ressentez.",
+            "Fixer vos propres limites est la fondation d'une relation saine.",
+            "Demandez-vous : 'De quoi ai-je vraiment besoin dans cette relation ?'",
+            "Prenez la responsabilité de votre propre bonheur."
+        ],
+        "find": [
+            "Faites un pas aujourd'hui pour rencontrer de nouvelles personnes.",
+            "Être en paix avec soi-même est la première étape pour trouver la bonne personne.",
+            "Joignez-vous à une activité aujourd'hui qui élargira votre cercle social.",
+            "Revoyez vos attentes, peut-être que ce que vous cherchez est différent de ce que vous pensez."
+        ],
+        "default": [
+            "Sourire est contagieux, souriez beaucoup aujourd'hui ! 😊",
+            "N'oubliez pas de prendre du temps pour vous, vous êtes précieux.",
+            "N'hésitez pas à dire à vos proches que vous les aimez.",
+            "Faites un compliment sincère à quelqu'un aujourd'hui."
+        ]
+    }
+}

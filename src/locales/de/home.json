@@ -1,0 +1,114 @@
+{
+    "greeting": "Hallo 👋",
+    "stats": {
+        "relationships": "Beziehungen",
+        "relationshipScore": "Punktzahl",
+        "streak": "Tage",
+        "streakLabel": "Serie"
+    },
+    "mood": {
+        "title": "Wie geht es Ihnen heute?",
+        "subtitle": "Verfolgen Sie Ihren Tag"
+    },
+    "relationships": {
+        "title": "Meine Beziehungen",
+        "seeAll": "Alle anzeigen →",
+        "empty": {
+            "title": "Noch keine Beziehungen",
+            "subtitle": "Fügen Sie Ihre erste Beziehung hinzu, um zu beginnen"
+        },
+        "new": "Neu",
+        "unnamed": "Unbenannt"
+    },
+    "specialDates": {
+        "title": "Anstehende besondere Termine",
+        "add": "+ Hinzufügen",
+        "empty": "Noch keine besonderen Termine hinzugefügt.",
+        "addNow": "Jetzt hinzufügen",
+        "general": "Allgemein",
+        "months": [
+            "Jan",
+            "Feb",
+            "Mär",
+            "Apr",
+            "Mai",
+            "Jun",
+            "Jul",
+            "Aug",
+            "Sep",
+            "Okt",
+            "Nov",
+            "Dez"
+        ]
+    },
+    "dailyTip": {
+        "title": "Tipp des Tages",
+        "from": "Notiz von Sona",
+        "focus": "Fokus"
+    },
+    "modal": {
+        "addDate": {
+            "title": "Besonderes Datum hinzufügen 📅",
+            "titleLabel": "Titel",
+            "titlePlaceholder": "Z.B. Geburtstag, Jahrestag",
+            "dayLabel": "Tag",
+            "dayPlaceholder": "TT",
+            "monthLabel": "Monat",
+            "monthPlaceholder": "MM",
+            "selectRelationship": "Beziehung auswählen",
+            "cancel": "Abbrechen",
+            "save": "Speichern",
+            "missingInfo": "Fehlende Informationen",
+            "fillAllFields": "Bitte füllen Sie alle Felder aus.",
+            "error": "Fehler",
+            "invalidDate": "Ungültiges Datum.",
+            "success": "Erfolg",
+            "dateAdded": "Besonderes Datum hinzugefügt! 🎉"
+        },
+        "deleteDate": {
+            "title": "Besonderes Datum löschen",
+            "message": "Sind Sie sicher, dass Sie dieses besondere Datum löschen möchten?",
+            "cancel": "Abbrechen",
+            "delete": "Löschen"
+        },
+        "relationshipDetail": {
+            "duration": "Zusammen",
+            "focusLabel": "Aktueller Fokus",
+            "chat": "Chat",
+            "edit": "Bearbeiten",
+            "delete": "Löschen"
+        }
+    },
+    "tips": {
+        "improve": [
+            "Führen Sie heute ein 10-minütiges Gespräch, bei dem Sie Ihrem Partner nur zuhören.",
+            "Eine kleine Überraschung kann manchmal ein großes Problem lösen. Besorgen oder tun Sie heute etwas, das sie lieben.",
+            "Probieren Sie heute etwas Neues zusammen aus, um Ihre Beziehung zu stärken.",
+            "Senden Sie ihnen eine Nachricht und erinnern Sie sie daran, warum Sie sie schätzen."
+        ],
+        "solve": [
+            "Versuchen Sie in einem Streit, 'Ich'-Aussagen anstelle von 'Du'-Aussagen zu verwenden.",
+            "Warten Sie auf einen ruhigen Moment, um Probleme zu besprechen, entscheiden Sie nicht, wenn Sie wütend sind.",
+            "Konzentrieren Sie sich heute darauf, die Perspektive Ihres Partners zu verstehen, nicht darauf, Recht zu haben.",
+            "Bringen Sie vergangene Fehler nicht in die Gegenwart, konzentrieren Sie sich auf das Jetzt."
+        ],
+        "understand": [
+            "Schreiben Sie Ihre Gefühle heute auf und denken Sie darüber nach, warum Sie sie fühlen.",
+            "Das Setzen eigener Grenzen ist die Grundlage einer gesunden Beziehung.",
+            "Fragen Sie sich: 'Was brauche ich wirklich in dieser Beziehung?'",
+            "Übernehmen Sie die Verantwortung für Ihr eigenes Glück."
+        ],
+        "find": [
+            "Machen Sie heute einen Schritt, um neue Leute kennenzulernen.",
+            "Mit sich selbst im Reinen zu sein, ist der erste Schritt, um die richtige Person zu finden.",
+            "Nehmen Sie heute an einer Aktivität teil, die Ihren sozialen Kreis erweitert.",
+            "Überprüfen Sie Ihre Erwartungen, vielleicht ist das, was Sie suchen, anders als Sie denken."
+        ],
+        "default": [
+            "Lächeln ist ansteckend, lächeln Sie heute viel! 😊",
+            "Vergessen Sie nicht, sich Zeit für sich selbst zu nehmen, Sie sind wertvoll.",
+            "Zögern Sie nicht, Ihren Lieben zu sagen, dass Sie sie lieben.",
+            "Machen Sie heute jemandem ein echtes Kompliment."
+        ]
+    }
+}

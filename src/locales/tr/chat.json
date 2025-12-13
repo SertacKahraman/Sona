@@ -1,0 +1,26 @@
+{
+    "header": {
+        "title": "Sohbet"
+    },
+    "relationshipSelector": {
+        "general": "Genel Sohbet"
+    },
+    "placeholder": "Mesajını yaz...",
+    "typing": "Sona yazıyor...",
+    "emptyState": {
+        "title": "Henüz mesaj yok",
+        "text": "Bu sohbetteki mesajlar burada görünecek.\nSohbete başlamak için bir şeyler yazın veya temizleyin."
+    },
+    "initialMessages": {
+        "general": "Merhaba {{userName}}! Bugün senin için ne yapabilirim?",
+        "relationship": "Merhaba! {{partnerName}} ile ilgili konuşmak istediğin bir şey mi var?"
+    },
+    "alerts": {
+        "clearChat": {
+            "title": "Sohbeti Temizle",
+            "message": "Bu sohbet geçmişini silmek istediğine emin misin?",
+            "cancel": "İptal",
+            "clear": "Temizle"
+        }
+    }
+}

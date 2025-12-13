@@ -1,0 +1,47 @@
+{
+    "title": "Sona",
+    "subtitle": "App gesperrt",
+    "description": "Tippen Sie auf die Schaltfläche unten, um fortzufahren",
+    "remainingAttempts": "Verbleibende Versuche: {{count}}",
+    "unlock": "Entsperren",
+    "authenticating": "Authentifizierung...",
+    "hintIOS": "Mit Face ID oder Touch ID authentifizieren",
+    "hintAndroid": "Mit Fingerabdruck oder PIN authentifizieren",
+    "alerts": {
+        "tooManyAttempts": {
+            "title": "Zu viele fehlgeschlagene Versuche",
+            "messageLogout": "Sie werden aus Sicherheitsgründen abgemeldet.",
+            "messageLockDisabled": "Die App-Sperre wird aus Sicherheitsgründen deaktiviert.",
+            "ok": "OK"
+        },
+        "noHardware": {
+            "title": "Biometrische Authentifizierung nicht unterstützt",
+            "message": "Ihr Gerät unterstützt keinen Fingerabdruck oder keine Gesichtserkennung. Die App-Sperre wird deaktiviert.",
+            "understood": "Verstanden"
+        },
+        "notEnrolled": {
+            "title": "Keine biometrischen Daten gefunden",
+            "message": "Auf Ihrem Gerät sind keine Fingerabdruck- oder Gesichtserkennungsdaten registriert. Bitte fügen Sie diese in den Geräteeinstellungen hinzu, sonst wird die App-Sperre deaktiviert.",
+            "goToSettings": "Zu den Einstellungen",
+            "disableLock": "Sperre deaktivieren"
+        },
+        "authFailed": {
+            "title": "Authentifizierung fehlgeschlagen",
+            "message": "Authentifizierung fehlgeschlagen.\n\nVerbleibende Versuche: {{count}}",
+            "retry": "Erneut versuchen",
+            "cancel": "Abbrechen"
+        },
+        "authError": {
+            "title": "Fehler",
+            "message": "Während der Authentifizierung ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut.",
+            "retry": "Erneut versuchen",
+            "cancel": "Abbrechen"
+        }
+    },
+    "biometric": {
+        "promptMessage": "Authentifizieren zum Öffnen der App",
+        "fallbackLabelIOS": "Passwort verwenden",
+        "fallbackLabelAndroid": "PIN verwenden",
+        "cancelLabel": "Abbrechen"
+    }
+}

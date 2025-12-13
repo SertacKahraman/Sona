@@ -1,0 +1,47 @@
+{
+    "title": "Sona",
+    "subtitle": "Uygulama Kilitli",
+    "description": "Devam etmek için aşağıdaki butona dokunun",
+    "remainingAttempts": "Kalan deneme: {{count}}",
+    "unlock": "Kilidi Aç",
+    "authenticating": "Doğrulanıyor...",
+    "hintIOS": "Face ID veya Touch ID ile doğrulayın",
+    "hintAndroid": "Parmak izi veya PIN ile doğrulayın",
+    "alerts": {
+        "tooManyAttempts": {
+            "title": "Çok Fazla Başarısız Deneme",
+            "messageLogout": "Güvenlik nedeniyle uygulamadan çıkış yapılacak.",
+            "messageLockDisabled": "Güvenlik nedeniyle uygulama kilidi kapatılacak.",
+            "ok": "Tamam"
+        },
+        "noHardware": {
+            "title": "Biyometrik Doğrulama Desteklenmiyor",
+            "message": "Cihazınız parmak izi veya yüz tanıma özelliğini desteklemiyor. Uygulama kilidi kapatılacak.",
+            "understood": "Anladım"
+        },
+        "notEnrolled": {
+            "title": "Biyometrik Veri Bulunamadı",
+            "message": "Cihazınızda kayıtlı parmak izi veya yüz tanıma verisi yok. Lütfen cihaz ayarlarından ekleyin veya uygulama kilidi kapatılacak.",
+            "goToSettings": "Ayarlara Git",
+            "disableLock": "Kilidi Kapat"
+        },
+        "authFailed": {
+            "title": "Doğrulama Başarısız",
+            "message": "Kimlik doğrulama başarısız oldu.\n\nKalan deneme hakkı: {{count}}",
+            "retry": "Tekrar Dene",
+            "cancel": "İptal"
+        },
+        "authError": {
+            "title": "Hata",
+            "message": "Kimlik doğrulama sırasında bir hata oluştu. Lütfen tekrar deneyin.",
+            "retry": "Tekrar Dene",
+            "cancel": "İptal"
+        }
+    },
+    "biometric": {
+        "promptMessage": "Uygulamayı Açmak İçin Doğrulayın",
+        "fallbackLabelIOS": "Şifre Kullan",
+        "fallbackLabelAndroid": "PIN Kullan",
+        "cancelLabel": "İptal"
+    }
+}

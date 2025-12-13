@@ -1,0 +1,7 @@
+{
+    "title": "All My Relationships",
+    "relationshipCount": "{{count}} Relationships",
+    "relationshipCountSingular": "{{count}} Relationship",
+    "unnamed": "Unnamed",
+    "new": "New"
+}

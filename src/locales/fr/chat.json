@@ -1,0 +1,26 @@
+{
+    "header": {
+        "title": "Chat"
+    },
+    "relationshipSelector": {
+        "general": "Chat Général"
+    },
+    "placeholder": "Tapez votre message...",
+    "typing": "Sona est en train d'écrire...",
+    "emptyState": {
+        "title": "Pas encore de messages",
+        "text": "Les messages de ce chat apparaîtront ici.\nÉcrivez quelque chose pour commencer la conversation ou effacez-la."
+    },
+    "initialMessages": {
+        "general": "Bonjour {{userName}} ! Que puis-je faire pour vous aujourd'hui ?",
+        "relationship": "Bonjour ! Y a-t-il quelque chose dont vous aimeriez parler concernant {{partnerName}} ?"
+    },
+    "alerts": {
+        "clearChat": {
+            "title": "Effacer le Chat",
+            "message": "Êtes-vous sûr de vouloir supprimer cet historique de chat ?",
+            "cancel": "Annuler",
+            "clear": "Effacer"
+        }
+    }
+}

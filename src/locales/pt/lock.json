@@ -1,0 +1,47 @@
+{
+    "title": "Sona",
+    "subtitle": "App Bloqueado",
+    "description": "Toque no botão abaixo para continuar",
+    "remainingAttempts": "Tentativas restantes: {{count}}",
+    "unlock": "Desbloquear",
+    "authenticating": "Autenticando...",
+    "hintIOS": "Autentique com Face ID ou Touch ID",
+    "hintAndroid": "Autentique com impressão digital ou PIN",
+    "alerts": {
+        "tooManyAttempts": {
+            "title": "Muitas Tentativas Falhas",
+            "messageLogout": "Você será desconectado por motivos de segurança.",
+            "messageLockDisabled": "O bloqueio do app será desativado por motivos de segurança.",
+            "ok": "OK"
+        },
+        "noHardware": {
+            "title": "Autenticação Biométrica Não Suportada",
+            "message": "Seu dispositivo não suporta impressão digital ou reconhecimento facial. O bloqueio do app será desativado.",
+            "understood": "Entendido"
+        },
+        "notEnrolled": {
+            "title": "Dados Biométricos Não Encontrados",
+            "message": "Nenhum dado de impressão digital ou reconhecimento facial está registrado no seu dispositivo. Adicione nas configurações do dispositivo ou o bloqueio do app será desativado.",
+            "goToSettings": "Ir para Configurações",
+            "disableLock": "Desativar Bloqueio"
+        },
+        "authFailed": {
+            "title": "Autenticação Falhou",
+            "message": "A autenticação falhou.\n\nTentativas restantes: {{count}}",
+            "retry": "Tentar Novamente",
+            "cancel": "Cancelar"
+        },
+        "authError": {
+            "title": "Erro",
+            "message": "Ocorreu um erro durante a autenticação. Tente novamente.",
+            "retry": "Tentar Novamente",
+            "cancel": "Cancelar"
+        }
+    },
+    "biometric": {
+        "promptMessage": "Autentique para Abrir o App",
+        "fallbackLabelIOS": "Usar Senha",
+        "fallbackLabelAndroid": "Usar PIN",
+        "cancelLabel": "Cancelar"
+    }
+}

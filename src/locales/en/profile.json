@@ -1,0 +1,80 @@
+{
+    "header": {
+        "title": "My Profile",
+        "edit": "Edit"
+    },
+    "stats": {
+        "days": "Days",
+        "messages": "Messages",
+        "relationships": "Relationships"
+    },
+    "sections": {
+        "personalInfo": "Personal Information",
+        "goals": "Goals",
+        "saved": "Saved",
+        "settings": "App Settings",
+        "language": "Language",
+        "account": "Account Management"
+    },
+    "personalInfo": {
+        "ageGroup": "Age Group",
+        "gender": "Gender",
+        "status": "Relationship Status"
+    },
+    "goals": {
+        "coachingGoal": "Coaching Goal"
+    },
+    "saved": {
+        "title": "My Favorite Advice",
+        "count": "{{count}} saved advice"
+    },
+    "settings": {
+        "title": "App Settings",
+        "language": {
+            "title": "Language"
+        },
+        "notifications": "Notifications",
+        "appLock": "App Lock"
+    },
+    "language": {
+        "title": "Language Selection",
+        "turkish": "🇹🇷 Türkçe",
+        "english": "🇬🇧 English",
+        "changed": "Language changed"
+    },
+    "logout": {
+        "button": "Logout and Delete Data",
+        "confirmTitle": "Logout",
+        "confirmMessage": "All your data will be deleted and you will be logged out. Are you sure?",
+        "cancel": "Cancel",
+        "confirm": "Logout"
+    },
+    "notifications": {
+        "enabled": "Notifications enabled! 🔔",
+        "disabled": "Notifications disabled",
+        "permissionTitle": "Notification Permission Required",
+        "permissionMessage": "To enable notifications, please grant Sona notification permission in your device settings.",
+        "error": "Failed to save notification settings. Please try again."
+    },
+    "appLock": {
+        "enabled": "Success! 🔒",
+        "enabledMessage": "App lock enabled.\n\nYou will now need to authenticate with {{method}} every time you open the app.",
+        "disabled": "Disabled",
+        "disabledMessage": "App lock disabled.",
+        "notSupported": "Not Supported",
+        "notSupportedMessage": "Your device does not support biometric authentication (fingerprint or face recognition).",
+        "notEnrolled": "No Biometric Data Found",
+        "notEnrolledMessage": "Your device has no registered {{authType}} data.\n\nPlease add {{authType}} in your device settings first.",
+        "authFailed": "Authentication Failed",
+        "authFailedMessage": "Authentication failed. Please try again.",
+        "cancelled": "Cancelled",
+        "cancelledMessage": "App lock could not be enabled.",
+        "error": "Failed to change app lock settings. Please try again.",
+        "promptEnable": "Authenticate to Enable App Lock",
+        "promptDisable": "Authenticate to Disable App Lock",
+        "faceIdTouchId": "Face ID/Touch ID",
+        "fingerprint": "fingerprint/PIN",
+        "faceId": "Face ID or Touch ID",
+        "fingerprintAuth": "fingerprint"
+    }
+}

@@ -1,0 +1,73 @@
+{
+  "expo": {
+    "name": "Sona: Kişisel İlişki Asistani",
+    "slug": "sona-kisisel-iliski-asistani",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "newArchEnabled": true,
+    "splash": {
+      "image": "./assets/icon.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#66D9A1"
+    },
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.sertackahraman.sona",
+      "buildNumber": "1",
+      "infoPlist": {
+        "NSFaceIDUsageDescription": "Uygulamanızı güvenli bir şekilde açmak için Face ID kullanılır.",
+        "NSUserTrackingUsageDescription": "Kişiselleştirilmiş deneyim için kullanılır. Verileriniz satılmaz.",
+        "ITSAppUsesNonExemptEncryption": false
+      },
+      "config": {
+        "usesNonExemptEncryption": false
+      }
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/icon.png",
+        "backgroundColor": "#ffffff"
+      },
+      "edgeToEdgeEnabled": true,
+      "package": "com.sertackahraman.sonakisiseliliskiasistani",
+      "versionCode": 1,
+      "permissions": [
+        "USE_BIOMETRIC",
+        "USE_FINGERPRINT"
+      ],
+      "blockedPermissions": [
+        "READ_PHONE_STATE",
+        "READ_CONTACTS",
+        "READ_CALENDAR",
+        "READ_CALL_LOG",
+        "READ_SMS",
+        "CAMERA",
+        "RECORD_AUDIO",
+        "ACCESS_FINE_LOCATION",
+        "ACCESS_COARSE_LOCATION"
+      ]
+    },
+    "web": {
+      "favicon": "./assets/icon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "2871b616-441a-4aea-9647-ab61d1c65e81"
+      }
+    },
+    "plugins": [
+      "expo-secure-store",
+      [
+        "expo-local-authentication",
+        {
+          "faceIDPermission": "Uygulamanızı güvenli bir şekilde açmak için Face ID kullanılır."
+        }
+      ]
+    ],
+    "privacy": "public",
+    "description": "Sona, yapay zeka destekli kişisel ilişki koçunuzdur. İlişkilerinizi güçlendirin, iletişim becerilerinizi geliştirin.",
+    "primaryColor": "#66D9A1"
+  }
+}

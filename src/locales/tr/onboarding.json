@@ -1,0 +1,131 @@
+{
+    "steps": {
+        "step1": "1/5",
+        "step2": "2/5",
+        "step3": "3/5",
+        "step4": "4/5",
+        "step5": "5/5",
+        "editing1": "1/3",
+        "editing2": "2/3",
+        "editing3": "3/3",
+        "firstStep": "İlk Adım",
+        "secondStep": "İkinci Adım",
+        "thirdStep": "Üçüncü Adım",
+        "fourthStep": "Dördüncü Adım",
+        "lastStep": "Son Adım",
+        "editing": "Düzenleme"
+    },
+    "legal": {
+        "title": "Gizlilik & Güvenlik",
+        "subtitle": "Verileriniz bizim için önemli",
+        "welcome": "Merhaba! 👋",
+        "welcomeMessage": "Sona'yı kullanmaya başlamadan önce, lütfen aşağıdaki belgeleri okuyun ve kabul edin.",
+        "documents": "Yasal Belgeler",
+        "termsTitle": "Kullanıcı Sözleşmesi",
+        "termsSubtitle": "Kullanım şartları ve koşullar",
+        "privacyTitle": "Gizlilik Politikası",
+        "privacySubtitle": "Veri koruma ve güvenlik",
+        "features": {
+            "encrypted": "Verileriniz şifrelenir",
+            "notShared": "Üçüncü taraflarla paylaşılmaz",
+            "protected": "Gizliliğiniz korunur"
+        },
+        "accept": "Kullanıcı Sözleşmesi ve Gizlilik Politikası'nı okudum, anladım ve kabul ediyorum."
+    },
+    "welcome": {
+        "title": "Sona'ya Hoş Geldin! 👋",
+        "subtitle": "Yapay Zeka Destekli İlişki Koçun",
+        "description": "İlişkilerini güçlendir, iletişim becerilerini geliştir ve duygusal zekânı artır.",
+        "features": {
+            "ai": "🤖 Kişiselleştirilmiş AI Koçluk",
+            "relationships": "💕 Çoklu İlişki Yönetimi",
+            "reminders": "📅 Akıllı Hatırlatıcılar",
+            "privacy": "🔒 Tam Gizlilik ve Güvenlik"
+        }
+    },
+    "name": {
+        "title": "Seni Tanıyalım",
+        "subtitle": "Adın ne?",
+        "placeholder": "Adını gir",
+        "helper": "Sana nasıl hitap edelim?"
+    },
+    "personalInfo": {
+        "title": "Kişisel Bilgiler",
+        "subtitle": "Seni daha iyi tanımak için",
+        "age": {
+            "label": "Yaş Grubu",
+            "18-24": "18-24",
+            "25-34": "25-34",
+            "35-44": "35-44",
+            "45-54": "45-54",
+            "55+": "55+"
+        },
+        "gender": {
+            "label": "Cinsiyet",
+            "female": "Kadın",
+            "male": "Erkek",
+            "other": "Belirtmek İstemiyorum"
+        },
+        "status": {
+            "label": "İlişki Durumu",
+            "single": "Bekar",
+            "dating": "Flört",
+            "relationship": "İlişkisi Var",
+            "married": "Evli",
+            "complicated": "Karmaşık"
+        },
+        "goal": {
+            "label": "Koçluk Hedefin",
+            "improve": "İlişkiyi Geliştirmek",
+            "solve": "Sorun Çözmek",
+            "understand": "Kendini Tanımak",
+            "find": "Partner Bulmak"
+        }
+    },
+    "relationshipType": {
+        "title": "İlişki Tipi",
+        "subtitle": "Hangi ilişkin hakkında konuşmak istersin?",
+        "romantic": "Eş/Partner",
+        "family": "Aile/Akraba",
+        "parent_child": "Ebeveyn/Çocuk",
+        "friend": "Arkadaş",
+        "professional": "İş Arkadaşı/Patron"
+    },
+    "partnerInfo": {
+        "title": "Partner Bilgileri",
+        "subtitle": "{{partnerType}} hakkında bilgi ver",
+        "name": {
+            "label": "İsim",
+            "placeholder": "Partner adı"
+        },
+        "duration": {
+            "label": "İlişki Süresi",
+            "years": "Yıl",
+            "months": "Ay",
+            "yearsShort": "Yıl",
+            "monthsShort": "Ay"
+        },
+        "age": {
+            "label": "Yaş Grubu"
+        },
+        "gender": {
+            "label": "Cinsiyet",
+            "female": "Kadın",
+            "male": "Erkek",
+            "other": "Belirtmek İstemiyorum"
+        },
+        "notes": {
+            "label": "Notlar (Opsiyonel)",
+            "placeholder": "Partner hakkında bilmemiz gereken özel bir şey var mı?"
+        }
+    },
+    "relationshipContext": {
+        "title": "İlişki Bağlamı",
+        "subtitle": "Ana zorluk nedir?",
+        "durationLabel": "İlişki Süresi?",
+        "challengeLabel": "Bu İlişkinin Ana Zorluğu Nedir?",
+        "placeholder": "Örn: İletişim sorunları yaşıyoruz",
+        "helper": "Ne konuda yardım istiyorsun?",
+        "encrypted": "Bu bilgi şifrelenmiştir"
+    }
+}

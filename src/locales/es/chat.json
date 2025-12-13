@@ -1,0 +1,26 @@
+{
+    "header": {
+        "title": "Chat"
+    },
+    "relationshipSelector": {
+        "general": "Chat General"
+    },
+    "placeholder": "Escribe tu mensaje...",
+    "typing": "Sona está escribiendo...",
+    "emptyState": {
+        "title": "Aún no hay mensajes",
+        "text": "Los mensajes de este chat aparecerán aquí.\nEscribe algo para iniciar la conversación o límpialo."
+    },
+    "initialMessages": {
+        "general": "¡Hola {{userName}}! ¿Qué puedo hacer por ti hoy?",
+        "relationship": "¡Hola! ¿Hay algo de lo que te gustaría hablar sobre {{partnerName}}?"
+    },
+    "alerts": {
+        "clearChat": {
+            "title": "Limpiar Chat",
+            "message": "¿Estás seguro de que quieres eliminar este historial de chat?",
+            "cancel": "Cancelar",
+            "clear": "Limpiar"
+        }
+    }
+}

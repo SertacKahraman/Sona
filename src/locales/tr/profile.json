@@ -1,0 +1,80 @@
+{
+    "header": {
+        "title": "Profilim",
+        "edit": "Düzenle"
+    },
+    "stats": {
+        "days": "Gün",
+        "messages": "Mesaj",
+        "relationships": "İlişki"
+    },
+    "sections": {
+        "personalInfo": "Kişisel Bilgiler",
+        "goals": "Hedefler",
+        "saved": "Kaydedilenler",
+        "settings": "Uygulama Ayarları",
+        "language": "Dil",
+        "account": "Hesap Yönetimi"
+    },
+    "personalInfo": {
+        "ageGroup": "Yaş Grubu",
+        "gender": "Cinsiyet",
+        "status": "İlişki Durumu"
+    },
+    "goals": {
+        "coachingGoal": "Koçluk Hedefi"
+    },
+    "saved": {
+        "title": "Favori Tavsiyelerim",
+        "count": "{{count}} kayıtlı tavsiye"
+    },
+    "settings": {
+        "title": "Uygulama Ayarları",
+        "language": {
+            "title": "Dil"
+        },
+        "notifications": "Bildirimler",
+        "appLock": "Uygulama Kilidi"
+    },
+    "language": {
+        "title": "Dil Seçimi",
+        "turkish": "🇹🇷 Türkçe",
+        "english": "🇬🇧 English",
+        "changed": "Dil değiştirildi"
+    },
+    "logout": {
+        "button": "Çıkış Yap ve Verileri Sil",
+        "confirmTitle": "Çıkış Yap",
+        "confirmMessage": "Tüm verilerin silinecek ve uygulamadan çıkış yapılacak. Emin misin?",
+        "cancel": "İptal",
+        "confirm": "Çıkış Yap"
+    },
+    "notifications": {
+        "enabled": "Bildirimler açıldı! 🔔",
+        "disabled": "Bildirimler kapatıldı",
+        "permissionTitle": "Bildirim İzni Gerekli",
+        "permissionMessage": "Bildirimleri açmak için lütfen cihaz ayarlarından Sona uygulamasına bildirim izni verin.",
+        "error": "Bildirim ayarı kaydedilemedi. Lütfen tekrar deneyin."
+    },
+    "appLock": {
+        "enabled": "Başarılı! 🔒",
+        "enabledMessage": "Uygulama kilidi açıldı.\n\nArtık uygulamayı her açtığınızda {{method}} ile kimlik doğrulama gerekecek.",
+        "disabled": "Kapatıldı",
+        "disabledMessage": "Uygulama kilidi kapatıldı.",
+        "notSupported": "Desteklenmiyor",
+        "notSupportedMessage": "Cihazınız biyometrik kimlik doğrulamayı (parmak izi veya yüz tanıma) desteklemiyor.",
+        "notEnrolled": "Biyometrik Veri Bulunamadı",
+        "notEnrolledMessage": "Cihazınızda kayıtlı {{authType}} verisi yok.\n\nLütfen önce cihaz ayarlarından {{authType}} ekleyin.",
+        "authFailed": "Doğrulama Başarısız",
+        "authFailedMessage": "Kimlik doğrulama başarısız oldu. Lütfen tekrar deneyin.",
+        "cancelled": "İptal Edildi",
+        "cancelledMessage": "Uygulama kilidi açılamadı.",
+        "error": "Uygulama kilidi ayarı değiştirilemedi. Lütfen tekrar deneyin.",
+        "promptEnable": "Uygulama Kilidini Açmak İçin Doğrulayın",
+        "promptDisable": "Uygulama Kilidini Kapatmak İçin Doğrulayın",
+        "faceIdTouchId": "Face ID/Touch ID",
+        "fingerprint": "parmak izi/PIN",
+        "faceId": "Face ID veya Touch ID",
+        "fingerprintAuth": "parmak izi"
+    }
+}

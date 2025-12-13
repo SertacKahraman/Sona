@@ -1,0 +1,81 @@
+{
+    "header": {
+        "title": "Mi Perfil",
+        "edit": "Editar"
+    },
+    "stats": {
+        "days": "Días",
+        "messages": "Mensajes",
+        "relationships": "Relaciones"
+    },
+    "sections": {
+        "personalInfo": "Información Personal",
+        "goals": "Objetivos",
+        "saved": "Guardado",
+        "settings": "Configuración de la App",
+        "language": "Idioma",
+        "account": "Gestión de Cuenta"
+    },
+    "personalInfo": {
+        "ageGroup": "Grupo de Edad",
+        "gender": "Género",
+        "status": "Estado Civil"
+    },
+    "goals": {
+        "coachingGoal": "Objetivo de Coaching"
+    },
+    "saved": {
+        "title": "Mis Consejos Favoritos",
+        "count": "{{count}} consejos guardados"
+    },
+    "settings": {
+        "title": "Configuración de la App",
+        "language": {
+            "title": "Idioma"
+        },
+        "notifications": "Notificaciones",
+        "appLock": "Bloqueo de App"
+    },
+    "language": {
+        "title": "Selección de Idioma",
+        "turkish": "🇹🇷 Türkçe",
+        "english": "🇬🇧 English",
+        "spanish": "🇪🇸 Español",
+        "changed": "Idioma cambiado"
+    },
+    "logout": {
+        "button": "Cerrar Sesión y Borrar Datos",
+        "confirmTitle": "Cerrar Sesión",
+        "confirmMessage": "Todos sus datos serán eliminados y se cerrará la sesión. ¿Está seguro?",
+        "cancel": "Cancelar",
+        "confirm": "Cerrar Sesión"
+    },
+    "notifications": {
+        "enabled": "¡Notificaciones activadas! 🔔",
+        "disabled": "Notificaciones desactivadas",
+        "permissionTitle": "Se Requiere Permiso de Notificación",
+        "permissionMessage": "Para habilitar las notificaciones, por favor otorgue permiso de notificación a Sona en la configuración de su dispositivo.",
+        "error": "No se pudo guardar la configuración de notificaciones. Inténtelo de nuevo."
+    },
+    "appLock": {
+        "enabled": "¡Éxito! 🔒",
+        "enabledMessage": "Bloqueo de aplicación habilitado.\n\nAhora necesitará autenticarse con {{method}} cada vez que abra la aplicación.",
+        "disabled": "Desactivado",
+        "disabledMessage": "Bloqueo de aplicación desactivado.",
+        "notSupported": "No Soportado",
+        "notSupportedMessage": "Su dispositivo no soporta autenticación biométrica (huella digital o reconocimiento facial).",
+        "notEnrolled": "No se Encontraron Datos Bioméytricos",
+        "notEnrolledMessage": "Su dispositivo no tiene datos registrados de {{authType}}.\n\nPor favor, añada {{authType}} en la configuración de su dispositivo primero.",
+        "authFailed": "Autenticación Fallida",
+        "authFailedMessage": "La autenticación falló. Inténtelo de nuevo.",
+        "cancelled": "Cancelado",
+        "cancelledMessage": "No se pudo habilitar el bloqueo de la aplicación.",
+        "error": "No se pudo cambiar la configuración de bloqueo de la aplicación. Inténtelo de nuevo.",
+        "promptEnable": "Autenticarse para Habilitar el Bloqueo de App",
+        "promptDisable": "Autenticarse para Deshabilitar el Bloqueo de App",
+        "faceIdTouchId": "Face ID/Touch ID",
+        "fingerprint": "huella digital/PIN",
+        "faceId": "Face ID o Touch ID",
+        "fingerprintAuth": "huella digital"
+    }
+}

@@ -1,0 +1,131 @@
+{
+    "steps": {
+        "step1": "1/5",
+        "step2": "2/5",
+        "step3": "3/5",
+        "step4": "4/5",
+        "step5": "5/5",
+        "editing1": "1/3",
+        "editing2": "2/3",
+        "editing3": "3/3",
+        "firstStep": "Primeiro Passo",
+        "secondStep": "Segundo Passo",
+        "thirdStep": "Terceiro Passo",
+        "fourthStep": "Quarto Passo",
+        "lastStep": "Último Passo",
+        "editing": "Editando"
+    },
+    "legal": {
+        "title": "Privacidade e Segurança",
+        "subtitle": "Seus dados são importantes para nós",
+        "welcome": "Olá! 👋",
+        "welcomeMessage": "Antes de começar a usar o Sona, leia e aceite os seguintes documentos.",
+        "documents": "Documentos Legais",
+        "termsTitle": "Termos de Serviço",
+        "termsSubtitle": "Termos e condições de uso",
+        "privacyTitle": "Política de Privacidade",
+        "privacySubtitle": "Proteção de dados e segurança",
+        "features": {
+            "encrypted": "Seus dados são criptografados",
+            "notShared": "Não compartilhado com terceiros",
+            "protected": "Sua privacidade está protegida"
+        },
+        "accept": "Li, entendi e aceito os Termos de Serviço e a Política de Privacidade."
+    },
+    "welcome": {
+        "title": "Bem-vindo ao Sona! 👋",
+        "subtitle": "Seu Coach de Relacionamento com IA",
+        "description": "Fortaleça seus relacionamentos, melhore suas habilidades de comunicação e aumente sua inteligência emocional.",
+        "features": {
+            "ai": "🤖 Coaching Personalizado com IA",
+            "relationships": "💕 Gerenciamento de Múltiplos Relacionamentos",
+            "reminders": "📅 Lembretes Inteligentes",
+            "privacy": "🔒 Privacidade e Segurança Completas"
+        }
+    },
+    "name": {
+        "title": "Vamos Conhecer Você",
+        "subtitle": "Qual é o seu nome?",
+        "placeholder": "Digite seu nome",
+        "helper": "Como devemos chamar você?"
+    },
+    "personalInfo": {
+        "title": "Informações Pessoais",
+        "subtitle": "Para te conhecer melhor",
+        "age": {
+            "label": "Faixa Etária",
+            "18-24": "18-24",
+            "25-34": "25-34",
+            "35-44": "35-44",
+            "45-54": "45-54",
+            "55+": "55+"
+        },
+        "gender": {
+            "label": "Gênero",
+            "female": "Feminino",
+            "male": "Masculino",
+            "other": "Prefiro não dizer"
+        },
+        "status": {
+            "label": "Estado Civil",
+            "single": "Solteiro(a)",
+            "dating": "Namorando",
+            "relationship": "Em um Relacionamento",
+            "married": "Casado(a)",
+            "complicated": "É Complicado"
+        },
+        "goal": {
+            "label": "Objetivo de Coaching",
+            "improve": "Melhorar Relacionamento",
+            "solve": "Resolver Problemas",
+            "understand": "Me Entender",
+            "find": "Encontrar um Parceiro"
+        }
+    },
+    "relationshipType": {
+        "title": "Tipo de Relacionamento",
+        "subtitle": "Sobre qual relacionamento você gostaria de falar?",
+        "romantic": "Cônjuge/Parceiro",
+        "family": "Família/Parente",
+        "parent_child": "Pai/Mãe/Filho(a)",
+        "friend": "Amigo(a)",
+        "professional": "Colega/Chefe"
+    },
+    "partnerInfo": {
+        "title": "Informações do Parceiro",
+        "subtitle": "Conte-nos sobre seu(sua) {{partnerType}}",
+        "name": {
+            "label": "Nome",
+            "placeholder": "Nome do parceiro"
+        },
+        "duration": {
+            "label": "Duração do Relacionamento",
+            "years": "Anos",
+            "months": "Meses",
+            "yearsShort": "Ano",
+            "monthsShort": "Mês"
+        },
+        "age": {
+            "label": "Faixa Etária"
+        },
+        "gender": {
+            "label": "Gênero",
+            "female": "Feminino",
+            "male": "Masculino",
+            "other": "Prefiro não dizer"
+        },
+        "notes": {
+            "label": "Notas (Opcional)",
+            "placeholder": "Há algo especial que devamos saber sobre seu parceiro?"
+        }
+    },
+    "relationshipContext": {
+        "title": "Detalhes do Relacionamento",
+        "subtitle": "Desafio principal?",
+        "durationLabel": "Duração?",
+        "challengeLabel": "Qual é o principal desafio aqui?",
+        "placeholder": "Ex: Problemas de comunicação",
+        "helper": "Com o que você gostaria de ajuda?",
+        "encrypted": "Criptografado"
+    }
+}

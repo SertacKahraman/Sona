@@ -1,0 +1,83 @@
+{
+    "header": {
+        "title": "Mein Profil",
+        "edit": "Bearbeiten"
+    },
+    "stats": {
+        "days": "Tage",
+        "messages": "Nachrichten",
+        "relationships": "Beziehungen"
+    },
+    "sections": {
+        "personalInfo": "Persönliche Informationen",
+        "goals": "Ziele",
+        "saved": "Gespeichert",
+        "settings": "App-Einstellungen",
+        "language": "Sprache",
+        "account": "Kontoverwaltung"
+    },
+    "personalInfo": {
+        "ageGroup": "Altersgruppe",
+        "gender": "Geschlecht",
+        "status": "Beziehungsstatus"
+    },
+    "goals": {
+        "coachingGoal": "Coaching-Ziel"
+    },
+    "saved": {
+        "title": "Meine Favoriten",
+        "count": "{{count}} gespeicherte Tipps"
+    },
+    "settings": {
+        "title": "App-Einstellungen",
+        "language": {
+            "title": "Sprache"
+        },
+        "notifications": "Benachrichtigungen",
+        "appLock": "App-Sperre"
+    },
+    "language": {
+        "title": "Sprachauswahl",
+        "turkish": "🇹🇷 Türkçe",
+        "english": "🇬🇧 English",
+        "spanish": "🇪🇸 Español",
+        "portuguese": "🇵🇹 Português",
+        "german": "🇩🇪 Deutsch",
+        "changed": "Sprache geändert"
+    },
+    "logout": {
+        "button": "Abmelden und Daten löschen",
+        "confirmTitle": "Abmelden",
+        "confirmMessage": "Alle Ihre Daten werden gelöscht und Sie werden abgemeldet. Sind Sie sicher?",
+        "cancel": "Abbrechen",
+        "confirm": "Abmelden"
+    },
+    "notifications": {
+        "enabled": "Benachrichtigungen aktiviert! 🔔",
+        "disabled": "Benachrichtigungen deaktiviert",
+        "permissionTitle": "Benachrichtigungserlaubnis erforderlich",
+        "permissionMessage": "Um Benachrichtigungen zu aktivieren, erlauben Sie Sona bitte den Zugriff in Ihren Geräteeinstellungen.",
+        "error": "Fehler beim Speichern der Benachrichtigungseinstellungen. Bitte versuchen Sie es erneut."
+    },
+    "appLock": {
+        "enabled": "Erfolg! 🔒",
+        "enabledMessage": "App-Sperre aktiviert.\n\nSie müssen sich nun jedes Mal mit {{method}} authentifizieren, wenn Sie die App öffnen.",
+        "disabled": "Deaktiviert",
+        "disabledMessage": "App-Sperre deaktiviert.",
+        "notSupported": "Nicht unterstützt",
+        "notSupportedMessage": "Ihr Gerät unterstützt keine biometrische Authentifizierung (Fingerabdruck oder Gesichtserkennung).",
+        "notEnrolled": "Keine biometrischen Daten gefunden",
+        "notEnrolledMessage": "Auf Ihrem Gerät sind keine {{authType}}-Daten registriert.\n\nBitte fügen Sie zuerst {{authType}} in Ihren Geräteeinstellungen hinzu.",
+        "authFailed": "Authentifizierung fehlgeschlagen",
+        "authFailedMessage": "Authentifizierung fehlgeschlagen. Bitte versuchen Sie es erneut.",
+        "cancelled": "Abgebrochen",
+        "cancelledMessage": "Die App-Sperre konnte nicht aktiviert werden.",
+        "error": "Fehler beim Ändern der App-Sperreinstellungen. Bitte versuchen Sie es erneut.",
+        "promptEnable": "Authentifizieren zum Aktivieren der App-Sperre",
+        "promptDisable": "Authentifizieren zum Deaktivieren der App-Sperre",
+        "faceIdTouchId": "Face ID/Touch ID",
+        "fingerprint": "Fingerabdruck/PIN",
+        "faceId": "Face ID oder Touch ID",
+        "fingerprintAuth": "Fingerabdruck"
+    }
+}

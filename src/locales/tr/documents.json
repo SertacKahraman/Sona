@@ -1,0 +1,92 @@
+{
+    "terms": {
+        "title": "Kullanıcı Sözleşmesi",
+        "lastUpdated": "Son Güncelleme: 8 Aralık 2024",
+        "intro": "Sona uygulamasını kullanarak aşağıdaki şartları kabul etmiş olursunuz.",
+        "sections": {
+            "service": {
+                "title": "1. Hizmet Tanımı",
+                "content": "Sona, kullanıcıların ilişkilerini yönetmelerine ve yapay zeka destekli koçluk almalarına yardımcı olan bir mobil uygulamadır. Uygulama, kişisel gelişim ve ilişki yönetimi konularında tavsiyeler sunar."
+            },
+            "responsibilities": {
+                "title": "2. Kullanıcı Sorumlulukları",
+                "content": "• Uygulamayı yasalara uygun şekilde kullanmayı kabul edersiniz.\n• Girdiğiniz bilgilerin doğruluğundan siz sorumlusunuz.\n• Uygulamayı kötüye kullanmamayı taahhüt edersiniz.\n• 18 yaşından büyük olduğunuzu beyan edersiniz."
+            },
+            "scope": {
+                "title": "3. Hizmet Kapsamı",
+                "content": "Sona bir koçluk uygulamasıdır ve profesyonel terapi veya psikolojik danışmanlık hizmeti sunmaz. Ciddi psikolojik sorunlar için lütfen profesyonel yardım alın."
+            },
+            "intellectual": {
+                "title": "4. Fikri Mülkiyet",
+                "content": "Uygulamanın tüm içeriği, tasarımı ve yazılımı telif hakkı ile korunmaktadır. İzinsiz kullanım yasaktır."
+            },
+            "disclaimer": {
+                "title": "5. Sorumluluk Reddi",
+                "content": "Sona, verilen tavsiyelerin sonuçlarından sorumlu değildir. Uygulama \"olduğu gibi\" sunulmaktadır ve herhangi bir garanti verilmemektedir."
+            },
+            "deletion": {
+                "title": "6. Hesap Silme",
+                "content": "Hesabınızı ve tüm verilerinizi istediğiniz zaman silebilirsiniz. Bu işlem geri alınamaz."
+            },
+            "changes": {
+                "title": "7. Değişiklikler",
+                "content": "Bu sözleşme zaman zaman güncellenebilir. Önemli değişiklikler size bildirilecektir."
+            },
+            "contact": {
+                "title": "8. İletişim",
+                "content": "Sorularınız için: support@sonaapp.com"
+            }
+        }
+    },
+    "privacy": {
+        "title": "Gizlilik Politikası",
+        "lastUpdated": "Son Güncelleme: 8 Aralık 2024",
+        "intro": "Gizliliğiniz bizim için önemlidir. Bu politika, verilerinizin nasıl toplandığını, kullanıldığını ve korunduğunu açıklar.",
+        "sections": {
+            "collected": {
+                "title": "1. Toplanan Bilgiler",
+                "personal": "Kişisel Bilgiler:",
+                "personalList": "• İsim\n• Yaş grubu\n• Cinsiyet\n• İlişki durumu\n• Koçluk hedefleri",
+                "relationship": "İlişki Bilgileri:",
+                "relationshipList": "• Partner bilgileri\n• İlişki süresi\n• Ana zorluklar\n• Sohbet geçmişi"
+            },
+            "usage": {
+                "title": "2. Bilgilerin Kullanımı",
+                "content": "Verileriniz sadece şu amaçlarla kullanılır:\n• Size kişiselleştirilmiş koçluk tavsiyeleri sunmak\n• Uygulama deneyiminizi iyileştirmek\n• İstatistiksel analizler yapmak\n• Hizmet kalitesini artırmak"
+            },
+            "security": {
+                "title": "3. Veri Güvenliği",
+                "encryption": "Şifreleme:",
+                "encryptionText": "Tüm verileriniz cihazınızda şifreli olarak saklanır.",
+                "local": "Yerel Depolama:",
+                "localText": "Verileriniz yalnızca cihazınızda tutulur, sunucularımıza gönderilmez.",
+                "thirdParty": "Üçüncü Taraf Paylaşımı:",
+                "thirdPartyText": "Verileriniz asla üçüncü taraflarla paylaşılmaz."
+            },
+            "ai": {
+                "title": "4. Yapay Zeka Kullanımı",
+                "content": "Sona, Google Gemini AI kullanarak size tavsiyeler sunar. Sohbet geçmişiniz AI'ya gönderilir ancak:\n• Kimlik bilgileriniz paylaşılmaz\n• Veriler eğitim için kullanılmaz\n• Oturum sonunda silinir"
+            },
+            "cookies": {
+                "title": "5. Çerezler ve İzleme",
+                "content": "Uygulama, temel işlevsellik için yerel depolama kullanır. Üçüncü taraf izleme araçları kullanılmaz."
+            },
+            "rights": {
+                "title": "6. Haklarınız",
+                "content": "• Verilerinize erişim hakkı\n• Verileri düzeltme hakkı\n• Verileri silme hakkı\n• Veri taşınabilirliği hakkı"
+            },
+            "children": {
+                "title": "7. Çocukların Gizliliği",
+                "content": "Uygulamamız 18 yaş altı kullanıcılara yönelik değildir. 18 yaşından küçük kullanıcılardan bilerek veri toplamıyoruz."
+            },
+            "policyChanges": {
+                "title": "8. Değişiklikler",
+                "content": "Bu politika güncellenebilir. Önemli değişiklikler uygulama içinde duyurulacaktır."
+            },
+            "privacyContact": {
+                "title": "9. İletişim",
+                "content": "Gizlilik konusunda sorularınız için:\nE-posta: privacy@sonaapp.com"
+            }
+        }
+    }
+}

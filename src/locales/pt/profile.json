@@ -1,0 +1,82 @@
+{
+    "header": {
+        "title": "Meu Perfil",
+        "edit": "Editar"
+    },
+    "stats": {
+        "days": "Dias",
+        "messages": "Mensagens",
+        "relationships": "Relacionamentos"
+    },
+    "sections": {
+        "personalInfo": "Informações Pessoais",
+        "goals": "Objetivos",
+        "saved": "Salvos",
+        "settings": "Configurações do App",
+        "language": "Idioma",
+        "account": "Gerenciamento da Conta"
+    },
+    "personalInfo": {
+        "ageGroup": "Faixa Etária",
+        "gender": "Gênero",
+        "status": "Estado Civil"
+    },
+    "goals": {
+        "coachingGoal": "Objetivo de Coaching"
+    },
+    "saved": {
+        "title": "Meus Conselhos Favoritos",
+        "count": "{{count}} conselhos salvos"
+    },
+    "settings": {
+        "title": "Configurações do App",
+        "language": {
+            "title": "Idioma"
+        },
+        "notifications": "Notificações",
+        "appLock": "Bloqueio do App"
+    },
+    "language": {
+        "title": "Seleção de Idioma",
+        "turkish": "🇹🇷 Türkçe",
+        "english": "🇬🇧 English",
+        "spanish": "🇪🇸 Español",
+        "portuguese": "🇵🇹 Português",
+        "changed": "Idioma alterado"
+    },
+    "logout": {
+        "button": "Sair e Excluir Dados",
+        "confirmTitle": "Sair",
+        "confirmMessage": "Todos os seus dados serão excluídos e você será desconectado. Tem certeza?",
+        "cancel": "Cancelar",
+        "confirm": "Sair"
+    },
+    "notifications": {
+        "enabled": "Notificações ativadas! 🔔",
+        "disabled": "Notificações desativadas",
+        "permissionTitle": "Permissão de Notificação Necessária",
+        "permissionMessage": "Para ativar as notificações, conceda permissão de notificação ao Sona nas configurações do seu dispositivo.",
+        "error": "Falha ao salvar as configurações de notificação. Tente novamente."
+    },
+    "appLock": {
+        "enabled": "Sucesso! 🔒",
+        "enabledMessage": "Bloqueio do aplicativo ativado.\n\nAgora você precisará se autenticar com {{method}} sempre que abrir o aplicativo.",
+        "disabled": "Desativado",
+        "disabledMessage": "Bloqueio do aplicativo desativado.",
+        "notSupported": "Não Suportado",
+        "notSupportedMessage": "Seu dispositivo não suporta autenticação biométrica (impressão digital ou reconhecimento facial).",
+        "notEnrolled": "Dados Biométricos Não Encontrados",
+        "notEnrolledMessage": "Seu dispositivo não possui dados de {{authType}} registrados.\n\nPor favor, adicione {{authType}} nas configurações do seu dispositivo primeiro.",
+        "authFailed": "Autenticação Falhou",
+        "authFailedMessage": "A autenticação falhou. Tente novamente.",
+        "cancelled": "Cancelado",
+        "cancelledMessage": "O bloqueio do aplicativo não pôde ser ativado.",
+        "error": "Falha ao alterar as configurações de bloqueio do aplicativo. Tente novamente.",
+        "promptEnable": "Autentique para Ativar o Bloqueio do App",
+        "promptDisable": "Autentique para Desativar o Bloqueio do App",
+        "faceIdTouchId": "Face ID/Touch ID",
+        "fingerprint": "impressão digital/PIN",
+        "faceId": "Face ID ou Touch ID",
+        "fingerprintAuth": "impressão digital"
+    }
+}

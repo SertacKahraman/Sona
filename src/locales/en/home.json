@@ -1,0 +1,117 @@
+{
+    "greeting": "Hello 👋",
+    "stats": {
+        "relationships": "Relationships",
+        "relationshipScore": "Score",
+        "streak": "Days",
+        "streakLabel": "Streak"
+    },
+    "mood": {
+        "title": "How Are You Today?",
+        "subtitle": "Track how your day is going"
+    },
+    "relationships": {
+        "title": "My Relationships",
+        "seeAll": "See All →",
+        "empty": {
+            "title": "No Relationships Yet",
+            "subtitle": "Add your first relationship to get started"
+        },
+        "new": "New",
+        "unnamed": "Unnamed"
+    },
+    "specialDates": {
+        "title": "Upcoming Special Dates",
+        "add": "+ Add",
+        "empty": "No special dates added yet.",
+        "addNow": "Add Now",
+        "general": "General",
+        "months": [
+            "Jan",
+            "Feb",
+            "Mar",
+            "Apr",
+            "May",
+            "Jun",
+            "Jul",
+            "Aug",
+            "Sep",
+            "Oct",
+            "Nov",
+            "Dec"
+        ]
+    },
+    "dailyTip": {
+        "title": "Daily Tip",
+        "from": "Note from Sona",
+        "focus": "Focus"
+    },
+    "modal": {
+        "addDate": {
+            "title": "Add Special Date 📅",
+            "titleLabel": "Title",
+            "titlePlaceholder": "E.g., Birthday, Anniversary",
+            "dayLabel": "Day",
+            "dayPlaceholder": "DD",
+            "monthLabel": "Month",
+            "monthPlaceholder": "MM",
+            "selectRelationship": "Select Relationship",
+            "selectDate": "Select Date",
+            "datePlaceholder": "Select Date",
+            "done": "Done",
+            "cancel": "Cancel",
+            "save": "Save",
+            "missingInfo": "Missing Information",
+            "fillAllFields": "Please fill in all fields.",
+            "error": "Error",
+            "invalidDate": "Invalid date.",
+            "success": "Success",
+            "dateAdded": "Special date added! 🎉"
+        },
+        "deleteDate": {
+            "title": "Delete Special Date",
+            "message": "Are you sure you want to delete this special date?",
+            "cancel": "Cancel",
+            "delete": "Delete"
+        },
+        "relationshipDetail": {
+            "duration": "Together",
+            "focusLabel": "Current Focus",
+            "chat": "Chat",
+            "edit": "Edit",
+            "delete": "Delete"
+        }
+    },
+    "tips": {
+        "improve": [
+            "Today, have a 10-minute conversation where you just listen to your partner.",
+            "A small surprise can sometimes solve a big problem. Get or do something they love today.",
+            "Try something new together today to strengthen your relationship.",
+            "Send them a message reminding them why you value them."
+        ],
+        "solve": [
+            "In an argument, try using 'I' language instead of 'you' language.",
+            "Wait for a calm moment to discuss issues, don't decide when angry.",
+            "Today, focus on understanding your partner's perspective, not being right.",
+            "Don't carry past mistakes into today, focus on now."
+        ],
+        "understand": [
+            "Write down your feelings today and think about why you feel them.",
+            "Setting your own boundaries is the foundation of a healthy relationship.",
+            "Ask yourself: 'What do I really need in this relationship?'",
+            "Take responsibility for your own happiness."
+        ],
+        "find": [
+            "Take a step today to meet new people.",
+            "Being at peace with yourself is the first step to finding the right person.",
+            "Join an activity today that will expand your social circle.",
+            "Review your expectations, maybe what you're looking for is different than you think."
+        ],
+        "default": [
+            "Smiling is contagious, smile a lot today! 😊",
+            "Don't forget to make time for yourself, you're valuable.",
+            "Don't hesitate to tell your loved ones you love them.",
+            "Give someone a genuine compliment today."
+        ]
+    }
+}

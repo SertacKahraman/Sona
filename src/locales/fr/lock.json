@@ -1,0 +1,47 @@
+{
+    "title": "Sona",
+    "subtitle": "App Verrouillée",
+    "description": "Touchez le bouton ci-dessous pour continuer",
+    "remainingAttempts": "Tentatives restantes : {{count}}",
+    "unlock": "Déverrouiller",
+    "authenticating": "Authentification...",
+    "hintIOS": "S'authentifier avec Face ID ou Touch ID",
+    "hintAndroid": "S'authentifier avec empreinte digitale ou PIN",
+    "alerts": {
+        "tooManyAttempts": {
+            "title": "Trop de Tentatives Échouées",
+            "messageLogout": "Vous serez déconnecté pour des raisons de sécurité.",
+            "messageLockDisabled": "Le verrouillage de l'application sera désactivé pour des raisons de sécurité.",
+            "ok": "OK"
+        },
+        "noHardware": {
+            "title": "Authentification Biométrique Non Prise en Charge",
+            "message": "Votre appareil ne prend pas en charge l'empreinte digitale ou la reconnaissance faciale. Le verrouillage de l'application sera désactivé.",
+            "understood": "Compris"
+        },
+        "notEnrolled": {
+            "title": "Aucune Donnée Biométrique Trouvée",
+            "message": "Aucune donnée d'empreinte digitale ou de reconnaissance faciale n'est enregistrée sur votre appareil. Veuillez les ajouter dans les paramètres de l'appareil sinon le verrouillage de l'application sera désactivé.",
+            "goToSettings": "Aller aux Paramètres",
+            "disableLock": "Désactiver le Verrouillage"
+        },
+        "authFailed": {
+            "title": "Authentification Échouée",
+            "message": "L'authentification a échoué.\n\nTentatives restantes : {{count}}",
+            "retry": "Réessayer",
+            "cancel": "Annuler"
+        },
+        "authError": {
+            "title": "Erreur",
+            "message": "Une erreur est survenue pendant l'authentification. Veuillez réessayer.",
+            "retry": "Réessayer",
+            "cancel": "Annuler"
+        }
+    },
+    "biometric": {
+        "promptMessage": "S'authentifier pour Ouvrir l'App",
+        "fallbackLabelIOS": "Utiliser le Mot de Passe",
+        "fallbackLabelAndroid": "Utiliser le PIN",
+        "cancelLabel": "Annuler"
+    }
+}

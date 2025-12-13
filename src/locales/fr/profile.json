@@ -1,0 +1,84 @@
+{
+    "header": {
+        "title": "Mon Profil",
+        "edit": "Modifier"
+    },
+    "stats": {
+        "days": "Jours",
+        "messages": "Messages",
+        "relationships": "Relations"
+    },
+    "sections": {
+        "personalInfo": "Informations Personnelles",
+        "goals": "Objectifs",
+        "saved": "Enregistré",
+        "settings": "Paramètres de l'App",
+        "language": "Langue",
+        "account": "Gestion du Compte"
+    },
+    "personalInfo": {
+        "ageGroup": "Groupe d'âge",
+        "gender": "Genre",
+        "status": "Statut Relationnel"
+    },
+    "goals": {
+        "coachingGoal": "Objectif de Coaching"
+    },
+    "saved": {
+        "title": "Mes Conseils Favoris",
+        "count": "{{count}} conseils enregistrés"
+    },
+    "settings": {
+        "title": "Paramètres de l'App",
+        "language": {
+            "title": "Langue"
+        },
+        "notifications": "Notifications",
+        "appLock": "Verrouillage de l'App"
+    },
+    "language": {
+        "title": "Sélection de la Langue",
+        "turkish": "🇹🇷 Türkçe",
+        "english": "🇬🇧 English",
+        "spanish": "🇪🇸 Español",
+        "portuguese": "🇵🇹 Português",
+        "german": "🇩🇪 Deutsch",
+        "french": "🇫🇷 Français",
+        "changed": "Langue changée"
+    },
+    "logout": {
+        "button": "Se déconnecter",
+        "confirmTitle": "Se déconnecter",
+        "confirmMessage": "Toutes vos données seront supprimées et vous serez déconnecté. Êtes-vous sûr ?",
+        "cancel": "Annuler",
+        "confirm": "Se déconnecter"
+    },
+    "notifications": {
+        "enabled": "Notifications activées ! 🔔",
+        "disabled": "Notifications désactivées",
+        "permissionTitle": "Permission de Notification Requise",
+        "permissionMessage": "Pour activer les notifications, veuillez accorder la permission de notification à Sona dans les paramètres de votre appareil.",
+        "error": "Échec de l'enregistrement des paramètres de notification. Veuillez réessayer."
+    },
+    "appLock": {
+        "enabled": "Succès ! 🔒",
+        "enabledMessage": "Verrouillage de l'application activé.\n\nVous devrez maintenant vous authentifier avec {{method}} chaque fois que vous ouvrirez l'application.",
+        "disabled": "Désactivé",
+        "disabledMessage": "Verrouillage de l'application désactivé.",
+        "notSupported": "Non Pris en Charge",
+        "notSupportedMessage": "Votre appareil ne prend pas en charge l'authentification biométrique (empreinte digitale ou reconnaissance faciale).",
+        "notEnrolled": "Aucune Donnée Biométrique Trouvée",
+        "notEnrolledMessage": "Votre appareil n'a pas de données {{authType}} enregistrées.\n\nVeuillez d'abord ajouter {{authType}} dans les paramètres de votre appareil.",
+        "authFailed": "Authentification Échouée",
+        "authFailedMessage": "L'authentification a échoué. Veuillez réessayer.",
+        "cancelled": "Annulé",
+        "cancelledMessage": "Le verrouillage de l'application n'a pas pu être activé.",
+        "error": "Échec de la modification des paramètres de verrouillage de l'application. Veuillez réessayer.",
+        "promptEnable": "S'authentifier pour Activer le Verrouillage",
+        "promptDisable": "S'authentifier pour Désactiver le Verrouillage",
+        "faceIdTouchId": "Face ID/Touch ID",
+        "fingerprint": "empreinte digitale/PIN",
+        "faceId": "Face ID ou Touch ID",
+        "fingerprintAuth": "empreinte digitale"
+    }
+}

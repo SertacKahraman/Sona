@@ -1,0 +1,131 @@
+{
+    "steps": {
+        "step1": "1/5",
+        "step2": "2/5",
+        "step3": "3/5",
+        "step4": "4/5",
+        "step5": "5/5",
+        "editing1": "1/3",
+        "editing2": "2/3",
+        "editing3": "3/3",
+        "firstStep": "Erster Schritt",
+        "secondStep": "Zweiter Schritt",
+        "thirdStep": "Dritter Schritt",
+        "fourthStep": "Vierter Schritt",
+        "lastStep": "Letzter Schritt",
+        "editing": "Bearbeiten"
+    },
+    "legal": {
+        "title": "Datenschutz & Sicherheit",
+        "subtitle": "Ihre Daten sind uns wichtig",
+        "welcome": "Hallo! 👋",
+        "welcomeMessage": "Bevor Sie Sona nutzen, lesen und akzeptieren Sie bitte die folgenden Dokumente.",
+        "documents": "Rechtliche Dokumente",
+        "termsTitle": "Nutzungsbedingungen",
+        "termsSubtitle": "Nutzungsbedingungen",
+        "privacyTitle": "Datenschutzrichtlinie",
+        "privacySubtitle": "Datenschutz und Sicherheit",
+        "features": {
+            "encrypted": "Ihre Daten sind verschlüsselt",
+            "notShared": "Nicht mit Dritten geteilt",
+            "protected": "Ihre Privatsphäre ist geschützt"
+        },
+        "accept": "Ich habe die Nutzungsbedingungen und die Datenschutzrichtlinie gelesen, verstanden und akzeptiere sie."
+    },
+    "welcome": {
+        "title": "Willkommen bei Sona! 👋",
+        "subtitle": "Ihr KI-Beziehungs-Coach",
+        "description": "Stärken Sie Ihre Beziehungen, verbessern Sie Ihre Kommunikationsfähigkeiten und steigern Sie Ihre emotionale Intelligenz.",
+        "features": {
+            "ai": "🤖 Personalisiertes KI-Coaching",
+            "relationships": "💕 Verwaltung mehrerer Beziehungen",
+            "reminders": "📅 Intelligente Erinnerungen",
+            "privacy": "🔒 Vollständige Privatsphäre & Sicherheit"
+        }
+    },
+    "name": {
+        "title": "Lernen wir uns kennen",
+        "subtitle": "Wie heißen Sie?",
+        "placeholder": "Geben Sie Ihren Namen ein",
+        "helper": "Wie sollen wir Sie nennen?"
+    },
+    "personalInfo": {
+        "title": "Persönliche Informationen",
+        "subtitle": "Um Sie besser kennenzulernen",
+        "age": {
+            "label": "Altersgruppe",
+            "18-24": "18-24",
+            "25-34": "25-34",
+            "35-44": "35-44",
+            "45-54": "45-54",
+            "55+": "55+"
+        },
+        "gender": {
+            "label": "Geschlecht",
+            "female": "Weiblich",
+            "male": "Männlich",
+            "other": "Möchte ich nicht sagen"
+        },
+        "status": {
+            "label": "Beziehungsstatus",
+            "single": "Single",
+            "dating": "Datend",
+            "relationship": "In einer Beziehung",
+            "married": "Verheiratet",
+            "complicated": "Es ist kompliziert"
+        },
+        "goal": {
+            "label": "Coaching-Ziel",
+            "improve": "Beziehung verbessern",
+            "solve": "Probleme lösen",
+            "understand": "Mich selbst verstehen",
+            "find": "Einen Partner finden"
+        }
+    },
+    "relationshipType": {
+        "title": "Beziehungstyp",
+        "subtitle": "Über welche Beziehung möchten Sie sprechen?",
+        "romantic": "Ehepartner/Partner",
+        "family": "Familie/Verwandter",
+        "parent_child": "Eltern/Kind",
+        "friend": "Freund",
+        "professional": "Kollege/Chef"
+    },
+    "partnerInfo": {
+        "title": "Partnerinformationen",
+        "subtitle": "Erzählen Sie uns von Ihrem {{partnerType}}",
+        "name": {
+            "label": "Name",
+            "placeholder": "Name des Partners"
+        },
+        "duration": {
+            "label": "Beziehungsdauer",
+            "years": "Jahre",
+            "months": "Monate",
+            "yearsShort": "Jahr",
+            "monthsShort": "Monat"
+        },
+        "age": {
+            "label": "Altersgruppe"
+        },
+        "gender": {
+            "label": "Geschlecht",
+            "female": "Weiblich",
+            "male": "Männlich",
+            "other": "Möchte ich nicht sagen"
+        },
+        "notes": {
+            "label": "Notizen (Optional)",
+            "placeholder": "Gibt es etwas Besonderes, das wir über Ihren Partner wissen sollten?"
+        }
+    },
+    "relationshipContext": {
+        "title": "Beziehungsdetails",
+        "subtitle": "Hauptherausforderung?",
+        "durationLabel": "Dauer?",
+        "challengeLabel": "Was ist hier die größte Herausforderung?",
+        "placeholder": "Z.B. Kommunikationsprobleme",
+        "helper": "Wobei möchten Sie Hilfe?",
+        "encrypted": "Verschlüsselt"
+    }
+}

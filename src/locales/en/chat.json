@@ -1,0 +1,26 @@
+{
+    "header": {
+        "title": "Chat"
+    },
+    "relationshipSelector": {
+        "general": "General Chat"
+    },
+    "placeholder": "Type your message...",
+    "typing": "Sona is typing...",
+    "emptyState": {
+        "title": "No messages yet",
+        "text": "Messages in this chat will appear here.\nWrite something to start the conversation or clear it."
+    },
+    "initialMessages": {
+        "general": "Hello {{userName}}! What can I do for you today?",
+        "relationship": "Hello! Is there something you'd like to talk about regarding {{partnerName}}?"
+    },
+    "alerts": {
+        "clearChat": {
+            "title": "Clear Chat",
+            "message": "Are you sure you want to delete this chat history?",
+            "cancel": "Cancel",
+            "clear": "Clear"
+        }
+    }
+}

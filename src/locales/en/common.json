@@ -1,0 +1,32 @@
+{
+    "buttons": {
+        "continue": "Continue",
+        "back": "Back",
+        "save": "Save",
+        "cancel": "Cancel",
+        "delete": "Delete",
+        "edit": "Edit",
+        "logout": "Logout",
+        "close": "Close",
+        "confirm": "Confirm",
+        "add": "Add",
+        "update": "Update",
+        "send": "Send"
+    },
+    "errors": {
+        "network": "Please check your internet connection",
+        "required": "This field is required",
+        "unknown": "An error occurred",
+        "tryAgain": "Please try again"
+    },
+    "navigation": {
+        "home": "Home",
+        "chat": "Chat",
+        "profile": "Profile"
+    },
+    "loading": "Loading...",
+    "success": "Success!",
+    "days": "Days",
+    "messages": "Messages",
+    "relationships": "Relationships"
+}

@@ -1,0 +1,26 @@
+{
+    "header": {
+        "title": "Chat"
+    },
+    "relationshipSelector": {
+        "general": "Allgemeiner Chat"
+    },
+    "placeholder": "Geben Sie Ihre Nachricht ein...",
+    "typing": "Sona schreibt...",
+    "emptyState": {
+        "title": "Noch keine Nachrichten",
+        "text": "Nachrichten in diesem Chat werden hier angezeigt.\nSchreiben Sie etwas, um das Gespräch zu beginnen, oder löschen Sie es."
+    },
+    "initialMessages": {
+        "general": "Hallo {{userName}}! Was kann ich heute für Sie tun?",
+        "relationship": "Hallo! Gibt es etwas, worüber Sie bezüglich {{partnerName}} sprechen möchten?"
+    },
+    "alerts": {
+        "clearChat": {
+            "title": "Chat löschen",
+            "message": "Sind Sie sicher, dass Sie diesen Chatverlauf löschen möchten?",
+            "cancel": "Abbrechen",
+            "clear": "Löschen"
+        }
+    }
+}

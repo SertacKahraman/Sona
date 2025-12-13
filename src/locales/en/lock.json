@@ -1,0 +1,47 @@
+{
+    "title": "Sona",
+    "subtitle": "App Locked",
+    "description": "Touch the button below to continue",
+    "remainingAttempts": "Remaining attempts: {{count}}",
+    "unlock": "Unlock",
+    "authenticating": "Authenticating...",
+    "hintIOS": "Authenticate with Face ID or Touch ID",
+    "hintAndroid": "Authenticate with fingerprint or PIN",
+    "alerts": {
+        "tooManyAttempts": {
+            "title": "Too Many Failed Attempts",
+            "messageLogout": "You will be logged out for security reasons.",
+            "messageLockDisabled": "App lock will be disabled for security reasons.",
+            "ok": "OK"
+        },
+        "noHardware": {
+            "title": "Biometric Authentication Not Supported",
+            "message": "Your device doesn't support fingerprint or face recognition. App lock will be disabled.",
+            "understood": "Understood"
+        },
+        "notEnrolled": {
+            "title": "No Biometric Data Found",
+            "message": "No fingerprint or face recognition data is registered on your device. Please add it in device settings or app lock will be disabled.",
+            "goToSettings": "Go to Settings",
+            "disableLock": "Disable Lock"
+        },
+        "authFailed": {
+            "title": "Authentication Failed",
+            "message": "Authentication failed.\n\nRemaining attempts: {{count}}",
+            "retry": "Try Again",
+            "cancel": "Cancel"
+        },
+        "authError": {
+            "title": "Error",
+            "message": "An error occurred during authentication. Please try again.",
+            "retry": "Try Again",
+            "cancel": "Cancel"
+        }
+    },
+    "biometric": {
+        "promptMessage": "Authenticate to Open App",
+        "fallbackLabelIOS": "Use Password",
+        "fallbackLabelAndroid": "Use PIN",
+        "cancelLabel": "Cancel"
+    }
+}

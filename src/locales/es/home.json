@@ -1,0 +1,117 @@
+{
+    "greeting": "Hola 👋",
+    "stats": {
+        "relationships": "Relaciones",
+        "relationshipScore": "Puntuación",
+        "streak": "Días",
+        "streakLabel": "Racha"
+    },
+    "mood": {
+        "title": "Cómo estás hoy?",
+        "subtitle": "Rastrea cómo va tu día"
+    },
+    "relationships": {
+        "title": "Mis Relaciones",
+        "seeAll": "Ver Todo →",
+        "empty": {
+            "title": "Aún No Hay Relaciones",
+            "subtitle": "Añade tu primera relación para comenzar"
+        },
+        "new": "Nuevo",
+        "unnamed": "Sin Nombre"
+    },
+    "specialDates": {
+        "title": "Fechas Especiales Próximas",
+        "add": "+ Añadir",
+        "empty": "Aún no hay fechas especiales añadidas.",
+        "addNow": "Añadir Ahora",
+        "general": "General",
+        "months": [
+            "Ene",
+            "Feb",
+            "Mar",
+            "Abr",
+            "May",
+            "Jun",
+            "Jul",
+            "Ago",
+            "Sep",
+            "Oct",
+            "Nov",
+            "Dic"
+        ]
+    },
+    "dailyTip": {
+        "title": "Consejo Diario",
+        "from": "Nota de Sona",
+        "focus": "Enfoque"
+    },
+    "modal": {
+        "addDate": {
+            "title": "Añadir Fecha Especial 📅",
+            "titleLabel": "Título",
+            "titlePlaceholder": "Ej., Cumpleaños, Aniversario",
+            "dayLabel": "Día",
+            "dayPlaceholder": "DD",
+            "monthLabel": "Mes",
+            "monthPlaceholder": "MM",
+            "selectRelationship": "Seleccionar Relación",
+            "selectDate": "Seleccionar Fecha",
+            "datePlaceholder": "Seleccionar Fecha",
+            "done": "Hecho",
+            "cancel": "Cancelar",
+            "save": "Guardar",
+            "missingInfo": "Información Faltante",
+            "fillAllFields": "Por favor complete todos los campos.",
+            "error": "Error",
+            "invalidDate": "Fecha inválida.",
+            "success": "Éxito",
+            "dateAdded": "¡Fecha especial añadida! 🎉"
+        },
+        "deleteDate": {
+            "title": "Eliminar Fecha Especial",
+            "message": "¿Está seguro de que desea eliminar esta fecha especial?",
+            "cancel": "Cancelar",
+            "delete": "Eliminar"
+        },
+        "relationshipDetail": {
+            "duration": "Juntos",
+            "focusLabel": "Enfoque Actual",
+            "chat": "Chatear",
+            "edit": "Editar",
+            "delete": "Eliminar"
+        }
+    },
+    "tips": {
+        "improve": [
+            "Hoy, ten una conversación de 10 minutos donde solo escuches a tu pareja.",
+            "Una pequeña sorpresa a veces puede resolver un gran problema. Consigue o haz algo que amen hoy.",
+            "Prueben algo nuevo juntos hoy para fortalecer su relación.",
+            "Envíales un mensaje recordándoles por qué los valoras."
+        ],
+        "solve": [
+            "En una discusión, intenta usar el lenguaje 'Yo' en lugar del 'Tú'.",
+            "Espera un momento tranquilo para discutir problemas, no decidas cuando estés enojado.",
+            "Hoy, enfócate en entender la perspectiva de tu pareja, no en tener la razón.",
+            "No traigas errores pasados al presente, enfócate en el ahora."
+        ],
+        "understand": [
+            "Escribe tus sentimientos hoy y piensa por qué los sientes.",
+            "Establecer tus propios límites es la base de una relación saludable.",
+            "Pregúntate: '¿Qué necesito realmente en esta relación?'",
+            "Asume la responsabilidad de tu propia felicidad."
+        ],
+        "find": [
+            "Da un paso hoy para conocer gente nueva.",
+            "Estar en paz contigo mismo es el primer paso para encontrar a la persona adecuada.",
+            "Únete a una actividad hoy que amplíe tu círculo social.",
+            "Revisa tus expectativas, tal vez lo que buscas es diferente de lo que piensas."
+        ],
+        "default": [
+            "Sonreír es contagioso, ¡sonríe mucho hoy! 😊",
+            "No olvides hacer tiempo para ti mismo, eres valioso.",
+            "No dudes en decirles a tus seres queridos que los amas.",
+            "Dale a alguien un cumplido genuino hoy."
+        ]
+    }
+}
