@@ -3,7 +3,8 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { NavigationContainer } from '@react-navigation/native';
 import { Feather } from '@expo/vector-icons';
-import { View, Text } from 'react-native';
+import { View, Text, useWindowDimensions, Platform } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useApp } from '../context/AppContext';
 import { useTranslation } from 'react-i18next';
@@ -29,22 +30,39 @@ import DocumentViewerScreen from '../screens/onboarding/DocumentViewerScreen';
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
 
+const TABLET_BREAKPOINT = 768;
+
 function MainTabs() {
   const { t } = useTranslation('common');
+  const { width: screenWidth } = useWindowDimensions();
+  const insets = useSafeAreaInsets();
+  const isTablet = screenWidth >= TABLET_BREAKPOINT;
+
+  // Dynamic sizes for tablet
+  const navHeight = isTablet ? 85 : 70;
+  const iconSize = isTablet ? 28 : 24;
+  const labelFontSize = isTablet ? 13 : 10;
+  const navHorizontalMargin = isTablet ? 40 : 20;
+
+  // Bottom offset - responsive olarak ekran yüksekliğine göre ayarla
+  const bottomOffset = Platform.OS === 'android'
+    ? (isTablet ? 15 : 10)
+    : (isTablet ? 25 : 20);
 
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
         headerShown: false,
+        tabBarLabelPosition: 'below-icon',
         tabBarStyle: {
           position: 'absolute',
-          bottom: 20,
-          left: 20,
-          right: 20,
+          bottom: bottomOffset,
+          left: navHorizontalMargin,
+          right: navHorizontalMargin,
           elevation: 10,
           backgroundColor: '#ffffff',
-          borderRadius: 30,
-          height: 70,
+          borderRadius: isTablet ? 35 : 30,
+          height: navHeight,
           shadowColor: '#000',
           shadowOffset: { width: 0, height: 5 },
           shadowOpacity: 0.15,
@@ -54,35 +72,36 @@ function MainTabs() {
           borderTopWidth: 0,
         },
         tabBarItemStyle: {
+          flexDirection: 'column',
           justifyContent: 'center',
           alignItems: 'center',
-          paddingVertical: 5,
+          paddingVertical: isTablet ? 8 : 5,
         },
         tabBarIcon: ({ focused, color, size }) => {
           let iconName;
           if (route.name === 'HomeTab') iconName = 'home';
           else if (route.name === 'ChatTab') iconName = 'message-circle';
           else if (route.name === 'ProfileTab') iconName = 'user';
-          return <Feather name={iconName} size={24} color={focused ? '#66D9A1' : '#B0B0B0'} />;
+          return <Feather name={iconName} size={iconSize} color={focused ? '#66D9A1' : '#B0B0B0'} />;
         },
         tabBarActiveTintColor: '#66D9A1',
         tabBarInactiveTintColor: '#B0B0B0',
-        tabBarLabelStyle: { fontSize: 10, fontWeight: 'bold' },
+        tabBarLabelStyle: { fontSize: labelFontSize, fontWeight: 'bold' },
         tabBarLabel: ({ focused }) => {
           let label;
           if (route.name === 'HomeTab') label = t('navigation.home');
           else if (route.name === 'ChatTab') label = t('navigation.chat');
           else if (route.name === 'ProfileTab') label = t('navigation.profile');
-          return <Text style={{ fontSize: 10, fontWeight: focused ? 'bold' : '500', color: focused ? '#66D9A1' : '#B0B0B0', marginTop: 4 }}>{label}</Text>;
+          return <Text style={{ fontSize: labelFontSize, fontWeight: focused ? 'bold' : '500', color: focused ? '#66D9A1' : '#B0B0B0', marginTop: isTablet ? 6 : 4 }}>{label}</Text>;
         }
-      })}
-    >
+      })}>
       <Tab.Screen name="HomeTab" component={HomeScreen} />
       <Tab.Screen name="ChatTab" component={ChatScreen} />
       <Tab.Screen name="ProfileTab" component={ProfileScreen} />
     </Tab.Navigator>
   );
 }
+
 
 // Helper function to determine onboarding completion status
 function getOnboardingStatus(userData) {
@@ -138,7 +157,7 @@ export default function AppNavigator() {
         setIsLocked(false);
       }
     } catch (e) {
-      console.error('Error checking lock status:', e);
+      // Error checking lock status - default to unlocked
       setIsLocked(false);
     } finally {
       setIsCheckingLock(false);

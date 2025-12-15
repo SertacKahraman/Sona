@@ -1,14 +1,26 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, View, Image, Animated } from 'react-native';
+import { StyleSheet, View, Image, Animated, LogBox } from 'react-native';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { AppProvider } from './src/context/AppContext';
 import AppNavigator from './src/navigation/AppNavigator';
 import './src/locales'; // i18n yapılandırmasını yükle
 
+// Expo Go'da beklenen uyarıları bastır (production build'de görünmezler)
+LogBox.ignoreLogs([
+  'expo-notifications: Android Push notifications',
+  'expo-notifications',
+  '`expo-notifications` functionality is not fully supported',
+  'SafeAreaView has been deprecated',
+  'We recommend you instead use a development build',
+]);
+
 export default function App() {
   return (
-    <AppProvider>
-      <AppNavigator />
-    </AppProvider>
+    <SafeAreaProvider>
+      <AppProvider>
+        <AppNavigator />
+      </AppProvider>
+    </SafeAreaProvider>
   );
 }
 

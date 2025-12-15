@@ -1,15 +1,48 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, TouchableOpacity, Image, ScrollView, SafeAreaView, Modal, TextInput, Alert, TouchableWithoutFeedback, Keyboard, Platform } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, Image, ScrollView, Modal, TextInput, Alert, TouchableWithoutFeedback, Keyboard, Platform, StatusBar as RNStatusBar, useWindowDimensions } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Feather } from '@expo/vector-icons';
 import { useState, useMemo } from 'react';
+import { useSafeAreaInsets, SafeAreaView } from 'react-native-safe-area-context';
 import { useApp } from '../../context/AppContext';
 import { getRelationshipInfo } from '../../constants/relationships';
 import { useTranslation } from 'react-i18next';
 
+// Tablet detection threshold
+const TABLET_BREAKPOINT = 768;
+const LARGE_TABLET_BREAKPOINT = 1200;
+const MAX_CONTENT_WIDTH = 600;
+
 export default function HomeScreen({ navigation }) {
   const { t, i18n } = useTranslation('home');
+  const { width: screenWidth } = useWindowDimensions();
+  const insets = useSafeAreaInsets();
+  const isTablet = screenWidth >= TABLET_BREAKPOINT;
+  const isLargeTablet = screenWidth >= LARGE_TABLET_BREAKPOINT;
+
+  // Bottom offset - responsive olarak (navigation bar ile aynı)
+  const bottomSafeArea = Platform.OS === 'android'
+    ? (isTablet ? 15 : 10)
+    : (isTablet ? 25 : 20);
+
+  // Tab bar yüksekliği + bottom offset
+  const tabBarHeight = isTablet ? 85 : 70;
+  const fabBottomPosition = tabBarHeight + bottomSafeArea + 10;
+
+  // Dynamic sizes for tablet (larger for very big screens)
+  const statPillWidth = isLargeTablet ? 200 : isTablet ? 160 : 90;
+  const statPillPadding = isLargeTablet
+    ? { paddingHorizontal: 36, paddingVertical: 28 }
+    : isTablet
+      ? { paddingHorizontal: 28, paddingVertical: 24 }
+      : { paddingHorizontal: 16, paddingVertical: 12 };
+  const cardWidth = isLargeTablet ? 280 : isTablet ? 220 : 180;
+  const cardHeight = isLargeTablet ? 320 : isTablet ? 260 : 220;
+  const sectionTitleSize = isLargeTablet ? 32 : isTablet ? 26 : 22;
+  const moodButtonSize = isLargeTablet ? 80 : isTablet ? 64 : 56;
+  const moodEmojiSize = isLargeTablet ? 40 : isTablet ? 32 : 28;
+
   const {
     userName,
     relationships,
@@ -278,19 +311,18 @@ export default function HomeScreen({ navigation }) {
         <SafeAreaView>
           <View style={styles.headerContent}>
             <View style={styles.headerTop}>
-              <View>
-                <Text style={styles.greeting}>{t('greeting')}</Text>
-                <Text style={styles.userName}>{userName}</Text>
-                <Text style={styles.dateText}>
+              <View style={{ flex: 1 }}>
+                <Text style={[styles.greeting, isLargeTablet && { fontSize: 28 }, isTablet && !isLargeTablet && { fontSize: 24 }]}>{t('greeting')}</Text>
+                <Text style={[styles.userName, isLargeTablet && { fontSize: 48 }, isTablet && !isLargeTablet && { fontSize: 40 }]}>{userName}</Text>
+                <Text style={[styles.dateText, isLargeTablet && { fontSize: 22 }, isTablet && !isLargeTablet && { fontSize: 18 }]}>
                   {getFormattedDate()}
                 </Text>
-
               </View>
               <TouchableOpacity
-                style={styles.profileButton}
+                style={[styles.profileButton, isLargeTablet && { width: 72, height: 72, borderRadius: 36 }, isTablet && !isLargeTablet && { width: 60, height: 60, borderRadius: 30 }]}
                 onPress={() => navigation.navigate('ProfileTab')}
               >
-                <Feather name="user" size={24} color="#FFF" />
+                <Feather name="user" size={isLargeTablet ? 38 : isTablet ? 32 : 24} color="#FFF" />
               </TouchableOpacity>
             </View>
 
@@ -299,30 +331,30 @@ export default function HomeScreen({ navigation }) {
               horizontal
               showsHorizontalScrollIndicator={false}
               style={styles.statsScroll}
-              contentContainerStyle={styles.statsContainer}
+              contentContainerStyle={[styles.statsContainer, { flexGrow: 1, justifyContent: 'center' }]}
             >
-              <View style={styles.statPill}>
-                <Feather name="heart" size={18} color="#FF6B9D" />
-                <Text style={styles.statPillValue}>{relationships.length}</Text>
-                <Text style={styles.statPillLabel}>{t('stats.relationships')}</Text>
+              <View style={[styles.statPill, { minWidth: statPillWidth }, statPillPadding]}>
+                <Feather name="heart" size={isTablet ? 24 : 18} color="#FF6B9D" />
+                <Text style={[styles.statPillValue, isTablet && { fontSize: 22 }]}>{relationships.length}</Text>
+                <Text style={[styles.statPillLabel, isTablet && { fontSize: 13 }]}>{t('stats.relationships')}</Text>
               </View>
 
-              <View style={styles.statPill}>
+              <View style={[styles.statPill, { minWidth: statPillWidth }, statPillPadding]}>
                 <Feather
                   name={progress.trend === 'up' ? "trending-up" : "trending-down"}
-                  size={18}
+                  size={isTablet ? 24 : 18}
                   color={progress.trend === 'up' ? "#4CAF50" : "#FF5252"}
                 />
-                <Text style={styles.statPillValue}>
+                <Text style={[styles.statPillValue, isTablet && { fontSize: 22 }]}>
                   %{progress.score}
                 </Text>
-                <Text style={styles.statPillLabel}>{t('stats.relationshipScore')}</Text>
+                <Text style={[styles.statPillLabel, isTablet && { fontSize: 13 }]}>{t('stats.relationshipScore')}</Text>
               </View>
 
-              <View style={styles.statPill}>
-                <Feather name="zap" size={18} color="#FFD93D" />
-                <Text style={styles.statPillValue}>{streak} {t('stats.streak')}</Text>
-                <Text style={styles.statPillLabel}>{t('stats.streakLabel')}</Text>
+              <View style={[styles.statPill, { minWidth: statPillWidth }, statPillPadding]}>
+                <Feather name="zap" size={isTablet ? 24 : 18} color="#FFD93D" />
+                <Text style={[styles.statPillValue, isTablet && { fontSize: 22 }]}>{streak} {t('stats.streak')}</Text>
+                <Text style={[styles.statPillLabel, isTablet && { fontSize: 13 }]}>{t('stats.streakLabel')}</Text>
               </View>
             </ScrollView>
           </View>
@@ -336,8 +368,8 @@ export default function HomeScreen({ navigation }) {
       >
         {/* Mood Check-in Section */}
         <View style={styles.moodSection}>
-          <Text style={styles.sectionTitle}>{t('mood.title')}</Text>
-          <Text style={styles.sectionSubtitle}>{t('mood.subtitle')}</Text>
+          <Text style={[styles.sectionTitle, { fontSize: sectionTitleSize }]}>{t('mood.title')}</Text>
+          <Text style={[styles.sectionSubtitle, isTablet && { fontSize: 16 }]}>{t('mood.subtitle')}</Text>
           <View style={styles.moodContainer}>
             {['😡', '😕', '😐', '🙂', '😍'].map((emoji, index) => {
               const today = new Date().toISOString().split('T')[0];
@@ -349,11 +381,12 @@ export default function HomeScreen({ navigation }) {
                   key={index}
                   style={[
                     styles.moodButton,
+                    { width: moodButtonSize, height: moodButtonSize },
                     isSelected && styles.moodButtonSelected
                   ]}
                   onPress={() => addDailyMood(emoji)}
                 >
-                  <Text style={styles.moodEmoji}>{emoji}</Text>
+                  <Text style={[styles.moodEmoji, { fontSize: moodEmojiSize }]}>{emoji}</Text>
                 </TouchableOpacity>
               );
             })}
@@ -362,19 +395,19 @@ export default function HomeScreen({ navigation }) {
 
         {/* Relationships Section */}
         <View style={styles.sectionHeader}>
-          <Text style={styles.sectionTitle}>{t('relationships.title')}</Text>
+          <Text style={[styles.sectionTitle, { fontSize: sectionTitleSize }]}>{t('relationships.title')}</Text>
           <TouchableOpacity onPress={() => navigation.navigate('AllRelationships')}>
-            <Text style={styles.seeAllText}>{t('relationships.seeAll')}</Text>
+            <Text style={[styles.seeAllText, isTablet && { fontSize: 16 }]}>{t('relationships.seeAll')}</Text>
           </TouchableOpacity>
         </View>
 
         {relationships.length === 0 ? (
           <View style={styles.emptyState}>
-            <View style={styles.emptyIconContainer}>
-              <Feather name="heart" size={48} color="#66D9A1" />
+            <View style={[styles.emptyIconContainer, isTablet && { width: 110, height: 110 }]}>
+              <Feather name="heart" size={isTablet ? 56 : 48} color="#66D9A1" />
             </View>
-            <Text style={styles.emptyTitle}>{t('relationships.empty.title')}</Text>
-            <Text style={styles.emptyText}>
+            <Text style={[styles.emptyTitle, isTablet && { fontSize: 20 }]}>{t('relationships.empty.title')}</Text>
+            <Text style={[styles.emptyText, isTablet && { fontSize: 16 }]}>
               {t('relationships.empty.subtitle')}
             </Text>
           </View>
@@ -391,7 +424,7 @@ export default function HomeScreen({ navigation }) {
               return (
                 <TouchableOpacity
                   key={rel.id}
-                  style={styles.relationshipCard}
+                  style={[styles.relationshipCard, { width: cardWidth, height: cardHeight }]}
                   activeOpacity={0.9}
                   onPress={() => {
                     setSelectedRelationshipForModal(rel);
@@ -404,14 +437,14 @@ export default function HomeScreen({ navigation }) {
                     start={{ x: 0, y: 0 }}
                     end={{ x: 1, y: 1 }}
                   >
-                    <Text style={styles.cardEmoji}>{relInfo.emoji}</Text>
-                    <Text style={styles.cardName}>{rel.partnerName || t('relationships.unnamed')}</Text>
-                    <Text style={styles.cardType}>{t(`relationshipType.${rel.type}`, { ns: 'onboarding' })}</Text>
+                    <Text style={[styles.cardEmoji, isTablet && { fontSize: 52 }]}>{relInfo.emoji}</Text>
+                    <Text style={[styles.cardName, isTablet && { fontSize: 20 }]}>{rel.partnerName || t('relationships.unnamed')}</Text>
+                    <Text style={[styles.cardType, isTablet && { fontSize: 13 }]}>{t(`relationshipType.${rel.type}`, { ns: 'onboarding' })}</Text>
 
                     <View style={styles.cardFooter}>
-                      <View style={styles.durationBadge}>
-                        <Feather name="clock" size={12} color="#FFF" />
-                        <Text style={styles.durationText}>{getDurationText(rel.years, rel.months)}</Text>
+                      <View style={[styles.durationBadge, isTablet && { paddingHorizontal: 12, paddingVertical: 7 }]}>
+                        <Feather name="clock" size={isTablet ? 14 : 12} color="#FFF" />
+                        <Text style={[styles.durationText, isTablet && { fontSize: 12 }]}>{getDurationText(rel.years, rel.months)}</Text>
                       </View>
                     </View>
                   </LinearGradient>
@@ -424,31 +457,31 @@ export default function HomeScreen({ navigation }) {
 
         {/* Special Dates Section */}
         <View style={styles.sectionHeader}>
-          <Text style={[styles.sectionTitle, { flex: 1 }]}>{t('specialDates.title')}</Text>
+          <Text style={[styles.sectionTitle, { flex: 1, fontSize: sectionTitleSize }]}>{t('specialDates.title')}</Text>
           <TouchableOpacity onPress={() => setShowDateModal(true)} style={{ marginLeft: 16 }}>
-            <Text style={styles.seeAllText}>{t('specialDates.add')}</Text>
+            <Text style={[styles.seeAllText, isTablet && { fontSize: 16 }]}>{t('specialDates.add')}</Text>
           </TouchableOpacity>
         </View>
 
         {
           specialDates.length === 0 ? (
             <View style={styles.emptyDateState}>
-              <Text style={styles.emptyDateText}>{t('specialDates.empty')}</Text>
+              <Text style={[styles.emptyDateText, isTablet && { fontSize: 16 }]}>{t('specialDates.empty')}</Text>
               <TouchableOpacity onPress={() => setShowDateModal(true)}>
-                <Text style={styles.addDateLink}>{t('specialDates.addNow')}</Text>
+                <Text style={[styles.addDateLink, isTablet && { fontSize: 16 }]}>{t('specialDates.addNow')}</Text>
               </TouchableOpacity>
             </View>
           ) : (
             <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.datesScroll}>
               {specialDates.map((date) => (
-                <View key={date.id} style={styles.dateCard}>
-                  <View style={styles.dateIconBox}>
-                    <Text style={styles.dateDay}>{date.day}</Text>
-                    <Text style={styles.dateMonth}>{t('specialDates.months', { returnObjects: true })[date.month - 1]}</Text>
+                <View key={date.id} style={[styles.dateCard, isTablet && { padding: 14 }]}>
+                  <View style={[styles.dateIconBox, isTablet && { width: 54, height: 54 }]}>
+                    <Text style={[styles.dateDay, isTablet && { fontSize: 20 }]}>{date.day}</Text>
+                    <Text style={[styles.dateMonth, isTablet && { fontSize: 11 }]}>{t('specialDates.months', { returnObjects: true })[date.month - 1]}</Text>
                   </View>
                   <View style={styles.dateInfo}>
-                    <Text style={styles.dateTitle}>{date.title}</Text>
-                    <Text style={styles.dateRelName}>
+                    <Text style={[styles.dateTitle, isTablet && { fontSize: 15 }]}>{date.title}</Text>
+                    <Text style={[styles.dateRelName, isTablet && { fontSize: 13 }]}>
                       {relationships.find(r => r.id === date.relationshipId)?.partnerName || t('specialDates.general')}
                     </Text>
                   </View>
@@ -457,7 +490,7 @@ export default function HomeScreen({ navigation }) {
                     style={styles.deleteDateButton}
                     hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
                   >
-                    <Feather name="trash-2" size={18} color="#FF6B6B" />
+                    <Feather name="trash-2" size={isTablet ? 20 : 18} color="#FF6B6B" />
                   </TouchableOpacity>
                 </View>
               ))}
@@ -467,27 +500,27 @@ export default function HomeScreen({ navigation }) {
 
         {/* Daily Tip Section */}
         <View style={styles.sectionHeader}>
-          <Text style={styles.sectionTitle}>{t('dailyTip.title')}</Text>
+          <Text style={[styles.sectionTitle, { fontSize: sectionTitleSize }]}>{t('dailyTip.title')}</Text>
         </View>
 
         <View style={styles.tipCard}>
           <LinearGradient
             colors={['#FFF9C4', '#FFF59D']}
-            style={styles.tipGradient}
+            style={[styles.tipGradient, isTablet && { padding: 24 }]}
             start={{ x: 0, y: 0 }}
             end={{ x: 1, y: 1 }}
           >
             <View style={styles.tipHeader}>
-              <View style={styles.tipIconContainer}>
-                <Feather name="sun" size={20} color="#F57F17" />
+              <View style={[styles.tipIconContainer, isTablet && { width: 40, height: 40 }]}>
+                <Feather name="sun" size={isTablet ? 22 : 20} color="#F57F17" />
               </View>
-              <Text style={styles.tipLabel}>{t('dailyTip.from')}</Text>
+              <Text style={[styles.tipLabel, isTablet && { fontSize: 14 }]}>{t('dailyTip.from')}</Text>
             </View>
-            <Text style={styles.tipText}>"{dailyTip}"</Text>
+            <Text style={[styles.tipText, isTablet && { fontSize: 17, lineHeight: 26 }]}>"{dailyTip}"</Text>
             {relationships.length > 0 && relationships[0].mainChallenge ? (
               <View style={styles.tipContextBox}>
-                <Feather name="target" size={14} color="#F9A825" style={{ marginTop: 2 }} />
-                <Text style={styles.tipContext}>
+                <Feather name="target" size={isTablet ? 16 : 14} color="#F9A825" style={{ marginTop: 2 }} />
+                <Text style={[styles.tipContext, isTablet && { fontSize: 14 }]}>
                   {t('dailyTip.focus')}: {relationships[0].mainChallenge}
                 </Text>
               </View>
@@ -495,22 +528,23 @@ export default function HomeScreen({ navigation }) {
           </LinearGradient>
         </View>
 
-        <View style={styles.bottomSpacer} />
+
+        <View style={{ height: fabBottomPosition }} />
       </ScrollView >
 
       {/* Floating Action Button */}
       < TouchableOpacity
-        style={styles.fab}
+        style={[styles.fab, { bottom: fabBottomPosition }, isLargeTablet && styles.fabLargeTablet, isTablet && !isLargeTablet && styles.fabTablet]}
         onPress={handleAddNew}
         activeOpacity={0.8}
       >
         <LinearGradient
           colors={['#66D9A1', '#4CAF50']}
-          style={styles.fabGradient}
+          style={[styles.fabGradient, isLargeTablet && styles.fabGradientLargeTablet, isTablet && !isLargeTablet && styles.fabGradientTablet]}
           start={{ x: 0, y: 0 }}
           end={{ x: 1, y: 1 }}
         >
-          <Feather name="plus" size={28} color="#FFF" />
+          <Feather name="plus" size={isLargeTablet ? 44 : isTablet ? 36 : 28} color="#FFF" />
         </LinearGradient>
       </TouchableOpacity >
 
@@ -738,7 +772,7 @@ const styles = StyleSheet.create({
   },
   headerContent: {
     paddingHorizontal: 20,
-    paddingTop: 10,
+    paddingTop: Platform.OS === 'android' ? (RNStatusBar.currentHeight || 24) + 10 : 10,
   },
   headerTop: {
     flexDirection: 'row',
@@ -1118,11 +1152,31 @@ const styles = StyleSheet.create({
     shadowRadius: 12,
     elevation: 8,
   },
+  fabTablet: {
+    width: 80,
+    height: 80,
+    borderRadius: 40,
+    bottom: 120,
+    right: 30,
+  },
+  fabLargeTablet: {
+    width: 100,
+    height: 100,
+    borderRadius: 50,
+    bottom: 140,
+    right: 40,
+  },
   fabGradient: {
     flex: 1,
     borderRadius: 32,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  fabGradientTablet: {
+    borderRadius: 40,
+  },
+  fabGradientLargeTablet: {
+    borderRadius: 50,
   },
   modalOverlay: {
     flex: 1,

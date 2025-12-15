@@ -30,7 +30,8 @@
         "foregroundImage": "./assets/icon.png",
         "backgroundColor": "#ffffff"
       },
-      "edgeToEdgeEnabled": true,
+      "edgeToEdgeEnabled": false,
+      "softwareKeyboardLayoutMode": "resize",
       "package": "com.sertackahraman.sonakisiseliliskiasistani",
       "versionCode": 1,
       "permissions": [

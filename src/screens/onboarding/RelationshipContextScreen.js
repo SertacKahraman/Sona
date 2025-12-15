@@ -1,13 +1,29 @@
-import React from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, TextInput, Image, KeyboardAvoidingView, Platform } from 'react-native';
+import React, { useRef } from 'react';
+import { StyleSheet, Text, View, TouchableOpacity, TextInput, Image, Platform, useWindowDimensions } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { LinearGradient } from 'expo-linear-gradient';
 import { StatusBar } from 'expo-status-bar';
 import { useApp } from '../../context/AppContext';
 import { useTranslation } from 'react-i18next';
 
+const TABLET_BREAKPOINT = 768;
+
 export default function RelationshipContextScreen({ navigation }) {
   const { t } = useTranslation('onboarding');
+  const { width: screenWidth, height: screenHeight } = useWindowDimensions();
+  const isTablet = screenWidth >= TABLET_BREAKPOINT;
+
+  // iOS için responsive keyboard offset (ekran yüksekliğinin %2'si - minimal boşluk)
+  const keyboardOffset = Platform.OS === 'ios' ? Math.round(screenHeight * 0.02) : 0;
+
+  // Dynamic sizes for tablet
+  const headerTitleSize = isTablet ? 38 : 28;
+  const headerSubtitleSize = isTablet ? 20 : 16;
+  const sectionLabelSize = isTablet ? 20 : 16;
+  const wheelSize = isTablet ? 160 : 110;
+  const buttonTextSize = isTablet ? 20 : 17;
+  const contentMaxWidth = isTablet ? Math.min(screenWidth * 0.7, 700) : '100%';
+
   const {
     relationshipYears,
     setRelationshipYears,
@@ -19,174 +35,189 @@ export default function RelationshipContextScreen({ navigation }) {
     isAddingNew
   } = useApp();
 
+  const scrollViewRef = useRef(null);
+
+  // Input'a tıklandığında sayfanın en altına (devam butonuna) kaydır
+  const handleInputFocus = () => {
+    if (scrollViewRef.current) {
+      // Klavyenin açılmasını bekle, sonra en alta kaydır
+      // Android'de daha fazla gecikme - klavye animasyonu tamamlansın
+      const scrollDelay = Platform.OS === 'ios' ? 100 : 350;
+      setTimeout(() => {
+        scrollViewRef.current.scrollToEnd({ animated: true });
+      }, scrollDelay);
+    }
+  };
+
   return (
     <View style={styles.container}>
       <LinearGradient
         colors={['#66D9A1', '#4CAF50']}
-        style={styles.headerGradient}
+        style={[styles.headerGradient, isTablet && { paddingBottom: 40 }]}
       >
         <View style={styles.headerTopRow}>
           <TouchableOpacity
-            style={styles.backButtonWhite}
+            style={[styles.backButtonWhite, isTablet && { width: 48, height: 48, borderRadius: 24 }]}
             onPress={() => navigation.goBack()}
           >
-            <Text style={styles.backIconWhite}>‹</Text>
+            <Text style={[styles.backIconWhite, isTablet && { fontSize: 28 }]}>‹</Text>
           </TouchableOpacity>
-          <View style={styles.whiteBadge}>
-            <Text style={styles.whiteBadgeText}>
+          <View style={[styles.whiteBadge, isTablet && { paddingVertical: 8, paddingHorizontal: 20 }]}>
+            <Text style={[styles.whiteBadgeText, isTablet && { fontSize: 14 }]}>
               {editingRelationshipId ? `${t('steps.editing2')} ${t('steps.editing')}` : (isAddingNew ? `${t('steps.editing2')} ${t('steps.secondStep')}` : `${t('steps.step3')} ${t('steps.thirdStep')}`)}
             </Text>
           </View>
-          <View style={{ width: 40 }} />
+          <View style={{ width: isTablet ? 48 : 40 }} />
         </View>
-        <Text style={styles.headerTitle}>{t('relationshipContext.title')}</Text>
-        <Text style={styles.headerSubtitle}>{t('relationshipContext.subtitle')}</Text>
+        <Text style={[styles.headerTitle, { fontSize: headerTitleSize }]}>{t('relationshipContext.title')}</Text>
+        <Text style={[styles.headerSubtitle, { fontSize: headerSubtitleSize }]}>{t('relationshipContext.subtitle')}</Text>
       </LinearGradient>
 
-      <KeyboardAvoidingView
+      <KeyboardAwareScrollView
+        ref={scrollViewRef}
         style={{ flex: 1 }}
-        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        contentContainerStyle={[{ padding: 24, paddingBottom: 20 }, isTablet && { alignItems: 'center', flexGrow: 1, justifyContent: 'center' }]}
+        showsVerticalScrollIndicator={false}
+        enableOnAndroid={true}
+        extraScrollHeight={keyboardOffset}
+        extraHeight={keyboardOffset}
+        enableAutomaticScroll={true}
+        enableResetScrollToCoords={false}
+        keyboardShouldPersistTaps="handled"
       >
-        <KeyboardAwareScrollView
-          style={{ flex: 1 }}
-          contentContainerStyle={{ padding: 24, paddingBottom: 40 }}
-          showsVerticalScrollIndicator={false}
-          enableOnAndroid={true}
-          extraScrollHeight={100}
+        <View style={[styles.mascotSectionSmall, isTablet && { marginBottom: 10 }]}>
+          <Image
+            source={require('../../../assets/tarih.png')}
+            style={[styles.mascotImageSmall, isTablet && { width: 220, height: 160 }]}
+            resizeMode="contain"
+          />
+        </View>
+
+        <View style={[styles.durationSection, isTablet && { maxWidth: contentMaxWidth, width: '100%' }]}>
+          <Text style={[styles.sectionLabel, { fontSize: sectionLabelSize }]}>{t('relationshipContext.durationLabel')}</Text>
+          <View style={styles.wheelsRow}>
+            <View style={styles.wheelBox}>
+              <Text style={[styles.wheelTitle, isTablet && { fontSize: 18 }]}>{t('partnerInfo.duration.years')}</Text>
+              <View style={[styles.wheelCircle, isTablet && { width: wheelSize, height: wheelSize, borderRadius: wheelSize / 2 }]}>
+                <View style={[styles.wheelTicksContainer, isTablet && { width: wheelSize, height: wheelSize }]}>
+                  {[0, 30, 60, 90, 120, 150, 180, 210, 240, 270, 300, 330].map((angle) => (
+                    <View
+                      key={angle}
+                      style={{
+                        position: 'absolute',
+                        width: wheelSize,
+                        height: wheelSize,
+                        transform: [{ rotate: `${angle}deg` }],
+                      }}
+                    >
+                      <View style={styles.wheelTickLine} />
+                    </View>
+                  ))}
+                </View>
+                <View style={{
+                  position: 'absolute',
+                  width: wheelSize,
+                  height: wheelSize,
+                  transform: [{ rotate: `${relationshipYears * 30}deg` }],
+                }}>
+                  <View style={styles.wheelTopDot} />
+                </View>
+                <Text style={[styles.wheelNumber, isTablet && { fontSize: 24 }]}>{relationshipYears} {t('partnerInfo.duration.yearsShort')}</Text>
+              </View>
+              <View style={styles.wheelControls}>
+                <TouchableOpacity onPress={() => setRelationshipYears(Math.max(0, relationshipYears - 1))}>
+                  <Text style={[styles.controlButton, isTablet && { fontSize: 32, paddingHorizontal: 25 }]}>-</Text>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={() => setRelationshipYears(Math.min(48, relationshipYears + 1))}>
+                  <Text style={[styles.controlButton, isTablet && { fontSize: 32, paddingHorizontal: 25 }]}>+</Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+
+            <View style={styles.wheelBox}>
+              <Text style={[styles.wheelTitle, isTablet && { fontSize: 18 }]}>{t('partnerInfo.duration.months')}</Text>
+              <View style={[styles.wheelCircle, isTablet && { width: wheelSize, height: wheelSize, borderRadius: wheelSize / 2 }]}>
+                <View style={[styles.wheelTicksContainer, isTablet && { width: wheelSize, height: wheelSize }]}>
+                  {[0, 30, 60, 90, 120, 150, 180, 210, 240, 270, 300, 330].map((angle) => (
+                    <View
+                      key={angle}
+                      style={{
+                        position: 'absolute',
+                        width: wheelSize,
+                        height: wheelSize,
+                        transform: [{ rotate: `${angle}deg` }],
+                      }}
+                    >
+                      <View style={styles.wheelTickLine} />
+                    </View>
+                  ))}
+                </View>
+                <View style={{
+                  position: 'absolute',
+                  width: wheelSize,
+                  height: wheelSize,
+                  transform: [{ rotate: `${relationshipMonths * 30}deg` }],
+                }}>
+                  <View style={styles.wheelTopDot} />
+                </View>
+                <Text style={[styles.wheelNumber, isTablet && { fontSize: 24 }]}>{relationshipMonths} {t('partnerInfo.duration.monthsShort')}</Text>
+              </View>
+              <View style={styles.wheelControls}>
+                <TouchableOpacity onPress={() => setRelationshipMonths(Math.max(0, relationshipMonths - 1))}>
+                  <Text style={[styles.controlButton, isTablet && { fontSize: 32, paddingHorizontal: 25 }]}>-</Text>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={() => setRelationshipMonths(Math.min(11, relationshipMonths + 1))}>
+                  <Text style={[styles.controlButton, isTablet && { fontSize: 32, paddingHorizontal: 25 }]}>+</Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+          </View>
+        </View>
+
+        <View style={[styles.challengeSection, isTablet && { maxWidth: contentMaxWidth, width: '100%' }]}>
+          <Text style={[styles.sectionLabel, { fontSize: sectionLabelSize }]}>{t('relationshipContext.challengeLabel')}</Text>
+          <TextInput
+            style={[styles.challengeInput, isTablet && { fontSize: 18, padding: 20, minHeight: 120 }]}
+            value={mainChallenge}
+            onChangeText={setMainChallenge}
+            placeholder={t('relationshipContext.placeholder')}
+            placeholderTextColor="#999"
+            multiline
+            returnKeyType="done"
+            blurOnSubmit={true}
+            maxLength={150}
+            onFocus={handleInputFocus}
+          />
+          <View style={styles.privacyNote}>
+            <Text style={[styles.lockIcon, isTablet && { fontSize: 14 }]}>🔒</Text>
+            <Text style={[styles.privacyText, isTablet && { fontSize: 14 }]}>{t('relationshipContext.encrypted')}</Text>
+          </View>
+        </View>
+
+        <TouchableOpacity
+          style={[styles.continueButton, !mainChallenge.trim() && styles.continueButtonDisabled, isTablet && { maxWidth: 400, width: '100%' }]}
+          activeOpacity={0.8}
+          onPress={() => {
+            if (mainChallenge.trim()) {
+              navigation.navigate('PartnerInfo');
+            }
+          }}
+          disabled={!mainChallenge.trim()}
         >
-          <View style={styles.mascotSectionSmall}>
-            <Image
-              source={require('../../../assets/tarih.png')}
-              style={styles.mascotImageSmall}
-              resizeMode="contain"
-            />
-          </View>
-
-          <View style={styles.durationSection}>
-            <Text style={styles.sectionLabel}>{t('relationshipContext.durationLabel')}</Text>
-            <View style={styles.wheelsRow}>
-              <View style={styles.wheelBox}>
-                <Text style={styles.wheelTitle}>{t('partnerInfo.duration.years')}</Text>
-                <View style={styles.wheelCircle}>
-                  <View style={styles.wheelTicksContainer}>
-                    {[0, 30, 60, 90, 120, 150, 180, 210, 240, 270, 300, 330].map((angle) => (
-                      <View
-                        key={angle}
-                        style={{
-                          position: 'absolute',
-                          width: 110,
-                          height: 110,
-                          transform: [{ rotate: `${angle}deg` }],
-                        }}
-                      >
-                        <View style={styles.wheelTickLine} />
-                      </View>
-                    ))}
-                  </View>
-                  <View style={{
-                    position: 'absolute',
-                    width: 110,
-                    height: 110,
-                    transform: [{ rotate: `${relationshipYears * 30}deg` }],
-                  }}>
-                    <View style={styles.wheelTopDot} />
-                  </View>
-                  <Text style={styles.wheelNumber}>{relationshipYears} {t('partnerInfo.duration.yearsShort')}</Text>
-                </View>
-                <View style={styles.wheelControls}>
-                  <TouchableOpacity onPress={() => setRelationshipYears(Math.max(0, relationshipYears - 1))}>
-                    <Text style={styles.controlButton}>-</Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity onPress={() => setRelationshipYears(Math.min(48, relationshipYears + 1))}>
-                    <Text style={styles.controlButton}>+</Text>
-                  </TouchableOpacity>
-                </View>
-              </View>
-
-              <View style={styles.wheelBox}>
-                <Text style={styles.wheelTitle}>{t('partnerInfo.duration.months')}</Text>
-                <View style={styles.wheelCircle}>
-                  <View style={styles.wheelTicksContainer}>
-                    {[0, 30, 60, 90, 120, 150, 180, 210, 240, 270, 300, 330].map((angle) => (
-                      <View
-                        key={angle}
-                        style={{
-                          position: 'absolute',
-                          width: 110,
-                          height: 110,
-                          transform: [{ rotate: `${angle}deg` }],
-                        }}
-                      >
-                        <View style={styles.wheelTickLine} />
-                      </View>
-                    ))}
-                  </View>
-                  <View style={{
-                    position: 'absolute',
-                    width: 110,
-                    height: 110,
-                    transform: [{ rotate: `${relationshipMonths * 30}deg` }],
-                  }}>
-                    <View style={styles.wheelTopDot} />
-                  </View>
-                  <Text style={styles.wheelNumber}>{relationshipMonths} {t('partnerInfo.duration.monthsShort')}</Text>
-                </View>
-                <View style={styles.wheelControls}>
-                  <TouchableOpacity onPress={() => setRelationshipMonths(Math.max(0, relationshipMonths - 1))}>
-                    <Text style={styles.controlButton}>-</Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity onPress={() => setRelationshipMonths(Math.min(11, relationshipMonths + 1))}>
-                    <Text style={styles.controlButton}>+</Text>
-                  </TouchableOpacity>
-                </View>
-              </View>
-            </View>
-          </View>
-
-          <View style={styles.challengeSection}>
-            <Text style={styles.sectionLabel}>{t('relationshipContext.challengeLabel')}</Text>
-            <TextInput
-              style={styles.challengeInput}
-              value={mainChallenge}
-              onChangeText={setMainChallenge}
-              placeholder={t('relationshipContext.placeholder')}
-              placeholderTextColor="#999"
-              multiline
-              returnKeyType="done"
-              blurOnSubmit={true}
-              maxLength={150}
-            />
-            <View style={styles.privacyNote}>
-              <Text style={styles.lockIcon}>🔒</Text>
-              <Text style={styles.privacyText}>{t('relationshipContext.encrypted')}</Text>
-            </View>
-          </View>
-
-          <TouchableOpacity
-            style={[styles.continueButton, !mainChallenge.trim() && styles.continueButtonDisabled]}
-            activeOpacity={0.8}
-            onPress={() => {
-              if (mainChallenge.trim()) {
-                navigation.navigate('PartnerInfo');
-              }
-            }}
-            disabled={!mainChallenge.trim()}
-          >
-            {mainChallenge.trim() ? (
-              <LinearGradient
-                colors={['#66D9A1', '#4CAF50']}
-                start={{ x: 0, y: 0 }}
-                end={{ x: 1, y: 1 }}
-                style={styles.gradientButton}
-              >
-                <Text style={styles.continueButtonText}>{t('common:buttons.continue')}</Text>
-              </LinearGradient>
-            ) : (
-              <Text style={styles.continueButtonText}>{t('common:buttons.continue')}</Text>
-            )}
-          </TouchableOpacity>
-        </KeyboardAwareScrollView>
-      </KeyboardAvoidingView>
+          {mainChallenge.trim() ? (
+            <LinearGradient
+              colors={['#66D9A1', '#4CAF50']}
+              start={{ x: 0, y: 0 }}
+              end={{ x: 1, y: 1 }}
+              style={[styles.gradientButton, isTablet && { paddingVertical: 24 }]}
+            >
+              <Text style={[styles.continueButtonText, { fontSize: buttonTextSize }]}>{t('common:buttons.continue')}</Text>
+            </LinearGradient>
+          ) : (
+            <Text style={[styles.continueButtonText, { fontSize: buttonTextSize }]}>{t('common:buttons.continue')}</Text>
+          )}
+        </TouchableOpacity>
+      </KeyboardAwareScrollView>
       <StatusBar style="light" />
     </View>
   );

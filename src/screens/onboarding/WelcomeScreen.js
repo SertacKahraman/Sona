@@ -1,11 +1,23 @@
 import React from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, Image, Animated } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, Image, Animated, useWindowDimensions } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { StatusBar } from 'expo-status-bar';
 import { useTranslation } from 'react-i18next';
 
+const TABLET_BREAKPOINT = 768;
+
 export default function WelcomeScreen({ navigation }) {
   const { t } = useTranslation('onboarding');
+  const { width: screenWidth } = useWindowDimensions();
+  const isTablet = screenWidth >= TABLET_BREAKPOINT;
+
+  // Dynamic sizes for tablet
+  const mascotSize = isTablet ? 400 : 280;
+  const titleSize = isTablet ? 48 : 36;
+  const subtitleSize = isTablet ? 26 : 20;
+  const descriptionSize = isTablet ? 22 : 17;
+  const buttonTextSize = isTablet ? 24 : 19;
+  const contentMaxWidth = isTablet ? Math.min(screenWidth * 0.7, 700) : '100%';
 
   return (
     <View style={styles.container}>
@@ -13,7 +25,7 @@ export default function WelcomeScreen({ navigation }) {
         colors={['#66D9A1', '#4CAF50']}
         style={[styles.headerGradient, { flex: 1, justifyContent: 'center', alignItems: 'center', borderBottomLeftRadius: 0, borderBottomRightRadius: 0 }]}
       >
-        <View style={styles.mascotContainer}>
+        <View style={[styles.mascotContainer, { width: mascotSize, height: mascotSize }]}>
           <Image
             source={require('../../../assets/selam.png')}
             style={styles.mascotImage}
@@ -21,21 +33,21 @@ export default function WelcomeScreen({ navigation }) {
           />
         </View>
 
-        <Text style={[styles.welcomeTitle, { color: '#FFF' }]}>{t('welcome.title')}</Text>
-        <Text style={[styles.welcomeSubtitle, { color: 'rgba(255, 255, 255, 0.9)' }]}>{t('welcome.subtitle')}</Text>
+        <Text style={[styles.welcomeTitle, { color: '#FFF', fontSize: titleSize }]}>{t('welcome.title')}</Text>
+        <Text style={[styles.welcomeSubtitle, { color: 'rgba(255, 255, 255, 0.9)', fontSize: subtitleSize }]}>{t('welcome.subtitle')}</Text>
 
-        <View style={[styles.descriptionBox, { backgroundColor: 'rgba(255, 255, 255, 0.15)', borderWidth: 1, borderColor: 'rgba(255, 255, 255, 0.3)', shadowOpacity: 0 }]}>
-          <Text style={[styles.welcomeText, { color: '#FFF' }]}>
+        <View style={[styles.descriptionBox, { backgroundColor: 'rgba(255, 255, 255, 0.15)', borderWidth: 1, borderColor: 'rgba(255, 255, 255, 0.3)', shadowOpacity: 0 }, isTablet && { padding: 32, marginHorizontal: 40, maxWidth: contentMaxWidth }]}>
+          <Text style={[styles.welcomeText, { color: '#FFF', fontSize: descriptionSize, lineHeight: descriptionSize + 9 }]}>
             {t('welcome.description')}
           </Text>
         </View>
 
         <TouchableOpacity
-          style={[styles.nextButton, { marginTop: 40, width: '100%', backgroundColor: '#FFF' }]}
+          style={[styles.nextButton, { marginTop: isTablet ? 50 : 40, width: '100%', backgroundColor: '#FFF' }, isTablet && { maxWidth: 400 }]}
           onPress={() => navigation.navigate('Name')}
         >
-          <View style={styles.gradientButton}>
-            <Text style={[styles.nextButtonText, { color: '#4CAF50' }]}>{t('common:buttons.continue')} ✨</Text>
+          <View style={[styles.gradientButton, isTablet && { paddingVertical: 24 }]}>
+            <Text style={[styles.nextButtonText, { color: '#4CAF50', fontSize: buttonTextSize }]}>{t('common:buttons.continue')} ✨</Text>
           </View>
         </TouchableOpacity>
       </LinearGradient>

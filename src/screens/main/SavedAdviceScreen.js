@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, SafeAreaView, TouchableOpacity, FlatList, Alert, Image } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, FlatList, Alert, Image } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Feather } from '@expo/vector-icons';
 import { StatusBar } from 'expo-status-bar';

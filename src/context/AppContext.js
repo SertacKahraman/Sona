@@ -13,6 +13,13 @@ export const AppProvider = ({ children }) => {
   const [userName, setUserName] = useState('');
   const [currentLanguage, setCurrentLanguage] = useState(i18n.language);
 
+  // Rate Limiting Constants & State
+  const MAX_DAILY_TOKENS = 50000;
+  const MAX_MESSAGES_PER_MINUTE = 10;
+  const [dailyTokenUsage, setDailyTokenUsage] = useState(0);
+  const [lastUsageDate, setLastUsageDate] = useState(new Date().toDateString());
+  const [messageTimestamps, setMessageTimestamps] = useState([]); // Son 1 dakikadaki mesaj zamanları
+
   // Çoklu ilişki yönetimi
   const [relationships, setRelationships] = useState([]);
 
@@ -42,46 +49,85 @@ export const AppProvider = ({ children }) => {
   const [partnerNotes, setPartnerNotes] = useState('');
 
   useEffect(() => {
-    registerForPushNotificationsAsync();
+    // Initialize notifications with error handling for Expo Go SDK 53+
+    const initNotifications = async () => {
+      try {
+        // Hata alsa bile denemeye devam et (Android 12 ve altı için çalışabilir)
+        await registerForPushNotificationsAsync();
+
+        Notifications.setNotificationHandler({
+          handleNotification: async () => ({
+            shouldShowBanner: true,
+            shouldShowList: true,
+            shouldPlaySound: true,
+            shouldSetBadge: false,
+          }),
+        });
+      } catch (error) {
+        // Expo Go SDK 53+ doesn't support push notifications - silently continue
+      }
+    };
+
+    initNotifications();
     checkOnboardingStatus();
+    loadTokenUsageData();
 
-    Notifications.setNotificationHandler({
-      handleNotification: async () => ({
-        shouldShowBanner: true,
-        shouldShowList: true,
-        shouldPlaySound: true,
-        shouldSetBadge: false,
-      }),
-    });
+    // Foreground listeners with error handling
+    let notificationListener;
+    let responseListener;
 
-    // Foreground listener
-    const notificationListener = Notifications.addNotificationReceivedListener(notification => {
-    });
+    try {
+      notificationListener = Notifications.addNotificationReceivedListener(notification => {
+      });
 
-    const responseListener = Notifications.addNotificationResponseReceivedListener(response => {
-    });
+      responseListener = Notifications.addNotificationResponseReceivedListener(response => {
+      });
+    } catch (error) {
+      // Notification listeners not available - silently continue
+    }
 
     return () => {
-      Notifications.removeNotificationSubscription(notificationListener);
-      Notifications.removeNotificationSubscription(responseListener);
+      try {
+        if (notificationListener) {
+          Notifications.removeNotificationSubscription(notificationListener);
+        }
+        if (responseListener) {
+          Notifications.removeNotificationSubscription(responseListener);
+        }
+      } catch (error) {
+        // Silently handle cleanup errors
+      }
     };
   }, []);
 
   async function registerForPushNotificationsAsync() {
-    if (Platform.OS === 'android') {
-      await Notifications.setNotificationChannelAsync('default', {
-        name: 'default',
-        importance: Notifications.AndroidImportance.MAX,
-        vibrationPattern: [0, 250, 250, 250],
-        lightColor: '#FF231F7C',
-      });
-    }
+    try {
+      if (Platform.OS === 'android') {
+        try {
+          await Notifications.setNotificationChannelAsync('default', {
+            name: 'default',
+            importance: Notifications.AndroidImportance.MAX,
+            vibrationPattern: [0, 250, 250, 250],
+            lightColor: '#FF231F7C',
+          });
+        } catch (channelError) {
+          // Channel creation failed - silently continue
+        }
+      }
 
-    const { status: existingStatus } = await Notifications.getPermissionsAsync();
-    let finalStatus = existingStatus;
-    if (existingStatus !== 'granted') {
-      const { status } = await Notifications.requestPermissionsAsync();
-      finalStatus = status;
+      try {
+        const { status: existingStatus } = await Notifications.getPermissionsAsync();
+        let finalStatus = existingStatus;
+        if (existingStatus !== 'granted') {
+          const { status } = await Notifications.requestPermissionsAsync();
+          finalStatus = status;
+        }
+      } catch (permError) {
+        // Expo Go SDK 53+ Android'de bu metodlar hata verir.
+        // Bu hatayı yutuyoruz ki uygulama çökmesin.
+      }
+    } catch (error) {
+      // Push notification registration skipped - silently continue
     }
   }
 
@@ -121,7 +167,7 @@ export const AppProvider = ({ children }) => {
         if (savedAdviceData) setSavedAdvice(JSON.parse(savedAdviceData));
       }
     } catch (error) {
-      console.error('Veri yüklenirken hata:', error);
+      // Veri yüklenirken hata - sessizce devam et
     } finally {
       setIsLoading(false);
     }
@@ -164,7 +210,6 @@ export const AppProvider = ({ children }) => {
         await AsyncStorage.setItem('relationships', JSON.stringify(updatedRelationships));
       }
     } catch (error) {
-      console.error('Veri kaydedilirken hata:', error);
       throw error;
     }
   };
@@ -192,7 +237,6 @@ export const AppProvider = ({ children }) => {
 
       setIsAddingNew(false);
     } catch (error) {
-      console.error('Yeni ilişki eklenirken hata:', error);
       throw error;
     }
   };
@@ -211,7 +255,6 @@ export const AppProvider = ({ children }) => {
 
       setEditingRelationshipId(null);
     } catch (error) {
-      console.error('İlişki güncellenirken hata:', error);
       throw error;
     }
   };
@@ -222,7 +265,7 @@ export const AppProvider = ({ children }) => {
       setRelationships(updatedRelationships);
       await AsyncStorage.setItem('relationships', JSON.stringify(updatedRelationships));
     } catch (error) {
-      console.error('İlişki silinirken hata:', error);
+      // Hata sessizce yoksayıldı
     }
   };
 
@@ -271,7 +314,7 @@ export const AppProvider = ({ children }) => {
       setSpecialDates(updatedDates);
       await AsyncStorage.setItem('specialDates', JSON.stringify(updatedDates));
     } catch (error) {
-      console.error('Özel gün eklenirken hata:', error);
+      // Hata sessizce yoksayıldı
     }
   };
 
@@ -279,14 +322,18 @@ export const AppProvider = ({ children }) => {
     try {
       const dateToDelete = specialDates.find(d => d.id === dateId);
       if (dateToDelete && dateToDelete.notificationId) {
-        await Notifications.cancelScheduledNotificationAsync(dateToDelete.notificationId);
+        try {
+          await Notifications.cancelScheduledNotificationAsync(dateToDelete.notificationId);
+        } catch (notifError) {
+          // Notification cancellation not available in Expo Go
+        }
       }
 
       const updatedDates = specialDates.filter(date => date.id !== dateId);
       setSpecialDates(updatedDates);
       await AsyncStorage.setItem('specialDates', JSON.stringify(updatedDates));
     } catch (error) {
-      console.error('Özel gün silinirken hata:', error);
+      // Hata sessizce yoksayıldı
     }
   };
 
@@ -305,7 +352,7 @@ export const AppProvider = ({ children }) => {
       setDailyMoods(updatedMoods);
       await AsyncStorage.setItem('dailyMoods', JSON.stringify(updatedMoods));
     } catch (error) {
-      console.error('Mod eklenirken hata:', error);
+      // Hata sessizce yoksayıldı
     }
   };
 
@@ -315,7 +362,7 @@ export const AppProvider = ({ children }) => {
       setTotalMessageCount(newCount);
       await AsyncStorage.setItem('totalMessageCount', newCount.toString());
     } catch (error) {
-      console.error('Mesaj sayısı güncellenirken hata:', error);
+      // Hata sessizce yoksayıldı
     }
   };
 
@@ -337,7 +384,6 @@ export const AppProvider = ({ children }) => {
       await AsyncStorage.setItem('savedAdvice', JSON.stringify(updatedAdvice));
       return true;
     } catch (error) {
-      console.error('Tavsiye kaydedilirken hata:', error);
       return false;
     }
   };
@@ -348,7 +394,7 @@ export const AppProvider = ({ children }) => {
       setSavedAdvice(updatedAdvice);
       await AsyncStorage.setItem('savedAdvice', JSON.stringify(updatedAdvice));
     } catch (error) {
-      console.error('Tavsiye silinirken hata:', error);
+      // Hata sessizce yoksayıldı
     }
   };
 
@@ -381,7 +427,7 @@ export const AppProvider = ({ children }) => {
       setIsEditingProfile(false);
       setEditingRelationshipId(null);
     } catch (error) {
-      console.error('Logout error:', error);
+      // Logout error - sessizce yoksayıldı
     }
   };
 
@@ -391,8 +437,76 @@ export const AppProvider = ({ children }) => {
       await saveLanguagePreference(lang);
       setCurrentLanguage(lang);
     } catch (error) {
-      console.error('Dil değiştirme hatası:', error);
+      // Dil değiştirme hatası - sessizce yoksayıldı
     }
+  };
+
+  // Token Usage Management
+  const loadTokenUsageData = async () => {
+    try {
+      const storedDate = await AsyncStorage.getItem('lastUsageDate');
+      const storedUsage = await AsyncStorage.getItem('dailyTokenUsage');
+      const today = new Date().toDateString();
+
+      if (storedDate === today) {
+        setDailyTokenUsage(parseInt(storedUsage) || 0);
+        setLastUsageDate(storedDate);
+      } else {
+        // Reset for new day
+        setDailyTokenUsage(0);
+        setLastUsageDate(today);
+        await AsyncStorage.setItem('lastUsageDate', today);
+        await AsyncStorage.setItem('dailyTokenUsage', '0');
+      }
+    } catch (e) {
+      // Token verisi yüklenemedi - sessizce yoksayıldı
+    }
+  };
+
+  const checkTokenLimit = () => {
+    const today = new Date().toDateString();
+    // If day changed but loadTokenUsage hasn't caught it yet (edge case), allow it but logic in update will fix it
+    if (today !== lastUsageDate) return true;
+    const isUnderLimit = dailyTokenUsage < MAX_DAILY_TOKENS;
+    return isUnderLimit;
+  };
+
+  const checkMinuteLimit = () => {
+    const now = Date.now();
+    const oneMinuteAgo = now - 60000; // 60 saniye öncesi
+
+    // Son 1 dakikadaki mesajları filtrele
+    const recentMessages = messageTimestamps.filter(ts => ts > oneMinuteAgo);
+
+    return recentMessages.length < MAX_MESSAGES_PER_MINUTE;
+  };
+
+  const recordMessageTimestamp = () => {
+    const now = Date.now();
+    const oneMinuteAgo = now - 60000;
+
+    // Eski timestamp'leri temizle ve yenisini ekle
+    setMessageTimestamps(prev => {
+      const recent = prev.filter(ts => ts > oneMinuteAgo);
+      return [...recent, now];
+    });
+  };
+
+  const updateTokenUsage = async (usageMetadata) => {
+    if (!usageMetadata || !usageMetadata.totalTokenCount) return;
+
+    const today = new Date().toDateString();
+    let currentUsage = dailyTokenUsage;
+
+    if (today !== lastUsageDate) {
+      currentUsage = 0;
+      setLastUsageDate(today);
+      await AsyncStorage.setItem('lastUsageDate', today);
+    }
+
+    const newUsage = currentUsage + usageMetadata.totalTokenCount;
+    setDailyTokenUsage(newUsage);
+    await AsyncStorage.setItem('dailyTokenUsage', newUsage.toString());
   };
 
   return (
@@ -426,14 +540,20 @@ export const AppProvider = ({ children }) => {
       addSpecialDate,
       deleteSpecialDate,
       addDailyMood,
-      addDailyMood,
       incrementMessageCount,
       savedAdvice,
       saveAdvice,
       removeAdvice,
       logout,
       currentLanguage,
-      changeLanguage
+      changeLanguage,
+      dailyTokenUsage,
+      MAX_DAILY_TOKENS,
+      checkTokenLimit,
+      updateTokenUsage,
+      checkMinuteLimit,
+      recordMessageTimestamp,
+      MAX_MESSAGES_PER_MINUTE
     }}>
       {children}
     </AppContext.Provider>

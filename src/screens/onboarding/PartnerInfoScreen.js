@@ -1,13 +1,30 @@
-import React from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, TextInput, KeyboardAvoidingView, Platform } from 'react-native';
+import React, { useRef } from 'react';
+import { StyleSheet, Text, View, TouchableOpacity, TextInput, Platform, useWindowDimensions } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { LinearGradient } from 'expo-linear-gradient';
 import { StatusBar } from 'expo-status-bar';
 import { useApp } from '../../context/AppContext';
 import { useTranslation } from 'react-i18next';
 
+const TABLET_BREAKPOINT = 768;
+
 export default function PartnerInfoScreen({ navigation }) {
   const { t } = useTranslation('onboarding');
+  const { width: screenWidth, height: screenHeight } = useWindowDimensions();
+  const isTablet = screenWidth >= TABLET_BREAKPOINT;
+
+  // iOS için responsive keyboard offset (ekran yüksekliğinin %2'si - minimal boşluk)
+  const keyboardOffset = Platform.OS === 'ios' ? Math.round(screenHeight * 0.02) : 0;
+
+  // Dynamic sizes for tablet
+  const headerTitleSize = isTablet ? 38 : 28;
+  const headerSubtitleSize = isTablet ? 20 : 16;
+  const questionLabelSize = isTablet ? 20 : 16;
+  const pillTextSize = isTablet ? 14 : 10;
+  const inputFontSize = isTablet ? 20 : 16;
+  const buttonTextSize = isTablet ? 20 : 17;
+  const contentMaxWidth = isTablet ? Math.min(screenWidth * 0.7, 700) : '100%';
+
   const {
     relationshipPartnerName,
     setRelationshipPartnerName,
@@ -43,171 +60,193 @@ export default function PartnerInfoScreen({ navigation }) {
 
   const isFormComplete = relationshipPartnerName.trim() && partnerAge && partnerGender;
 
+  const scrollViewRef = useRef(null);
+
+  // Input'a tıklandığında sayfanın en altına (devam butonuna) kaydır
+  const handleInputFocus = () => {
+    if (scrollViewRef.current) {
+      // Klavyenin açılmasını bekle, sonra en alta kaydır
+      // Android'de daha fazla gecikme - klavye animasyonu tamamlansın
+      const scrollDelay = Platform.OS === 'ios' ? 100 : 350;
+      setTimeout(() => {
+        scrollViewRef.current.scrollToEnd({ animated: true });
+      }, scrollDelay);
+    }
+  };
+
   return (
     <View style={styles.container}>
       <LinearGradient
         colors={['#66D9A1', '#4CAF50']}
-        style={styles.headerGradient}
+        style={[styles.headerGradient, isTablet && { paddingBottom: 40 }]}
       >
         <View style={styles.headerTopRow}>
           <TouchableOpacity
-            style={styles.backButtonWhite}
+            style={[styles.backButtonWhite, isTablet && { width: 48, height: 48, borderRadius: 24 }]}
             onPress={() => navigation.goBack()}
           >
-            <Text style={styles.backIconWhite}>‹</Text>
+            <Text style={[styles.backIconWhite, isTablet && { fontSize: 28 }]}>‹</Text>
           </TouchableOpacity>
-          <View style={styles.whiteBadge}>
-            <Text style={styles.whiteBadgeText}>
+          <View style={[styles.whiteBadge, isTablet && { paddingVertical: 8, paddingHorizontal: 20 }]}>
+            <Text style={[styles.whiteBadgeText, isTablet && { fontSize: 14 }]}>
               {editingRelationshipId ? `${t('steps.editing3')} ${t('steps.lastStep')}` : (isAddingNew ? `${t('steps.editing3')} ${t('steps.lastStep')}` : `${t('steps.step4')} ${t('steps.fourthStep')}`)}
             </Text>
           </View>
-          <View style={{ width: 40 }} />
+          <View style={{ width: isTablet ? 48 : 40 }} />
         </View>
-        <Text style={styles.headerTitle}>{t('partnerInfo.title')}</Text>
-        <Text style={styles.headerSubtitle}>
+        <Text style={[styles.headerTitle, { fontSize: headerTitleSize }]}>{t('partnerInfo.title')}</Text>
+        <Text style={[styles.headerSubtitle, { fontSize: headerSubtitleSize }]}>
           {t('partnerInfo.subtitle', {
             partnerType: relationshipType ? t(`relationshipType.${relationshipType}`) : ''
           })}
         </Text>
       </LinearGradient>
 
-      <KeyboardAvoidingView
+      <KeyboardAwareScrollView
+        ref={scrollViewRef}
         style={{ flex: 1 }}
-        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        contentContainerStyle={[{ padding: 24, paddingBottom: 20 }, isTablet && { alignItems: 'center', flexGrow: 1, justifyContent: 'center' }]}
+        showsVerticalScrollIndicator={false}
+        enableOnAndroid={true}
+        extraScrollHeight={keyboardOffset}
+        extraHeight={keyboardOffset}
+        enableAutomaticScroll={true}
+        enableResetScrollToCoords={false}
+        keyboardShouldPersistTaps="handled"
       >
-        <KeyboardAwareScrollView
-          style={{ flex: 1 }}
-          contentContainerStyle={{ padding: 24, paddingBottom: 40 }}
-          showsVerticalScrollIndicator={false}
-          enableOnAndroid={true}
-          extraScrollHeight={100}
-          keyboardShouldPersistTaps="handled"
-        >
-          {/* İsim */}
-          <View style={styles.questionContainer}>
-            <Text style={styles.questionLabel}>{t('partnerInfo.name.label')}</Text>
-            <TextInput
-              style={styles.nameInputBox}
-              value={relationshipPartnerName}
-              onChangeText={setRelationshipPartnerName}
-              placeholder={t('partnerInfo.name.placeholder')}
-              placeholderTextColor="rgba(150, 150, 150, 0.5)"
-              maxLength={15}
-            />
-          </View>
+        {/* İsim */}
+        <View style={[styles.questionContainer, isTablet && { maxWidth: contentMaxWidth, width: '100%', padding: 28 }]}>
+          <Text style={[styles.questionLabel, { fontSize: questionLabelSize }]}>{t('partnerInfo.name.label')}</Text>
+          <TextInput
+            style={[styles.nameInputBox, { fontSize: inputFontSize }, isTablet && { padding: 20 }]}
+            value={relationshipPartnerName}
+            onChangeText={setRelationshipPartnerName}
+            placeholder={t('partnerInfo.name.placeholder')}
+            placeholderTextColor="rgba(150, 150, 150, 0.5)"
+            maxLength={15}
+            returnKeyType="done"
+            blurOnSubmit={true}
+          />
+        </View>
 
-          {/* Yaş Grubu */}
-          <View style={styles.questionContainer}>
-            <Text style={styles.questionLabel}>{t('partnerInfo.age.label')}</Text>
-            <View style={styles.pillOptionsRow}>
-              {ageOptions.map(option => (
-                <TouchableOpacity
-                  key={option.id}
-                  style={[
-                    styles.pillOption,
-                    partnerAge === option.id && styles.pillOptionSelected
-                  ]}
-                  onPress={() => setPartnerAge(option.id)}
-                >
-                  <Text style={[
-                    styles.pillOptionText,
-                    partnerAge === option.id && styles.pillOptionTextSelected
-                  ]}>{option.label}</Text>
-                </TouchableOpacity>
-              ))}
-            </View>
-          </View>
-
-          {/* Cinsiyet */}
-          <View style={styles.questionContainer}>
-            <Text style={styles.questionLabel}>{t('partnerInfo.gender.label')}</Text>
-            <View style={styles.pillOptionsRow}>
-              {genderOptions.map(option => (
-                <TouchableOpacity
-                  key={option.id}
-                  style={[
-                    styles.pillOption,
-                    option.isLong && styles.pillOptionLong,
-                    partnerGender === option.id && styles.pillOptionSelected
-                  ]}
-                  onPress={() => setPartnerGender(option.id)}
-                >
-                  <Text style={[
-                    styles.pillOptionText,
-                    partnerGender === option.id && styles.pillOptionTextSelected
-                  ]}>{option.label}</Text>
-                </TouchableOpacity>
-              ))}
-            </View>
-          </View>
-
-          {/* Notlar */}
-          <View style={styles.questionContainer}>
-            <Text style={styles.questionLabel}>{t('partnerInfo.notes.label')}</Text>
-            <TextInput
-              style={[styles.challengeInput, { minHeight: 60 }]}
-              value={partnerNotes}
-              onChangeText={setPartnerNotes}
-              placeholder={t('partnerInfo.notes.placeholder')}
-              placeholderTextColor="#999"
-              multiline
-            />
-          </View>
-
-          <TouchableOpacity
-            style={[styles.continueButton, !isFormComplete && styles.continueButtonDisabled]}
-            onPress={async () => {
-              if (isFormComplete) {
-                try {
-                  if (editingRelationshipId) {
-                    await updateRelationship(editingRelationshipId, {
-                      type: relationshipType,
-                      partnerName: relationshipPartnerName,
-                      partnerAge: partnerAge,
-                      partnerGender: partnerGender,
-                      partnerNotes: partnerNotes,
-                      years: relationshipYears,
-                      months: relationshipMonths,
-                      mainChallenge: mainChallenge
-                    });
-                    navigation.navigate('Main');
-                  } else if (isAddingNew) {
-                    await addNewRelationship({
-                      type: relationshipType,
-                      partnerName: relationshipPartnerName,
-                      years: relationshipYears,
-                      months: relationshipMonths,
-                      mainChallenge: mainChallenge,
-                      partnerAge: partnerAge,
-                      partnerGender: partnerGender,
-                      partnerNotes: partnerNotes
-                    });
-                    navigation.navigate('Main');
-                  } else {
-                    navigation.navigate('PersonalInfo');
-                  }
-                } catch (error) {
-                  alert(error.message);
-                }
-              }
-            }}
-            disabled={!isFormComplete}
-          >
-            {isFormComplete ? (
-              <LinearGradient
-                colors={['#66D9A1', '#4CAF50']}
-                start={{ x: 0, y: 0 }}
-                end={{ x: 1, y: 1 }}
-                style={styles.gradientButton}
+        {/* Yaş Grubu */}
+        <View style={[styles.questionContainer, isTablet && { maxWidth: contentMaxWidth, width: '100%', padding: 28 }]}>
+          <Text style={[styles.questionLabel, { fontSize: questionLabelSize }]}>{t('partnerInfo.age.label')}</Text>
+          <View style={styles.pillOptionsRow}>
+            {ageOptions.map(option => (
+              <TouchableOpacity
+                key={option.id}
+                style={[
+                  styles.pillOption,
+                  isTablet && { paddingVertical: 12 },
+                  partnerAge === option.id && styles.pillOptionSelected
+                ]}
+                onPress={() => setPartnerAge(option.id)}
               >
-                <Text style={styles.continueButtonText}>{(isAddingNew || editingRelationshipId) ? t('common:buttons.save') : t('common:buttons.continue')}</Text>
-              </LinearGradient>
-            ) : (
-              <Text style={styles.continueButtonText}>{(isAddingNew || editingRelationshipId) ? t('common:buttons.save') : t('common:buttons.continue')}</Text>
-            )}
-          </TouchableOpacity>
-        </KeyboardAwareScrollView>
-      </KeyboardAvoidingView>
+                <Text style={[
+                  styles.pillOptionText,
+                  { fontSize: pillTextSize },
+                  partnerAge === option.id && styles.pillOptionTextSelected
+                ]}>{option.label}</Text>
+              </TouchableOpacity>
+            ))}
+          </View>
+        </View>
+
+        {/* Cinsiyet */}
+        <View style={[styles.questionContainer, isTablet && { maxWidth: contentMaxWidth, width: '100%', padding: 28 }]}>
+          <Text style={[styles.questionLabel, { fontSize: questionLabelSize }]}>{t('partnerInfo.gender.label')}</Text>
+          <View style={styles.pillOptionsRow}>
+            {genderOptions.map(option => (
+              <TouchableOpacity
+                key={option.id}
+                style={[
+                  styles.pillOption,
+                  option.isLong && styles.pillOptionLong,
+                  isTablet && { paddingVertical: 12 },
+                  partnerGender === option.id && styles.pillOptionSelected
+                ]}
+                onPress={() => setPartnerGender(option.id)}
+              >
+                <Text style={[
+                  styles.pillOptionText,
+                  { fontSize: pillTextSize },
+                  partnerGender === option.id && styles.pillOptionTextSelected
+                ]}>{option.label}</Text>
+              </TouchableOpacity>
+            ))}
+          </View>
+        </View>
+
+        {/* Notlar */}
+        <View style={[styles.questionContainer, isTablet && { maxWidth: contentMaxWidth, width: '100%', padding: 28 }]}>
+          <Text style={[styles.questionLabel, { fontSize: questionLabelSize }]}>{t('partnerInfo.notes.label')}</Text>
+          <TextInput
+            style={[styles.challengeInput, { minHeight: isTablet ? 100 : 60, fontSize: isTablet ? 18 : 14 }]}
+            value={partnerNotes}
+            onChangeText={setPartnerNotes}
+            placeholder={t('partnerInfo.notes.placeholder')}
+            placeholderTextColor="#999"
+            multiline
+            returnKeyType="done"
+            blurOnSubmit={true}
+            onFocus={handleInputFocus}
+          />
+        </View>
+
+        <TouchableOpacity
+          style={[styles.continueButton, !isFormComplete && styles.continueButtonDisabled, isTablet && { maxWidth: 500, width: '100%' }]}
+          onPress={async () => {
+            if (isFormComplete) {
+              try {
+                if (editingRelationshipId) {
+                  await updateRelationship(editingRelationshipId, {
+                    type: relationshipType,
+                    partnerName: relationshipPartnerName,
+                    partnerAge: partnerAge,
+                    partnerGender: partnerGender,
+                    partnerNotes: partnerNotes,
+                    years: relationshipYears,
+                    months: relationshipMonths,
+                    mainChallenge: mainChallenge
+                  });
+                  navigation.navigate('Main');
+                } else if (isAddingNew) {
+                  await addNewRelationship({
+                    type: relationshipType,
+                    partnerName: relationshipPartnerName,
+                    years: relationshipYears,
+                    months: relationshipMonths,
+                    mainChallenge: mainChallenge,
+                    partnerAge: partnerAge,
+                    partnerGender: partnerGender,
+                    partnerNotes: partnerNotes
+                  });
+                  navigation.navigate('Main');
+                } else {
+                  navigation.navigate('PersonalInfo');
+                }
+              } catch (error) {
+                alert(error.message);
+              }
+            }
+          }}
+          disabled={!isFormComplete}
+        >
+          {isFormComplete ? (
+            <LinearGradient
+              colors={['#66D9A1', '#4CAF50']}
+              start={{ x: 0, y: 0 }}
+              end={{ x: 1, y: 1 }}
+              style={[styles.gradientButton, isTablet && { paddingVertical: 24 }]}
+            >
+              <Text style={[styles.continueButtonText, { fontSize: buttonTextSize }]}>{(isAddingNew || editingRelationshipId) ? t('common:buttons.save') : t('common:buttons.continue')}</Text>
+            </LinearGradient>
+          ) : (
+            <Text style={[styles.continueButtonText, { fontSize: buttonTextSize }]}>{(isAddingNew || editingRelationshipId) ? t('common:buttons.save') : t('common:buttons.continue')}</Text>
+          )}
+        </TouchableOpacity>
+      </KeyboardAwareScrollView>
       <StatusBar style="light" />
     </View>
   );
@@ -301,7 +340,7 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     borderColor: '#E8F5E9',
     marginBottom: 20,
-    textAlign: 'center',
+    textAlign: 'left',
   },
   pillOptionsRow: {
     flexDirection: 'row',

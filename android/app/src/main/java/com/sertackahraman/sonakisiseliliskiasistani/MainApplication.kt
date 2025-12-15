@@ -1,4 +1,4 @@
-package com.sonakiiselilikiasistan
+package com.sertackahraman.sonakisiseliliskiasistani
 
 import android.app.Application
 import android.content.res.Configuration

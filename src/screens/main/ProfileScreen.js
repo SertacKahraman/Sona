@@ -1,17 +1,42 @@
 import React from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, TouchableOpacity, ScrollView, SafeAreaView, Image, Alert, Switch, Platform, Modal, FlatList } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, ScrollView, Image, Alert, Switch, Platform, Modal, FlatList, useWindowDimensions } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Feather } from '@expo/vector-icons';
 import { useState, useEffect } from 'react';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as Notifications from 'expo-notifications';
 import * as LocalAuthentication from 'expo-local-authentication';
 import { useApp } from '../../context/AppContext';
 import { useTranslation } from 'react-i18next';
 
+const TABLET_BREAKPOINT = 768;
+
 export default function ProfileScreen({ navigation }) {
   const { t, i18n } = useTranslation('profile');
+  const { width: screenWidth } = useWindowDimensions();
+  const insets = useSafeAreaInsets();
+  const isTablet = screenWidth >= TABLET_BREAKPOINT;
+
+  // Bottom offset - responsive olarak (navigation bar ile aynı)
+  const bottomSafeArea = Platform.OS === 'android'
+    ? (isTablet ? 15 : 10)
+    : (isTablet ? 25 : 20);
+
+  // Tab bar yüksekliği + bottom offset
+  const tabBarHeight = isTablet ? 85 : 70;
+  const bottomPadding = tabBarHeight + bottomSafeArea + 20;
+
+  // Dynamic sizes for tablet
+  const headerTitleSize = isTablet ? 24 : 20;
+  const avatarContainerSize = isTablet ? 120 : 100;
+  const userNameSize = isTablet ? 28 : 24;
+  const sectionTitleSize = isTablet ? 20 : 18;
+  const statNumberSize = isTablet ? 24 : 20;
+  const infoIconSize = isTablet ? 48 : 40;
+  const infoValueSize = isTablet ? 18 : 16;
+
   const {
     userName,
     userAge,
@@ -43,8 +68,14 @@ export default function ProfileScreen({ navigation }) {
       const notifPreference = await AsyncStorage.getItem('notificationsEnabled');
       const privacy = await AsyncStorage.getItem('privacyLockEnabled');
 
-      // Gerçek telefon bildirim iznini kontrol et
-      const { status } = await Notifications.getPermissionsAsync();
+      // Gerçek telefon bildirim iznini kontrol et (with error handling for Expo Go)
+      let status = 'undetermined';
+      try {
+        const result = await Notifications.getPermissionsAsync();
+        status = result.status;
+      } catch (notifError) {
+        // Notifications not available in Expo Go SDK 53+
+      }
 
       // Bildirim durumunu belirle:
       // - Telefon izni VARSA ve kullanıcı tercihi açıksa → Açık
@@ -89,7 +120,19 @@ export default function ProfileScreen({ navigation }) {
     try {
       if (value) {
         // Kullanıcı bildirimleri açmak istiyor
-        const { status } = await Notifications.requestPermissionsAsync();
+        let status = 'denied';
+        try {
+          const result = await Notifications.requestPermissionsAsync();
+          status = result.status;
+        } catch (notifError) {
+          // Notifications not available in Expo Go SDK 53+
+          Alert.alert(
+            t('notifications.notAvailable', { ns: 'profile', defaultValue: 'Not Available' }),
+            t('notifications.notAvailableMessage', { ns: 'profile', defaultValue: 'Push notifications are not available in Expo Go. Please use a development build.' })
+          );
+          setNotificationsEnabled(false);
+          return;
+        }
 
         if (status === 'granted') {
           // İzin verildi
@@ -304,109 +347,107 @@ export default function ProfileScreen({ navigation }) {
       {/* Header */}
       <LinearGradient
         colors={['#66D9A1', '#4CAF50']}
-        style={styles.headerGradient}
+        style={[styles.headerGradient, isTablet && { paddingBottom: 30 }]}
         start={{ x: 0, y: 0 }}
         end={{ x: 1, y: 1 }}
       >
-        <SafeAreaView>
-          <View style={styles.headerContent}>
-            <View style={styles.headerTop}>
-              <Text style={styles.headerTitle}>{t('header.title')}</Text>
-              <TouchableOpacity
-                style={styles.editButton}
-                onPress={handleEditProfile}
-              >
-                <Feather name="edit-2" size={20} color="#FFF" />
-              </TouchableOpacity>
-            </View>
-            <View style={styles.profileCard}>
-              <View style={styles.avatarContainer}>
-                <Image
-                  source={require('../../../assets/selam.png')}
-                  style={styles.avatar}
-                  resizeMode="contain"
-                />
-              </View>
-              <Text style={styles.userName}>{userName}</Text>
-              <Text style={styles.userStatus}>{getStatusLabel(relationshipStatus)}</Text>
-            </View>
+        <View style={[styles.headerContent, { paddingHorizontal: 20, paddingTop: insets.top + 10 }]}>
+          <View style={styles.headerTop}>
+            <Text style={[styles.headerTitle, { fontSize: headerTitleSize }]}>{t('header.title')}</Text>
+            <TouchableOpacity
+              style={[styles.editButton, isTablet && { padding: 12 }]}
+              onPress={handleEditProfile}
+            >
+              <Feather name="edit-2" size={isTablet ? 26 : 20} color="#FFF" />
+            </TouchableOpacity>
           </View>
-        </SafeAreaView>
+          <View style={styles.profileCard}>
+            <View style={[styles.avatarContainer, { width: avatarContainerSize, height: avatarContainerSize, borderRadius: avatarContainerSize / 2 }]}>
+              <Image
+                source={require('../../../assets/selam.png')}
+                style={styles.avatar}
+                resizeMode="contain"
+              />
+            </View>
+            <Text style={[styles.userName, { fontSize: userNameSize }]}>{userName}</Text>
+            <Text style={[styles.userStatus, isTablet && { fontSize: 16 }]}>{getStatusLabel(relationshipStatus)}</Text>
+          </View>
+        </View>
       </LinearGradient>
 
       <ScrollView
         style={styles.scrollView}
-        contentContainerStyle={styles.scrollContent}
+        contentContainerStyle={[styles.scrollContent, { paddingBottom: bottomPadding }]}
         showsVerticalScrollIndicator={false}
       >
         {/* Statistics Section */}
-        <View style={styles.statsRow}>
+        <View style={[styles.statsRow, isTablet && { padding: 28 }]}>
           <View style={styles.statItem}>
-            <Text style={styles.statNumber}>{daysCount}</Text>
-            <Text style={styles.statLabel}>{t('stats.days')}</Text>
+            <Text style={[styles.statNumber, { fontSize: statNumberSize }]}>{daysCount}</Text>
+            <Text style={[styles.statLabel, isTablet && { fontSize: 14 }]}>{t('stats.days')}</Text>
           </View>
-          <View style={styles.statDivider} />
+          <View style={[styles.statDivider, isTablet && { height: 40 }]} />
           <View style={styles.statItem}>
-            <Text style={styles.statNumber}>{totalMessageCount}</Text>
-            <Text style={styles.statLabel}>{t('stats.messages')}</Text>
+            <Text style={[styles.statNumber, { fontSize: statNumberSize }]}>{totalMessageCount}</Text>
+            <Text style={[styles.statLabel, isTablet && { fontSize: 14 }]}>{t('stats.messages')}</Text>
           </View>
-          <View style={styles.statDivider} />
+          <View style={[styles.statDivider, isTablet && { height: 40 }]} />
           <View style={styles.statItem}>
-            <Text style={styles.statNumber}>{relationships?.length || 0}</Text>
-            <Text style={styles.statLabel}>{t('stats.relationships')}</Text>
+            <Text style={[styles.statNumber, { fontSize: statNumberSize }]}>{relationships?.length || 0}</Text>
+            <Text style={[styles.statLabel, isTablet && { fontSize: 14 }]}>{t('stats.relationships')}</Text>
           </View>
         </View>
 
         <View style={styles.section}>
-          <Text style={styles.sectionTitle}>{t('sections.personalInfo')}</Text>
+          <Text style={[styles.sectionTitle, { fontSize: sectionTitleSize }]}>{t('sections.personalInfo')}</Text>
 
-          <View style={styles.infoCard}>
-            <View style={styles.infoRow}>
-              <View style={styles.infoIcon}>
-                <Feather name="user" size={20} color="#66D9A1" />
+          <View style={[styles.infoCard, isTablet && { padding: 24 }]}>
+            <View style={[styles.infoRow, isTablet && { paddingVertical: 12 }]}>
+              <View style={[styles.infoIcon, { width: infoIconSize, height: infoIconSize, borderRadius: infoIconSize / 2 }]}>
+                <Feather name="user" size={isTablet ? 24 : 20} color="#66D9A1" />
               </View>
               <View style={styles.infoContent}>
-                <Text style={styles.infoLabel}>{t('personalInfo.ageGroup')}</Text>
-                <Text style={styles.infoValue}>{userAge}</Text>
+                <Text style={[styles.infoLabel, isTablet && { fontSize: 14 }]}>{t('personalInfo.ageGroup')}</Text>
+                <Text style={[styles.infoValue, { fontSize: infoValueSize }]}>{userAge}</Text>
               </View>
             </View>
 
             <View style={styles.divider} />
 
-            <View style={styles.infoRow}>
-              <View style={styles.infoIcon}>
-                <Feather name="users" size={20} color="#66D9A1" />
+            <View style={[styles.infoRow, isTablet && { paddingVertical: 12 }]}>
+              <View style={[styles.infoIcon, { width: infoIconSize, height: infoIconSize, borderRadius: infoIconSize / 2 }]}>
+                <Feather name="users" size={isTablet ? 24 : 20} color="#66D9A1" />
               </View>
               <View style={styles.infoContent}>
-                <Text style={styles.infoLabel}>{t('personalInfo.gender')}</Text>
-                <Text style={styles.infoValue}>{getGenderLabel(userGender)}</Text>
+                <Text style={[styles.infoLabel, isTablet && { fontSize: 14 }]}>{t('personalInfo.gender')}</Text>
+                <Text style={[styles.infoValue, { fontSize: infoValueSize }]}>{getGenderLabel(userGender)}</Text>
               </View>
             </View>
 
             <View style={styles.divider} />
 
-            <View style={styles.infoRow}>
-              <View style={styles.infoIcon}>
-                <Feather name="heart" size={20} color="#66D9A1" />
+            <View style={[styles.infoRow, isTablet && { paddingVertical: 12 }]}>
+              <View style={[styles.infoIcon, { width: infoIconSize, height: infoIconSize, borderRadius: infoIconSize / 2 }]}>
+                <Feather name="heart" size={isTablet ? 24 : 20} color="#66D9A1" />
               </View>
               <View style={styles.infoContent}>
-                <Text style={styles.infoLabel}>{t('personalInfo.status')}</Text>
-                <Text style={styles.infoValue}>{getStatusLabel(relationshipStatus)}</Text>
+                <Text style={[styles.infoLabel, isTablet && { fontSize: 14 }]}>{t('personalInfo.status')}</Text>
+                <Text style={[styles.infoValue, { fontSize: infoValueSize }]}>{getStatusLabel(relationshipStatus)}</Text>
               </View>
             </View>
           </View>
         </View>
 
         <View style={styles.section}>
-          <Text style={styles.sectionTitle}>{t('sections.goals')}</Text>
-          <View style={styles.infoCard}>
-            <View style={styles.infoRow}>
-              <View style={styles.infoIcon}>
-                <Feather name="target" size={20} color="#FFD93D" />
+          <Text style={[styles.sectionTitle, { fontSize: sectionTitleSize }]}>{t('sections.goals')}</Text>
+          <View style={[styles.infoCard, isTablet && { padding: 24 }]}>
+            <View style={[styles.infoRow, isTablet && { paddingVertical: 12 }]}>
+              <View style={[styles.infoIcon, { width: infoIconSize, height: infoIconSize, borderRadius: infoIconSize / 2 }]}>
+                <Feather name="target" size={isTablet ? 24 : 20} color="#FFD93D" />
               </View>
               <View style={styles.infoContent}>
-                <Text style={styles.infoLabel}>{t('goals.coachingGoal')}</Text>
-                <Text style={styles.infoValue}>{getGoalLabel(coachingGoal)}</Text>
+                <Text style={[styles.infoLabel, isTablet && { fontSize: 14 }]}>{t('goals.coachingGoal')}</Text>
+                <Text style={[styles.infoValue, { fontSize: infoValueSize }]}>{getGoalLabel(coachingGoal)}</Text>
               </View>
             </View>
           </View>
@@ -414,58 +455,58 @@ export default function ProfileScreen({ navigation }) {
 
         {/* Saved Advice Section */}
         <View style={styles.section}>
-          <Text style={styles.sectionTitle}>{t('sections.saved')}</Text>
+          <Text style={[styles.sectionTitle, { fontSize: sectionTitleSize }]}>{t('sections.saved')}</Text>
           <TouchableOpacity
             style={styles.savedAdviceCard}
             onPress={() => navigation.navigate('SavedAdvice')}
           >
             <LinearGradient
               colors={['#FFF', '#F8F9FA']}
-              style={styles.savedAdviceGradient}
+              style={[styles.savedAdviceGradient, isTablet && { padding: 20 }]}
             >
-              <View style={styles.savedIconBox}>
-                <Feather name="bookmark" size={24} color="#66D9A1" />
+              <View style={[styles.savedIconBox, isTablet && { width: 56, height: 56, borderRadius: 28 }]}>
+                <Feather name="bookmark" size={isTablet ? 28 : 24} color="#66D9A1" />
               </View>
               <View style={styles.savedContent}>
-                <Text style={styles.savedTitle}>{t('saved.title')}</Text>
-                <Text style={styles.savedSubtitle}>{t('saved.count', { count: savedAdvice?.length || 0 })}</Text>
+                <Text style={[styles.savedTitle, isTablet && { fontSize: 18 }]}>{t('saved.title')}</Text>
+                <Text style={[styles.savedSubtitle, isTablet && { fontSize: 14 }]}>{t('saved.count', { count: savedAdvice?.length || 0 })}</Text>
               </View>
-              <Feather name="chevron-right" size={20} color="#CCC" />
+              <Feather name="chevron-right" size={isTablet ? 24 : 20} color="#CCC" />
             </LinearGradient>
           </TouchableOpacity>
         </View>
 
         {/* App Settings Section */}
         <View style={styles.section}>
-          <Text style={styles.sectionTitle}>{t('settings.title')}</Text>
-          <View style={styles.infoCard}>
+          <Text style={[styles.sectionTitle, { fontSize: sectionTitleSize }]}>{t('settings.title')}</Text>
+          <View style={[styles.infoCard, isTablet && { padding: 24 }]}>
             {/* Language Selector */}
             <TouchableOpacity
-              style={styles.settingRow}
+              style={[styles.settingRow, isTablet && { paddingVertical: 12 }]}
               onPress={showLanguageOptions}
             >
               <View style={styles.settingLeft}>
-                <View style={[styles.infoIcon, { backgroundColor: '#E8F5E9' }]}>
-                  <Feather name="globe" size={20} color="#4CAF50" />
+                <View style={[styles.infoIcon, { backgroundColor: '#E8F5E9', width: infoIconSize, height: infoIconSize, borderRadius: infoIconSize / 2 }]}>
+                  <Feather name="globe" size={isTablet ? 24 : 20} color="#4CAF50" />
                 </View>
                 <View style={styles.languageInfo}>
-                  <Text style={styles.settingLabel}>{t('settings.language.title')}</Text>
-                  <Text style={styles.languageValue}>
+                  <Text style={[styles.settingLabel, isTablet && { fontSize: 18 }]}>{t('settings.language.title')}</Text>
+                  <Text style={[styles.languageValue, isTablet && { fontSize: 16 }]}>
                     {currentLanguage.flag} {currentLanguage.name}
                   </Text>
                 </View>
               </View>
-              <Feather name="chevron-right" size={20} color="#CCC" />
+              <Feather name="chevron-right" size={isTablet ? 24 : 20} color="#CCC" />
             </TouchableOpacity>
 
             <View style={styles.divider} />
 
-            <View style={styles.settingRow}>
+            <View style={[styles.settingRow, isTablet && { paddingVertical: 12 }]}>
               <View style={styles.settingLeft}>
-                <View style={[styles.infoIcon, { backgroundColor: '#E3F2FD' }]}>
-                  <Feather name="bell" size={20} color="#2196F3" />
+                <View style={[styles.infoIcon, { backgroundColor: '#E3F2FD', width: infoIconSize, height: infoIconSize, borderRadius: infoIconSize / 2 }]}>
+                  <Feather name="bell" size={isTablet ? 24 : 20} color="#2196F3" />
                 </View>
-                <Text style={styles.settingLabel}>{t('settings.notifications')}</Text>
+                <Text style={[styles.settingLabel, isTablet && { fontSize: 18 }]}>{t('settings.notifications')}</Text>
               </View>
               <Switch
                 trackColor={{ false: "#767577", true: "#81b0ff" }}
@@ -473,17 +514,18 @@ export default function ProfileScreen({ navigation }) {
                 ios_backgroundColor="#3e3e3e"
                 onValueChange={toggleNotifications}
                 value={notificationsEnabled}
+                style={isTablet ? { transform: [{ scaleX: 1.2 }, { scaleY: 1.2 }] } : {}}
               />
             </View>
 
             <View style={styles.divider} />
 
-            <View style={styles.settingRow}>
+            <View style={[styles.settingRow, isTablet && { paddingVertical: 12 }]}>
               <View style={styles.settingLeft}>
-                <View style={[styles.infoIcon, { backgroundColor: '#FFEBEE' }]}>
-                  <Feather name="lock" size={20} color="#FF5252" />
+                <View style={[styles.infoIcon, { backgroundColor: '#FFEBEE', width: infoIconSize, height: infoIconSize, borderRadius: infoIconSize / 2 }]}>
+                  <Feather name="lock" size={isTablet ? 24 : 20} color="#FF5252" />
                 </View>
-                <Text style={styles.settingLabel}>{t('settings.appLock')}</Text>
+                <Text style={[styles.settingLabel, isTablet && { fontSize: 18 }]}>{t('settings.appLock')}</Text>
               </View>
               <Switch
                 trackColor={{ false: "#767577", true: "#ffcdd2" }}
@@ -491,20 +533,19 @@ export default function ProfileScreen({ navigation }) {
                 ios_backgroundColor="#3e3e3e"
                 onValueChange={togglePrivacyLock}
                 value={privacyLockEnabled}
+                style={isTablet ? { transform: [{ scaleX: 1.2 }, { scaleY: 1.2 }] } : {}}
               />
             </View>
           </View>
         </View>
 
         <View style={styles.section}>
-          <Text style={styles.sectionTitle}>{t('sections.account')}</Text>
-          <TouchableOpacity style={styles.logoutButton} onPress={handleLogout}>
-            <Feather name="log-out" size={20} color="#FF6B6B" />
-            <Text style={styles.logoutText}>{t('logout.button')}</Text>
+          <Text style={[styles.sectionTitle, { fontSize: sectionTitleSize }]}>{t('sections.account')}</Text>
+          <TouchableOpacity style={[styles.logoutButton, isTablet && { padding: 20 }]} onPress={handleLogout}>
+            <Feather name="log-out" size={isTablet ? 24 : 20} color="#FF6B6B" />
+            <Text style={[styles.logoutText, isTablet && { fontSize: 18 }]}>{t('logout.button')}</Text>
           </TouchableOpacity>
         </View>
-
-        <View style={styles.bottomSpacer} />
       </ScrollView>
 
 
@@ -560,7 +601,7 @@ export default function ProfileScreen({ navigation }) {
       </Modal>
 
       {/* Bottom Navigation Removed */}
-    </View>
+    </View >
   );
 }
 
@@ -581,20 +622,22 @@ const styles = StyleSheet.create({
   },
   headerTop: {
     flexDirection: 'row',
-    justifyContent: 'center',
+    justifyContent: 'flex-end',
     alignItems: 'center',
     width: '100%',
     position: 'relative',
     marginBottom: 20,
   },
   headerTitle: {
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    textAlign: 'center',
     fontSize: 20,
     fontWeight: 'bold',
     color: '#FFF',
   },
   editButton: {
-    position: 'absolute',
-    right: 20,
     padding: 8,
     backgroundColor: 'rgba(255,255,255,0.2)',
     borderRadius: 20,

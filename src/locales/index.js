@@ -76,7 +76,7 @@ const getDeviceLanguage = () => {
             return primaryLocale.languageCode;
         }
     } catch (error) {
-        console.error('Dil algılama hatası:', error);
+        // Dil algılama hatası - varsayılan dil kullanılacak
     }
     // Varsayılan: İngilizce
     return 'en';
@@ -91,7 +91,7 @@ const getStoredLanguage = async () => {
         const stored = await AsyncStorage.getItem(LANGUAGE_STORAGE_KEY);
         return stored || getDeviceLanguage();
     } catch (error) {
-        console.error('Kaydedilmiş dil yüklenemedi:', error);
+        // Kaydedilmiş dil yüklenemedi - cihaz dili kullanılacak
         return getDeviceLanguage();
     }
 };
@@ -103,7 +103,7 @@ export const saveLanguagePreference = async (language) => {
     try {
         await AsyncStorage.setItem(LANGUAGE_STORAGE_KEY, language);
     } catch (error) {
-        console.error('Dil tercihi kaydedilemedi:', error);
+        // Dil tercihi kaydedilemedi - sessizce devam et
     }
 };
 
@@ -187,8 +187,8 @@ i18n
             useSuspense: false, // Async yükleme için suspense kullanma
         },
 
-        // Debug modu (production'da kapalı)
-        debug: __DEV__,
+        // Debug modu kapalı
+        debug: false,
     });
 
 // Kaydedilmiş dili yükle ve uygula

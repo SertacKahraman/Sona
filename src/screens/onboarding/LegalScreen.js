@@ -1,19 +1,21 @@
 import React, { useState } from 'react';
-import { View, Text, ScrollView, StyleSheet, TouchableOpacity, Image, Platform } from 'react-native';
+import { View, Text, ScrollView, StyleSheet, TouchableOpacity, Image, Platform, useWindowDimensions } from 'react-native';
 import { Feather } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import { StatusBar } from 'expo-status-bar';
 import { useTranslation } from 'react-i18next';
 
+const TABLET_BREAKPOINT = 768;
+
 // Custom Checkbox Component
-const CustomCheckbox = ({ value, onValueChange }) => {
+const CustomCheckbox = ({ value, onValueChange, isTablet }) => {
   return (
     <TouchableOpacity
-      style={[styles.checkbox, value && styles.checkboxChecked]}
+      style={[styles.checkbox, value && styles.checkboxChecked, isTablet && { width: 32, height: 32 }]}
       onPress={() => onValueChange(!value)}
       activeOpacity={0.7}
     >
-      {value && <Feather name="check" size={18} color="#FFF" />}
+      {value && <Feather name="check" size={isTablet ? 22 : 18} color="#FFF" />}
     </TouchableOpacity>
   );
 };
@@ -21,6 +23,16 @@ const CustomCheckbox = ({ value, onValueChange }) => {
 export default function LegalScreen({ navigation, onAccept }) {
   const { t } = useTranslation('onboarding');
   const [accepted, setAccepted] = useState(false);
+  const { width: screenWidth } = useWindowDimensions();
+  const isTablet = screenWidth >= TABLET_BREAKPOINT;
+
+  // Dynamic sizes for tablet
+  const headerTitleSize = isTablet ? 38 : 28;
+  const headerSubtitleSize = isTablet ? 20 : 16;
+  const sectionTitleSize = isTablet ? 22 : 18;
+  const documentTitleSize = isTablet ? 20 : 16;
+  const buttonTextSize = isTablet ? 20 : 17;
+  const contentMaxWidth = isTablet ? Math.min(screenWidth * 0.7, 700) : '100%';
 
   const handleAccept = () => {
     if (accepted) {
@@ -34,42 +46,42 @@ export default function LegalScreen({ navigation, onAccept }) {
       {/* Header with Gradient */}
       <LinearGradient
         colors={['#66D9A1', '#4CAF50']}
-        style={styles.headerGradient}
+        style={[styles.headerGradient, isTablet && { paddingBottom: 40 }]}
       >
         <View style={styles.headerContent}>
-          <View style={styles.iconContainer}>
-            <Feather name="shield" size={40} color="#FFF" />
+          <View style={[styles.iconContainer, isTablet && { width: 100, height: 100, borderRadius: 50 }]}>
+            <Feather name="shield" size={isTablet ? 50 : 40} color="#FFF" />
           </View>
-          <Text style={styles.headerTitle}>{t('legal.title')}</Text>
-          <Text style={styles.headerSubtitle}>{t('legal.subtitle')}</Text>
+          <Text style={[styles.headerTitle, { fontSize: headerTitleSize }]}>{t('legal.title')}</Text>
+          <Text style={[styles.headerSubtitle, { fontSize: headerSubtitleSize }]}>{t('legal.subtitle')}</Text>
         </View>
       </LinearGradient>
 
       <ScrollView
         style={styles.scrollView}
-        contentContainerStyle={styles.scrollContent}
+        contentContainerStyle={[styles.scrollContent, isTablet && { alignItems: 'center', flexGrow: 1, justifyContent: 'center' }]}
         showsVerticalScrollIndicator={false}
       >
         {/* Mascot Section */}
-        <View style={styles.mascotSection}>
+        <View style={[styles.mascotSection, isTablet && { maxWidth: contentMaxWidth, width: '100%' }]}>
           <Image
             source={require('../../../assets/merakli.png')}
-            style={styles.mascotImage}
+            style={[styles.mascotImage, isTablet && { width: 180, height: 180 }]}
             resizeMode="contain"
           />
         </View>
 
         {/* Welcome Message */}
-        <View style={styles.welcomeCard}>
-          <Text style={styles.welcomeTitle}>{t('legal.welcome')}</Text>
-          <Text style={styles.welcomeText}>
+        <View style={[styles.welcomeCard, isTablet && { maxWidth: contentMaxWidth, width: '100%', padding: 24 }]}>
+          <Text style={[styles.welcomeTitle, isTablet && { fontSize: 22 }]}>{t('legal.welcome')}</Text>
+          <Text style={[styles.welcomeText, isTablet && { fontSize: 16, lineHeight: 24 }]}>
             {t('legal.welcomeMessage')}
           </Text>
         </View>
 
         {/* Document Cards */}
-        <View style={styles.documentsSection}>
-          <Text style={styles.sectionTitle}>{t('legal.documents')}</Text>
+        <View style={[styles.documentsSection, isTablet && { maxWidth: contentMaxWidth, width: '100%' }]}>
+          <Text style={[styles.sectionTitle, { fontSize: sectionTitleSize }]}>{t('legal.documents')}</Text>
 
           {/* Terms of Service Card */}
           <TouchableOpacity
@@ -79,17 +91,17 @@ export default function LegalScreen({ navigation, onAccept }) {
           >
             <LinearGradient
               colors={['#FFF', '#F8F9FA']}
-              style={styles.documentGradient}
+              style={[styles.documentGradient, isTablet && { padding: 20 }]}
             >
-              <View style={styles.documentIconBox}>
-                <Feather name="file-text" size={24} color="#4CAF50" />
+              <View style={[styles.documentIconBox, isTablet && { width: 60, height: 60, borderRadius: 30 }]}>
+                <Feather name="file-text" size={isTablet ? 28 : 24} color="#4CAF50" />
               </View>
               <View style={styles.documentContent}>
-                <Text style={styles.documentTitle}>{t('legal.termsTitle')}</Text>
-                <Text style={styles.documentSubtitle}>{t('legal.termsSubtitle')}</Text>
+                <Text style={[styles.documentTitle, { fontSize: documentTitleSize }]}>{t('legal.termsTitle')}</Text>
+                <Text style={[styles.documentSubtitle, isTablet && { fontSize: 15 }]}>{t('legal.termsSubtitle')}</Text>
               </View>
               <View style={styles.documentArrow}>
-                <Feather name="chevron-right" size={20} color="#66D9A1" />
+                <Feather name="chevron-right" size={isTablet ? 24 : 20} color="#66D9A1" />
               </View>
             </LinearGradient>
           </TouchableOpacity>
@@ -102,53 +114,53 @@ export default function LegalScreen({ navigation, onAccept }) {
           >
             <LinearGradient
               colors={['#FFF', '#F8F9FA']}
-              style={styles.documentGradient}
+              style={[styles.documentGradient, isTablet && { padding: 20 }]}
             >
-              <View style={styles.documentIconBox}>
-                <Feather name="lock" size={24} color="#4CAF50" />
+              <View style={[styles.documentIconBox, isTablet && { width: 60, height: 60, borderRadius: 30 }]}>
+                <Feather name="lock" size={isTablet ? 28 : 24} color="#4CAF50" />
               </View>
               <View style={styles.documentContent}>
-                <Text style={styles.documentTitle}>{t('legal.privacyTitle')}</Text>
-                <Text style={styles.documentSubtitle}>{t('legal.privacySubtitle')}</Text>
+                <Text style={[styles.documentTitle, { fontSize: documentTitleSize }]}>{t('legal.privacyTitle')}</Text>
+                <Text style={[styles.documentSubtitle, isTablet && { fontSize: 15 }]}>{t('legal.privacySubtitle')}</Text>
               </View>
               <View style={styles.documentArrow}>
-                <Feather name="chevron-right" size={20} color="#66D9A1" />
+                <Feather name="chevron-right" size={isTablet ? 24 : 20} color="#66D9A1" />
               </View>
             </LinearGradient>
           </TouchableOpacity>
         </View>
 
         {/* Security Features */}
-        <View style={styles.featuresSection}>
+        <View style={[styles.featuresSection, isTablet && { maxWidth: contentMaxWidth, width: '100%', padding: 24 }]}>
           <View style={styles.featureItem}>
-            <View style={styles.featureIcon}>
-              <Feather name="lock" size={16} color="#4CAF50" />
+            <View style={[styles.featureIcon, isTablet && { width: 40, height: 40, borderRadius: 20 }]}>
+              <Feather name="lock" size={isTablet ? 20 : 16} color="#4CAF50" />
             </View>
-            <Text style={styles.featureText}>{t('legal.features.encrypted')}</Text>
+            <Text style={[styles.featureText, isTablet && { fontSize: 16 }]}>{t('legal.features.encrypted')}</Text>
           </View>
           <View style={styles.featureItem}>
-            <View style={styles.featureIcon}>
-              <Feather name="shield" size={16} color="#4CAF50" />
+            <View style={[styles.featureIcon, isTablet && { width: 40, height: 40, borderRadius: 20 }]}>
+              <Feather name="shield" size={isTablet ? 20 : 16} color="#4CAF50" />
             </View>
-            <Text style={styles.featureText}>{t('legal.features.notShared')}</Text>
+            <Text style={[styles.featureText, isTablet && { fontSize: 16 }]}>{t('legal.features.notShared')}</Text>
           </View>
           <View style={styles.featureItem}>
-            <View style={styles.featureIcon}>
-              <Feather name="eye-off" size={16} color="#4CAF50" />
+            <View style={[styles.featureIcon, isTablet && { width: 40, height: 40, borderRadius: 20 }]}>
+              <Feather name="eye-off" size={isTablet ? 20 : 16} color="#4CAF50" />
             </View>
-            <Text style={styles.featureText}>{t('legal.features.protected')}</Text>
+            <Text style={[styles.featureText, isTablet && { fontSize: 16 }]}>{t('legal.features.protected')}</Text>
           </View>
         </View>
 
         {/* Acceptance Section */}
-        <View style={styles.acceptanceSection}>
+        <View style={[styles.acceptanceSection, isTablet && { maxWidth: contentMaxWidth, width: '100%', padding: 24 }]}>
           <TouchableOpacity
             style={styles.checkboxRow}
             onPress={() => setAccepted(!accepted)}
             activeOpacity={0.7}
           >
-            <CustomCheckbox value={accepted} onValueChange={setAccepted} />
-            <Text style={styles.checkboxLabel}>
+            <CustomCheckbox value={accepted} onValueChange={setAccepted} isTablet={isTablet} />
+            <Text style={[styles.checkboxLabel, isTablet && { fontSize: 16, lineHeight: 24 }]}>
               {t('legal.accept')}
             </Text>
           </TouchableOpacity>
@@ -156,7 +168,7 @@ export default function LegalScreen({ navigation, onAccept }) {
 
         {/* Continue Button */}
         <TouchableOpacity
-          style={[styles.continueButton, !accepted && styles.continueButtonDisabled]}
+          style={[styles.continueButton, !accepted && styles.continueButtonDisabled, isTablet && { maxWidth: 400, width: '100%' }]}
           onPress={handleAccept}
           disabled={!accepted}
           activeOpacity={0.8}
@@ -166,15 +178,15 @@ export default function LegalScreen({ navigation, onAccept }) {
               colors={['#66D9A1', '#4CAF50']}
               start={{ x: 0, y: 0 }}
               end={{ x: 1, y: 1 }}
-              style={styles.gradientButton}
+              style={[styles.gradientButton, isTablet && { paddingVertical: 22 }]}
             >
-              <Text style={styles.continueButtonText}>{t('common:buttons.continue')}</Text>
-              <Feather name="arrow-right" size={20} color="#FFF" />
+              <Text style={[styles.continueButtonText, { fontSize: buttonTextSize }]}>{t('common:buttons.continue')}</Text>
+              <Feather name="arrow-right" size={isTablet ? 24 : 20} color="#FFF" />
             </LinearGradient>
           ) : (
-            <View style={styles.disabledButton}>
-              <Text style={styles.continueButtonTextDisabled}>{t('common:buttons.continue')}</Text>
-              <Feather name="arrow-right" size={20} color="#999" />
+            <View style={[styles.disabledButton, isTablet && { paddingVertical: 22 }]}>
+              <Text style={[styles.continueButtonTextDisabled, { fontSize: buttonTextSize }]}>{t('common:buttons.continue')}</Text>
+              <Feather name="arrow-right" size={isTablet ? 24 : 20} color="#999" />
             </View>
           )}
         </TouchableOpacity>

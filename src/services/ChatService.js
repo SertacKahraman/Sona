@@ -105,27 +105,39 @@ export const generateChatResponse = async (message, history, context) => {
 
     const result = await model.generateContent(fullPrompt);
     const response = await result.response;
+
+    if (response.usageMetadata) {
+      // Token usage metadata available for updateTokenUsage
+    }
+
     let text = response.text();
 
     // Failsafe: Eğer hala inatla kullanıyorsa temizle
     text = text.replace(/diyorsun[.?,!]?/gi, "");
     text = text.replace(/"/g, ""); // Tırnak işaretlerini de temizle
 
-    return text;
+    return {
+      text: text,
+      usageMetadata: response.usageMetadata
+    };
 
   } catch (error) {
-    console.error(`Model ${modelId} hatası:`, error);
+
+    let errorText = "Şu an sana cevap veremiyorum. Lütfen biraz sonra tekrar dene. 💕";
 
     if (error.message.includes("Network request failed")) {
-      return "İnternet bağlantında bir sorun var gibi görünüyor. Lütfen bağlantını kontrol et. 📶";
+      errorText = "İnternet bağlantında bir sorun var gibi görünüyor. Lütfen bağlantını kontrol et. 📶";
     } else if (error.message.includes("404")) {
-      return "Model bulunamadı. Lütfen uygulamayı güncelleyin veya daha sonra tekrar deneyin. 🤖";
+      errorText = "Model bulunamadı. Lütfen uygulamayı güncelleyin veya daha sonra tekrar deneyin. 🤖";
     } else if (error.message.includes("403")) {
-      return "Yetkilendirme hatası. API servisi henüz aktifleşmemiş olabilir. ⏳";
+      errorText = "Yetkilendirme hatası. API servisi henüz aktifleşmemiş olabilir. ⏳";
     } else if (error.message.includes("429")) {
-      return "Çok fazla istek gönderildi. Biraz bekleyip tekrar dener misin? ⏳";
-    } else {
-      return "Şu an sana cevap veremiyorum. Lütfen biraz sonra tekrar dene. 💕";
+      errorText = "Çok fazla istek gönderildi. Biraz bekleyip tekrar dener misin? ⏳";
     }
+
+    return {
+      text: errorText,
+      usageMetadata: null
+    };
   }
 };

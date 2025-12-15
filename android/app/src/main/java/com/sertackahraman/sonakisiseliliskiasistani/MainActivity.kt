@@ -1,4 +1,4 @@
-package com.sonakiiselilikiasistan
+package com.sertackahraman.sonakisiseliliskiasistani
 
 import android.os.Build
 import android.os.Bundle

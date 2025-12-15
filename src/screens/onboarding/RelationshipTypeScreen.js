@@ -1,13 +1,26 @@
 import React from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, ScrollView, KeyboardAvoidingView, Platform } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, ScrollView, KeyboardAvoidingView, Platform, useWindowDimensions } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { StatusBar } from 'expo-status-bar';
 import { useApp } from '../../context/AppContext';
 import { RELATIONSHIP_TYPES } from '../../constants/relationships';
 import { useTranslation } from 'react-i18next';
 
+const TABLET_BREAKPOINT = 768;
+
 export default function RelationshipTypeScreen({ navigation }) {
   const { t } = useTranslation('onboarding');
+  const { width: screenWidth } = useWindowDimensions();
+  const isTablet = screenWidth >= TABLET_BREAKPOINT;
+
+  // Dynamic sizes for tablet
+  const headerTitleSize = isTablet ? 38 : 28;
+  const headerSubtitleSize = isTablet ? 20 : 16;
+  const cardTitleSize = isTablet ? 22 : 17;
+  const emojiSize = isTablet ? 36 : 26;
+  const buttonTextSize = isTablet ? 20 : 17;
+  const contentMaxWidth = isTablet ? Math.min(screenWidth * 0.7, 700) : '100%';
+
   const {
     relationshipType,
     setRelationshipType,
@@ -33,11 +46,11 @@ export default function RelationshipTypeScreen({ navigation }) {
     <View style={styles.container}>
       <LinearGradient
         colors={['#66D9A1', '#4CAF50']}
-        style={styles.headerGradient}
+        style={[styles.headerGradient, isTablet && { paddingBottom: 40 }]}
       >
         <View style={styles.headerTopRow}>
           <TouchableOpacity
-            style={styles.backButtonWhite}
+            style={[styles.backButtonWhite, isTablet && { width: 48, height: 48, borderRadius: 24 }]}
             onPress={() => {
               if (editingRelationshipId) {
                 setEditingRelationshipId(null);
@@ -46,23 +59,22 @@ export default function RelationshipTypeScreen({ navigation }) {
                 if (isAddingNew) {
                   navigation.navigate('Main');
                 } else {
-                  // İlk onboarding sırasında Name ekranına geri dön
                   navigation.navigate('Name');
                 }
               }
             }}
           >
-            <Text style={styles.backIconWhite}>‹</Text>
+            <Text style={[styles.backIconWhite, isTablet && { fontSize: 28 }]}>‹</Text>
           </TouchableOpacity>
-          <View style={styles.whiteBadge}>
-            <Text style={styles.whiteBadgeText}>
+          <View style={[styles.whiteBadge, isTablet && { paddingVertical: 8, paddingHorizontal: 20 }]}>
+            <Text style={[styles.whiteBadgeText, isTablet && { fontSize: 14 }]}>
               {editingRelationshipId ? `${t('steps.editing1')} ${t('steps.editing')}` : (isAddingNew ? `${t('steps.editing1')} ${t('steps.firstStep')}` : `${t('steps.step2')} ${t('steps.secondStep')}`)}
             </Text>
           </View>
-          <View style={{ width: 40 }} />
+          <View style={{ width: isTablet ? 48 : 40 }} />
         </View>
-        <Text style={styles.headerTitle}>{t('relationshipType.title')}</Text>
-        <Text style={styles.headerSubtitle}>{t('relationshipType.subtitle')}</Text>
+        <Text style={[styles.headerTitle, { fontSize: headerTitleSize }]}>{t('relationshipType.title')}</Text>
+        <Text style={[styles.headerSubtitle, { fontSize: headerSubtitleSize }]}>{t('relationshipType.subtitle')}</Text>
       </LinearGradient>
 
       <KeyboardAvoidingView
@@ -71,30 +83,31 @@ export default function RelationshipTypeScreen({ navigation }) {
       >
         <ScrollView
           style={{ flex: 1 }}
-          contentContainerStyle={{ padding: 24, paddingBottom: 40 }}
+          contentContainerStyle={[{ padding: 24, paddingBottom: 40 }, isTablet && { alignItems: 'center', flexGrow: 1, justifyContent: 'center' }]}
           showsVerticalScrollIndicator={false}
         >
-          <View style={styles.relationshipCards}>
+          <View style={[styles.relationshipCards, isTablet && { maxWidth: contentMaxWidth, width: '100%' }]}>
             {relationshipOptions.map((option) => (
               <TouchableOpacity
                 key={option.id}
                 style={[
                   styles.relationshipCard,
+                  isTablet && { paddingVertical: 20, paddingHorizontal: 24 },
                   relationshipType === option.id && styles.relationshipCardSelected
                 ]}
                 onPress={() => setRelationshipType(option.id)}
               >
-                <View style={styles.cardIconWrapper}>
-                  <Text style={styles.cardEmojiSmall}>{option.emoji}</Text>
+                <View style={[styles.cardIconWrapper, isTablet && { width: 60, height: 60, borderRadius: 30 }]}>
+                  <Text style={[styles.cardEmojiSmall, { fontSize: emojiSize }]}>{option.emoji}</Text>
                 </View>
-                <Text style={styles.cardTitleInline}>{getRelationshipLabel(option.id)}</Text>
+                <Text style={[styles.cardTitleInline, { fontSize: cardTitleSize }]}>{getRelationshipLabel(option.id)}</Text>
                 <View style={styles.checkWrapper}>
                   {relationshipType === option.id ? (
-                    <View style={styles.checkedCircle}>
-                      <View style={styles.checkmark} />
+                    <View style={[styles.checkedCircle, isTablet && { width: 32, height: 32, borderRadius: 16 }]}>
+                      <View style={[styles.checkmark, isTablet && { width: 16, height: 16, borderRadius: 8 }]} />
                     </View>
                   ) : (
-                    <View style={styles.uncheckedCircle} />
+                    <View style={[styles.uncheckedCircle, isTablet && { width: 32, height: 32, borderRadius: 16 }]} />
                   )}
                 </View>
               </TouchableOpacity>
@@ -102,7 +115,7 @@ export default function RelationshipTypeScreen({ navigation }) {
           </View>
 
           <TouchableOpacity
-            style={[styles.continueButton, !relationshipType && styles.continueButtonDisabled]}
+            style={[styles.continueButton, !relationshipType && styles.continueButtonDisabled, isTablet && { maxWidth: 400, width: '100%' }]}
             onPress={() => {
               if (relationshipType) {
                 navigation.navigate('RelationshipContext');
@@ -115,12 +128,12 @@ export default function RelationshipTypeScreen({ navigation }) {
                 colors={['#66D9A1', '#4CAF50']}
                 start={{ x: 0, y: 0 }}
                 end={{ x: 1, y: 1 }}
-                style={styles.gradientButton}
+                style={[styles.gradientButton, isTablet && { paddingVertical: 24 }]}
               >
-                <Text style={styles.continueButtonText}>{t('common:buttons.continue')}</Text>
+                <Text style={[styles.continueButtonText, { fontSize: buttonTextSize }]}>{t('common:buttons.continue')}</Text>
               </LinearGradient>
             ) : (
-              <Text style={styles.continueButtonText}>{t('common:buttons.continue')}</Text>
+              <Text style={[styles.continueButtonText, { fontSize: buttonTextSize }]}>{t('common:buttons.continue')}</Text>
             )}
           </TouchableOpacity>
         </ScrollView>

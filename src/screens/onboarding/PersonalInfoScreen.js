@@ -1,13 +1,26 @@
 import React from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, KeyboardAvoidingView, Platform } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, KeyboardAvoidingView, Platform, useWindowDimensions } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { LinearGradient } from 'expo-linear-gradient';
 import { StatusBar } from 'expo-status-bar';
 import { useApp } from '../../context/AppContext';
 import { useTranslation } from 'react-i18next';
 
+const TABLET_BREAKPOINT = 768;
+
 export default function PersonalInfoScreen({ navigation }) {
   const { t } = useTranslation('onboarding');
+  const { width: screenWidth } = useWindowDimensions();
+  const isTablet = screenWidth >= TABLET_BREAKPOINT;
+
+  // Dynamic sizes for tablet
+  const headerTitleSize = isTablet ? 38 : 28;
+  const headerSubtitleSize = isTablet ? 20 : 16;
+  const questionLabelSize = isTablet ? 20 : 16;
+  const pillTextSize = isTablet ? 14 : 10;
+  const buttonTextSize = isTablet ? 20 : 17;
+  const contentMaxWidth = isTablet ? Math.min(screenWidth * 0.7, 700) : '100%';
+
   const {
     userAge,
     setUserAge,
@@ -57,22 +70,22 @@ export default function PersonalInfoScreen({ navigation }) {
     <View style={styles.container}>
       <LinearGradient
         colors={['#66D9A1', '#4CAF50']}
-        style={styles.headerGradient}
+        style={[styles.headerGradient, isTablet && { paddingBottom: 40 }]}
       >
         <View style={styles.headerTopRow}>
           <TouchableOpacity
-            style={styles.backButtonWhite}
+            style={[styles.backButtonWhite, isTablet && { width: 48, height: 48, borderRadius: 24 }]}
             onPress={() => navigation.goBack()}
           >
-            <Text style={styles.backIconWhite}>‹</Text>
+            <Text style={[styles.backIconWhite, isTablet && { fontSize: 28 }]}>‹</Text>
           </TouchableOpacity>
-          <View style={styles.whiteBadge}>
-            <Text style={styles.whiteBadgeText}>{t('steps.step5')} {t('steps.lastStep')}</Text>
+          <View style={[styles.whiteBadge, isTablet && { paddingVertical: 8, paddingHorizontal: 20 }]}>
+            <Text style={[styles.whiteBadgeText, isTablet && { fontSize: 14 }]}>{t('steps.step5')} {t('steps.lastStep')}</Text>
           </View>
-          <View style={{ width: 40 }} />
+          <View style={{ width: isTablet ? 48 : 40 }} />
         </View>
-        <Text style={styles.headerTitle}>{t('personalInfo.title')}</Text>
-        <Text style={styles.headerSubtitle}>{t('personalInfo.subtitle')}</Text>
+        <Text style={[styles.headerTitle, { fontSize: headerTitleSize }]}>{t('personalInfo.title')}</Text>
+        <Text style={[styles.headerSubtitle, { fontSize: headerSubtitleSize }]}>{t('personalInfo.subtitle')}</Text>
       </LinearGradient>
 
       <KeyboardAvoidingView
@@ -81,27 +94,29 @@ export default function PersonalInfoScreen({ navigation }) {
       >
         <KeyboardAwareScrollView
           style={{ flex: 1 }}
-          contentContainerStyle={{ padding: 24, paddingBottom: 40 }}
+          contentContainerStyle={[{ padding: 28, paddingBottom: 40 }, isTablet && { alignItems: 'center', flexGrow: 1, justifyContent: 'center' }]}
           showsVerticalScrollIndicator={false}
           enableOnAndroid={true}
           extraScrollHeight={100}
           keyboardShouldPersistTaps="handled"
         >
           {/* Yaş Grubu */}
-          <View style={styles.questionContainer}>
-            <Text style={styles.questionLabel}>{t('personalInfo.age.label')}</Text>
+          <View style={[styles.questionContainer, isTablet && { maxWidth: contentMaxWidth, width: '100%', padding: 28 }]}>
+            <Text style={[styles.questionLabel, { fontSize: questionLabelSize }]}>{t('personalInfo.age.label')}</Text>
             <View style={styles.pillOptionsRow}>
               {ageOptions.map(option => (
                 <TouchableOpacity
                   key={option.id}
                   style={[
                     styles.pillOption,
+                    isTablet && { paddingVertical: 14 },
                     userAge === option.id && styles.pillOptionSelected
                   ]}
                   onPress={() => setUserAge(option.id)}
                 >
                   <Text style={[
                     styles.pillOptionText,
+                    { fontSize: pillTextSize },
                     userAge === option.id && styles.pillOptionTextSelected
                   ]}>{option.label}</Text>
                 </TouchableOpacity>
@@ -110,8 +125,8 @@ export default function PersonalInfoScreen({ navigation }) {
           </View>
 
           {/* Cinsiyet */}
-          <View style={styles.questionContainer}>
-            <Text style={styles.questionLabel}>{t('personalInfo.gender.label')}</Text>
+          <View style={[styles.questionContainer, isTablet && { maxWidth: contentMaxWidth, width: '100%', padding: 28 }]}>
+            <Text style={[styles.questionLabel, { fontSize: questionLabelSize }]}>{t('personalInfo.gender.label')}</Text>
             <View style={styles.pillOptionsRow}>
               {genderOptions.map(option => (
                 <TouchableOpacity
@@ -119,12 +134,14 @@ export default function PersonalInfoScreen({ navigation }) {
                   style={[
                     styles.pillOption,
                     option.isLong && styles.pillOptionLong,
+                    isTablet && { paddingVertical: 14 },
                     userGender === option.id && styles.pillOptionSelected
                   ]}
                   onPress={() => setUserGender(option.id)}
                 >
                   <Text style={[
                     styles.pillOptionText,
+                    { fontSize: pillTextSize },
                     userGender === option.id && styles.pillOptionTextSelected
                   ]}>{option.label}</Text>
                 </TouchableOpacity>
@@ -133,8 +150,8 @@ export default function PersonalInfoScreen({ navigation }) {
           </View>
 
           {/* İlişki Durumu */}
-          <View style={styles.questionContainer}>
-            <Text style={styles.questionLabel}>{t('personalInfo.status.label')}</Text>
+          <View style={[styles.questionContainer, isTablet && { maxWidth: contentMaxWidth, width: '100%', padding: 28 }]}>
+            <Text style={[styles.questionLabel, { fontSize: questionLabelSize }]}>{t('personalInfo.status.label')}</Text>
             <View style={styles.pillOptionsWrap}>
               {statusOptions.map(option => (
                 <TouchableOpacity
@@ -142,12 +159,14 @@ export default function PersonalInfoScreen({ navigation }) {
                   style={[
                     styles.pillOption,
                     styles.pillOptionHalf,
+                    isTablet && { paddingVertical: 14, minWidth: 120 },
                     relationshipStatus === option.id && styles.pillOptionSelected
                   ]}
                   onPress={() => setRelationshipStatus(option.id)}
                 >
                   <Text style={[
                     styles.pillOptionText,
+                    { fontSize: pillTextSize },
                     relationshipStatus === option.id && styles.pillOptionTextSelected
                   ]}>{option.label}</Text>
                 </TouchableOpacity>
@@ -156,8 +175,8 @@ export default function PersonalInfoScreen({ navigation }) {
           </View>
 
           {/* Koçluk Hedefi */}
-          <View style={styles.questionContainer}>
-            <Text style={styles.questionLabel}>{t('personalInfo.goal.label')}</Text>
+          <View style={[styles.questionContainer, isTablet && { maxWidth: contentMaxWidth, width: '100%', padding: 28 }]}>
+            <Text style={[styles.questionLabel, { fontSize: questionLabelSize }]}>{t('personalInfo.goal.label')}</Text>
             <View style={styles.pillOptionsWrap}>
               {goalOptions.map(option => (
                 <TouchableOpacity
@@ -165,12 +184,14 @@ export default function PersonalInfoScreen({ navigation }) {
                   style={[
                     styles.pillOption,
                     styles.pillOptionHalf,
+                    isTablet && { paddingVertical: 14, minWidth: 120 },
                     coachingGoal === option.id && styles.pillOptionSelected
                   ]}
                   onPress={() => setCoachingGoal(option.id)}
                 >
                   <Text style={[
                     styles.pillOptionText,
+                    { fontSize: pillTextSize },
                     coachingGoal === option.id && styles.pillOptionTextSelected
                   ]}>{option.label}</Text>
                 </TouchableOpacity>
@@ -181,7 +202,8 @@ export default function PersonalInfoScreen({ navigation }) {
           <TouchableOpacity
             style={[
               styles.continueButton,
-              !isFormComplete && styles.continueButtonDisabled
+              !isFormComplete && styles.continueButtonDisabled,
+              isTablet && { maxWidth: 500, width: '100%' }
             ]}
             onPress={async () => {
               if (isFormComplete) {
@@ -205,12 +227,12 @@ export default function PersonalInfoScreen({ navigation }) {
                 colors={['#66D9A1', '#4CAF50']}
                 start={{ x: 0, y: 0 }}
                 end={{ x: 1, y: 1 }}
-                style={styles.gradientButton}
+                style={[styles.gradientButton, isTablet && { paddingVertical: 24 }]}
               >
-                <Text style={styles.continueButtonText}>{isEditingProfile ? t('common:buttons.save') : t('common:buttons.continue')}</Text>
+                <Text style={[styles.continueButtonText, { fontSize: buttonTextSize }]}>{isEditingProfile ? t('common:buttons.save') : t('common:buttons.continue')}</Text>
               </LinearGradient>
             ) : (
-              <Text style={styles.continueButtonText}>{isEditingProfile ? t('common:buttons.save') : t('common:buttons.continue')}</Text>
+              <Text style={[styles.continueButtonText, { fontSize: buttonTextSize }]}>{isEditingProfile ? t('common:buttons.save') : t('common:buttons.continue')}</Text>
             )}
           </TouchableOpacity>
         </KeyboardAwareScrollView>

@@ -1,14 +1,29 @@
 import React, { useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, TouchableOpacity, ScrollView, SafeAreaView, Platform, Modal } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, ScrollView, Platform, Modal, useWindowDimensions } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Feather } from '@expo/vector-icons';
 import { useTranslation } from 'react-i18next';
 import { getRelationshipInfo } from '../../constants/relationships';
 import { useApp } from '../../context/AppContext';
+import { SafeAreaView } from 'react-native-safe-area-context';
+
+const TABLET_BREAKPOINT = 768;
 
 export default function AllRelationshipsScreen({ navigation }) {
     const { t } = useTranslation(['allRelationships', 'home', 'onboarding']);
+    const { width: screenWidth } = useWindowDimensions();
+    const isTablet = screenWidth >= TABLET_BREAKPOINT;
+
+    // Dynamic sizes for tablet
+    const headerTitleSize = isTablet ? 26 : 20;
+    const headerSubtitleSize = isTablet ? 14 : 12;
+    const headerButtonSize = isTablet ? 52 : 40;
+    const headerIconSize = isTablet ? 28 : 24;
+    const cardHeight = isTablet ? 240 : 200;
+    const cardEmojiSize = isTablet ? 56 : 48;
+    const cardNameSize = isTablet ? 24 : 20;
+
     const {
         relationships,
         setEditingRelationshipId,
@@ -76,21 +91,21 @@ export default function AllRelationshipsScreen({ navigation }) {
             {/* Gradient Header */}
             <LinearGradient
                 colors={['#66D9A1', '#4CAF50']}
-                style={styles.headerGradient}
+                style={[styles.headerGradient, isTablet && { paddingBottom: 30 }]}
                 start={{ x: 0, y: 0 }}
                 end={{ x: 1, y: 1 }}
             >
                 <SafeAreaView>
                     <View style={styles.header}>
-                        <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
-                            <Feather name="arrow-left" size={24} color="#FFF" />
+                        <TouchableOpacity onPress={() => navigation.goBack()} style={[styles.backButton, isTablet && { width: headerButtonSize, height: headerButtonSize, borderRadius: headerButtonSize / 2 }]}>
+                            <Feather name="arrow-left" size={headerIconSize} color="#FFF" />
                         </TouchableOpacity>
                         <View style={styles.headerTextContainer}>
-                            <Text style={styles.headerTitle}>{t('title')}</Text>
-                            <Text style={styles.headerSubtitle}>{t('relationshipCount', { count: relationships.length })}</Text>
+                            <Text style={[styles.headerTitle, { fontSize: headerTitleSize }]}>{t('title')}</Text>
+                            <Text style={[styles.headerSubtitle, { fontSize: headerSubtitleSize }]}>{t('relationshipCount', { count: relationships.length })}</Text>
                         </View>
-                        <TouchableOpacity onPress={handleAddNew} style={styles.backButton}>
-                            <Feather name="plus" size={24} color="#FFF" />
+                        <TouchableOpacity onPress={handleAddNew} style={[styles.backButton, isTablet && { width: headerButtonSize, height: headerButtonSize, borderRadius: headerButtonSize / 2 }]}>
+                            <Feather name="plus" size={headerIconSize} color="#FFF" />
                         </TouchableOpacity>
                     </View>
                 </SafeAreaView>
@@ -107,32 +122,32 @@ export default function AllRelationshipsScreen({ navigation }) {
                     return (
                         <TouchableOpacity
                             key={rel.id}
-                            style={styles.relationshipCard}
+                            style={[styles.relationshipCard, { height: cardHeight }]}
                             onPress={() => handleSelectRelationship(rel.id)}
                             activeOpacity={0.9}
                         >
                             <LinearGradient
                                 colors={relInfo.gradient}
-                                style={styles.cardGradient}
+                                style={[styles.cardGradient, isTablet && { padding: 24 }]}
                                 start={{ x: 0, y: 0 }}
                                 end={{ x: 1, y: 1 }}
                             >
                                 <View style={styles.cardContent}>
-                                    <Text style={styles.cardEmoji}>{relInfo.emoji}</Text>
-                                    <Text style={styles.cardName}>{rel.partnerName || t('unnamed')}</Text>
-                                    <Text style={styles.cardType}>{t(`relationshipType.${rel.type}`, { ns: 'onboarding' })}</Text>
+                                    <Text style={[styles.cardEmoji, { fontSize: cardEmojiSize }]}>{relInfo.emoji}</Text>
+                                    <Text style={[styles.cardName, { fontSize: cardNameSize }]}>{rel.partnerName || t('unnamed')}</Text>
+                                    <Text style={[styles.cardType, isTablet && { fontSize: 15 }]}>{t(`relationshipType.${rel.type}`, { ns: 'onboarding' })}</Text>
 
                                     <View style={styles.cardFooter}>
-                                        <View style={styles.durationBadge}>
-                                            <Feather name="clock" size={12} color="#FFF" />
-                                            <Text style={styles.durationText}>{getDurationText(rel.years, rel.months)}</Text>
+                                        <View style={[styles.durationBadge, isTablet && { paddingHorizontal: 14, paddingVertical: 8 }]}>
+                                            <Feather name="clock" size={isTablet ? 14 : 12} color="#FFF" />
+                                            <Text style={[styles.durationText, isTablet && { fontSize: 13 }]}>{getDurationText(rel.years, rel.months)}</Text>
                                         </View>
                                     </View>
 
                                     {rel.mainChallenge && (
-                                        <View style={styles.challengeBadge}>
-                                            <Feather name="alert-circle" size={10} color="rgba(255,255,255,0.9)" />
-                                            <Text style={styles.challengeText} numberOfLines={1}>{rel.mainChallenge}</Text>
+                                        <View style={[styles.challengeBadge, isTablet && { paddingHorizontal: 10, paddingVertical: 6 }]}>
+                                            <Feather name="alert-circle" size={isTablet ? 12 : 10} color="rgba(255,255,255,0.9)" />
+                                            <Text style={[styles.challengeText, isTablet && { fontSize: 12 }]} numberOfLines={1}>{rel.mainChallenge}</Text>
                                         </View>
                                     )}
                                 </View>

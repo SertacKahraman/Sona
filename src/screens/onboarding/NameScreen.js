@@ -1,29 +1,42 @@
 import React from 'react';
-import { StyleSheet, Text, View, TextInput, TouchableOpacity, Image, KeyboardAvoidingView, Platform, TouchableWithoutFeedback, Keyboard, ScrollView } from 'react-native';
+import { StyleSheet, Text, View, TextInput, TouchableOpacity, Image, KeyboardAvoidingView, Platform, TouchableWithoutFeedback, Keyboard, ScrollView, useWindowDimensions } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { StatusBar } from 'expo-status-bar';
 import { useApp } from '../../context/AppContext';
 import { useTranslation } from 'react-i18next';
 
+const TABLET_BREAKPOINT = 768;
+
 export default function NameScreen({ navigation }) {
   const { t } = useTranslation('onboarding');
   const { userName, setUserName, isEditingProfile } = useApp();
+  const { width: screenWidth } = useWindowDimensions();
+  const isTablet = screenWidth >= TABLET_BREAKPOINT;
+
+  // Dynamic sizes for tablet
+  const headerTitleSize = isTablet ? 38 : 28;
+  const headerSubtitleSize = isTablet ? 20 : 16;
+  const mascotSize = isTablet ? 380 : 250;
+  const inputFontSize = isTablet ? 22 : 16;
+  const buttonTextSize = isTablet ? 20 : 16;
+  const helperTextSize = isTablet ? 18 : 14;
+  const contentMaxWidth = isTablet ? Math.min(screenWidth * 0.7, 700) : '100%';
 
   return (
     <View style={styles.container}>
       <LinearGradient
         colors={['#66D9A1', '#4CAF50']}
-        style={styles.headerGradient}
+        style={[styles.headerGradient, isTablet && { paddingBottom: 50 }]}
       >
         <View style={styles.headerTopRow}>
           <View style={{ width: 40 }} />
-          <View style={styles.whiteBadge}>
-            <Text style={styles.whiteBadgeText}>{t('steps.step1')} {t('steps.firstStep')}</Text>
+          <View style={[styles.whiteBadge, isTablet && { paddingVertical: 8, paddingHorizontal: 20 }]}>
+            <Text style={[styles.whiteBadgeText, isTablet && { fontSize: 14 }]}>{t('steps.step1')} {t('steps.firstStep')}</Text>
           </View>
           <View style={{ width: 40 }} />
         </View>
-        <Text style={styles.headerTitle}>{t('name.title')}</Text>
-        <Text style={styles.headerSubtitle}>{t('name.subtitle')}</Text>
+        <Text style={[styles.headerTitle, { fontSize: headerTitleSize }]}>{t('name.title')}</Text>
+        <Text style={[styles.headerSubtitle, { fontSize: headerSubtitleSize }]}>{t('name.subtitle')}</Text>
       </LinearGradient>
 
       <KeyboardAvoidingView
@@ -32,20 +45,20 @@ export default function NameScreen({ navigation }) {
       >
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
           <ScrollView
-            contentContainerStyle={{ flexGrow: 1, paddingHorizontal: 24, paddingTop: 30, paddingBottom: 20 }}
+            contentContainerStyle={[{ flexGrow: 1, paddingHorizontal: 24, paddingTop: 30, paddingBottom: 20 }, isTablet && { alignItems: 'center', justifyContent: 'center' }]}
             showsVerticalScrollIndicator={false}
             keyboardShouldPersistTaps="handled"
           >
-            <View style={styles.mascotWithHearts}>
+            <View style={[styles.mascotWithHearts, isTablet && { width: 350, height: 350 }]}>
               <Image
                 source={require('../../../assets/merakli.png')}
-                style={styles.mascotImageLarge}
+                style={[styles.mascotImageLarge, { width: mascotSize, height: mascotSize }]}
                 resizeMode="contain"
               />
             </View>
 
             <TextInput
-              style={styles.nameInputBox}
+              style={[styles.nameInputBox, { fontSize: inputFontSize }, isTablet && { padding: 18, maxWidth: 500, width: '100%' }]}
               value={userName}
               onChangeText={setUserName}
               placeholder={t('name.placeholder')}
@@ -55,14 +68,14 @@ export default function NameScreen({ navigation }) {
               maxLength={15}
             />
 
-            <View style={styles.welcomeMessageBox}>
-              <Text style={styles.welcomeMessageText}>
+            <View style={[styles.welcomeMessageBox, isTablet && { padding: 24, maxWidth: 500, width: '100%' }]}>
+              <Text style={[styles.welcomeMessageText, { fontSize: helperTextSize, lineHeight: helperTextSize + 8 }]}>
                 {t('name.helper')}
               </Text>
             </View>
 
             <TouchableOpacity
-              style={[styles.startButton, !userName.trim() && styles.startButtonDisabled]}
+              style={[styles.startButton, !userName.trim() && styles.startButtonDisabled, isTablet && { maxWidth: 400, width: '100%' }]}
               onPress={() => {
                 if (userName.trim()) {
                   if (isEditingProfile) {
@@ -79,12 +92,12 @@ export default function NameScreen({ navigation }) {
                   colors={['#66D9A1', '#4CAF50']}
                   start={{ x: 0, y: 0 }}
                   end={{ x: 1, y: 1 }}
-                  style={styles.gradientButton}
+                  style={[styles.gradientButton, isTablet && { paddingVertical: 24 }]}
                 >
-                  <Text style={styles.startButtonText}>{t('common:buttons.continue')}</Text>
+                  <Text style={[styles.startButtonText, { fontSize: buttonTextSize }]}>{t('common:buttons.continue')}</Text>
                 </LinearGradient>
               ) : (
-                <Text style={styles.startButtonText}>{t('common:buttons.continue')}</Text>
+                <Text style={[styles.startButtonText, { fontSize: buttonTextSize }]}>{t('common:buttons.continue')}</Text>
               )}
             </TouchableOpacity>
           </ScrollView>
@@ -162,9 +175,9 @@ const styles = StyleSheet.create({
     padding: 15,
     fontSize: 16,
     borderWidth: 2,
-    borderColor: '#E8F5E9',
+    borderColor: '#E8F5E8',
     marginBottom: 20,
-    textAlign: 'center',
+    textAlign: 'left',
   },
   welcomeMessageBox: {
     backgroundColor: '#E0F7EE',

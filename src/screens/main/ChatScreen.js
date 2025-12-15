@@ -1,17 +1,40 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { StyleSheet, Text, View, TextInput, TouchableOpacity, FlatList, KeyboardAvoidingView, Platform, Image, ActivityIndicator, Keyboard, Alert } from 'react-native';
+import { StyleSheet, Text, View, TextInput, TouchableOpacity, FlatList, KeyboardAvoidingView, Platform, Image, ActivityIndicator, Keyboard, Alert, useWindowDimensions } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Feather, FontAwesome } from '@expo/vector-icons';
 import { StatusBar } from 'expo-status-bar';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { generateChatResponse } from '../../services/ChatService';
 import { useApp } from '../../context/AppContext';
 import { useTranslation } from 'react-i18next';
 
+const TABLET_BREAKPOINT = 768;
+
 export default function ChatScreen({ route, navigation }) {
   const { t, i18n } = useTranslation('chat');
+  const { width: screenWidth, height: screenHeight } = useWindowDimensions();
+  const insets = useSafeAreaInsets();
+  const isTablet = screenWidth >= TABLET_BREAKPOINT;
+
+  // Navigation bar için responsive bottom padding
+  // Tab bar yüksekliği (~70-85) + tab bar bottom offset + ekstra padding
+  const tabBarHeight = isTablet ? 85 : 70;
+  const tabBarBottomOffset = Platform.OS === 'android'
+    ? (isTablet ? 15 : 10)
+    : (isTablet ? 25 : 20);
+  const navBarHeight = tabBarHeight + tabBarBottomOffset + 10;
+
+  // Dynamic sizes for tablet
+  const headerTitleSize = isTablet ? 24 : 20;
+  const relChipPadding = isTablet ? { paddingHorizontal: 20, paddingVertical: 10 } : { paddingHorizontal: 16, paddingVertical: 8 };
+  const messageFontSize = isTablet ? 17 : 15;
+  const inputFontSize = isTablet ? 17 : 15;
+  const sendButtonSize = isTablet ? 52 : 44;
+  const avatarSize = isTablet ? 40 : 32;
+
   const { initialRelationshipId } = route.params || {};
-  const { relationships, userName, coachingGoal, incrementMessageCount, saveAdvice, savedAdvice, removeAdvice } = useApp();
+  const { relationships, userName, coachingGoal, incrementMessageCount, saveAdvice, savedAdvice, removeAdvice, checkTokenLimit, updateTokenUsage, checkMinuteLimit, recordMessageTimestamp } = useApp();
   const [selectedRelId, setSelectedRelId] = useState(initialRelationshipId || relationships[0]?.id || 'general');
   const [messages, setMessages] = useState([]);
   const [inputText, setInputText] = useState('');
@@ -81,7 +104,7 @@ export default function ChatScreen({ route, navigation }) {
       }, 200);
 
     } catch (error) {
-      console.error('Mesajlar yüklenirken hata:', error);
+      // Mesajlar yüklenirken hata - sessizce devam et
     }
   };
 
@@ -89,7 +112,7 @@ export default function ChatScreen({ route, navigation }) {
     try {
       await AsyncStorage.setItem(`chat_${relId}`, JSON.stringify(newMessages));
     } catch (error) {
-      console.error('Mesajlar kaydedilirken hata:', error);
+      // Mesajlar kaydedilirken hata - sessizce devam et
     }
   };
 
@@ -115,6 +138,27 @@ export default function ChatScreen({ route, navigation }) {
 
   const handleSend = async () => {
     if (!inputText.trim()) return;
+
+    if (!checkTokenLimit()) {
+      Alert.alert(
+        "Günlük Limit Aşıldı",
+        "Bugünlük Sona ile konuşma limitine ulaştın. Yarın tekrar görüşmek üzere! 👋",
+        [{ text: "Tamam" }]
+      );
+      return;
+    }
+
+    if (!checkMinuteLimit()) {
+      Alert.alert(
+        "Çok Hızlısın! ⏱️",
+        "Dakikada en fazla 10 mesaj gönderebilirsin. Lütfen biraz bekle.",
+        [{ text: "Tamam" }]
+      );
+      return;
+    }
+
+    // Mesaj zaman damgasını kaydet
+    recordMessageTimestamp();
 
     const userMessage = {
       id: Date.now().toString(),
@@ -143,11 +187,16 @@ export default function ChatScreen({ route, navigation }) {
         language: i18n.language
       };
 
-      const responseText = await generateChatResponse(userMessage.text, messages, context);
+      const response = await generateChatResponse(userMessage.text, messages, context);
+
+      // Token kullanımını güncelle
+      if (response.usageMetadata) {
+        updateTokenUsage(response.usageMetadata);
+      }
 
       const sonaMessage = {
         id: (Date.now() + 1).toString(),
-        text: responseText,
+        text: response.text,
         sender: 'sona',
         timestamp: new Date().toISOString()
       };
@@ -157,7 +206,7 @@ export default function ChatScreen({ route, navigation }) {
       saveMessages(selectedRelId, finalMessages);
       incrementMessageCount(1); // Sona mesajı için artır
     } catch (error) {
-      console.error('Cevap üretilirken hata:', error);
+      // Cevap üretilirken hata - sessizce devam et
     } finally {
       setIsTyping(false);
     }
@@ -188,22 +237,25 @@ export default function ChatScreen({ route, navigation }) {
         isUser ? styles.userBubble : styles.sonaBubble
       ]}>
         {!isUser && (
-          <View style={styles.avatarContainer}>
-            <Image source={require('../../../assets/selam.png')} style={styles.avatar} />
+          <View style={[styles.avatarContainer, { width: avatarSize, height: avatarSize, borderRadius: avatarSize / 2 }]}>
+            <Image source={require('../../../assets/selam.png')} style={[styles.avatar, { width: avatarSize - 4, height: avatarSize - 4 }]} />
           </View>
         )}
         <View style={[
           styles.bubbleContent,
-          isUser ? styles.userBubbleContent : styles.sonaBubbleContent
+          isUser ? styles.userBubbleContent : styles.sonaBubbleContent,
+          isTablet && { padding: 16, maxWidth: '75%' }
         ]}>
           <Text style={[
             styles.messageText,
+            { fontSize: messageFontSize, lineHeight: messageFontSize + 7 },
             isUser ? styles.userMessageText : styles.sonaMessageText
           ]}>{item.text}</Text>
 
-          <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginTop: 4 }}>
+          <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginTop: isTablet ? 6 : 4 }}>
             <Text style={[
               styles.timestamp,
+              isTablet && { fontSize: 11 },
               isUser ? styles.userTimestamp : styles.sonaTimestamp
             ]}>
               {new Date(item.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
@@ -211,7 +263,7 @@ export default function ChatScreen({ route, navigation }) {
 
             {!isUser && (
               <TouchableOpacity onPress={handleSaveMessage} style={{ marginLeft: 8, padding: 4 }}>
-                <FontAwesome name={isSaved ? "bookmark" : "bookmark-o"} size={16} color={isSaved ? "#FBC02D" : "#999"} />
+                <FontAwesome name={isSaved ? "bookmark" : "bookmark-o"} size={isTablet ? 18 : 16} color={isSaved ? "#FBC02D" : "#999"} />
               </TouchableOpacity>
             )}
           </View>
@@ -241,10 +293,10 @@ export default function ChatScreen({ route, navigation }) {
       {/* Header */}
       <LinearGradient
         colors={['#66D9A1', '#4CAF50']}
-        style={styles.header}
+        style={[styles.header, isTablet && { paddingBottom: 20 }]}
       >
         <View style={styles.headerTop}>
-          <Text style={styles.headerTitle}>{t('header.title')}</Text>
+          <Text style={[styles.headerTitle, { fontSize: headerTitleSize }]}>{t('header.title')}</Text>
         </View>
 
         {/* İlişki Seçici */}
@@ -253,17 +305,19 @@ export default function ChatScreen({ route, navigation }) {
           data={[{ id: 'general', partnerName: t('relationshipSelector.general') }, ...relationships]}
           keyExtractor={item => item.id}
           showsHorizontalScrollIndicator={false}
-          contentContainerStyle={styles.relSelector}
+          contentContainerStyle={[styles.relSelector, { flexGrow: 1, justifyContent: 'center' }]}
           renderItem={({ item }) => (
             <TouchableOpacity
               style={[
                 styles.relChip,
+                relChipPadding,
                 selectedRelId === item.id && styles.relChipActive
               ]}
               onPress={() => setSelectedRelId(item.id)}
             >
               <Text style={[
                 styles.relChipText,
+                isTablet && { fontSize: 15 },
                 selectedRelId === item.id && styles.relChipTextActive
               ]}>{item.partnerName}</Text>
             </TouchableOpacity>
@@ -300,17 +354,27 @@ export default function ChatScreen({ route, navigation }) {
         )}
 
         {/* Input Alanı */}
-        <View style={[styles.inputContainer, isKeyboardVisible && styles.inputContainerKeyboardOpen]}>
+        <View style={[
+          styles.inputContainer,
+          { paddingBottom: isKeyboardVisible ? 10 : navBarHeight },
+          isTablet && { padding: 14 }
+        ]}>
           <TextInput
-            style={styles.input}
+            style={[styles.input, { fontSize: inputFontSize }, isTablet && { paddingVertical: 14, paddingHorizontal: 18 }]}
             value={inputText}
             onChangeText={setInputText}
             placeholder={t('placeholder')}
             placeholderTextColor="#999"
             multiline
+            keyboardType="default"
+            autoCapitalize="sentences"
+            autoCorrect={true}
+            returnKeyType="send"
+            blurOnSubmit={false}
+            onSubmitEditing={handleSend}
           />
           <TouchableOpacity
-            style={[styles.sendButton, !inputText.trim() && styles.sendButtonDisabled]}
+            style={[styles.sendButton, { width: sendButtonSize, height: sendButtonSize, borderRadius: sendButtonSize / 2 }, !inputText.trim() && styles.sendButtonDisabled]}
             onPress={handleSend}
             disabled={!inputText.trim()}
           >
@@ -318,7 +382,7 @@ export default function ChatScreen({ route, navigation }) {
               colors={inputText.trim() ? ['#66D9A1', '#4CAF50'] : ['#E0E0E0', '#BDBDBD']}
               style={styles.sendButtonGradient}
             >
-              <Feather name="send" size={20} color="#FFF" />
+              <Feather name="send" size={isTablet ? 24 : 20} color="#FFF" />
             </LinearGradient>
           </TouchableOpacity>
         </View>
@@ -457,7 +521,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'flex-end',
     padding: 10,
-    paddingBottom: Platform.OS === 'ios' ? 110 : 100, // Bottom nav'ın üzerine çıkması için artırıldı
     backgroundColor: '#FFF',
     borderTopWidth: 1,
     borderTopColor: '#F0F0F0',

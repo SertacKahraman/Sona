@@ -22,7 +22,6 @@ export const SecureStorage = {
                 await SecureStore.setItemAsync(key, value);
             }
         } catch (error) {
-            console.error('SecureStorage setItem error:', error);
             throw error;
         }
     },
@@ -36,7 +35,6 @@ export const SecureStorage = {
                 return await SecureStore.getItemAsync(key);
             }
         } catch (error) {
-            console.error('SecureStorage getItem error:', error);
             return null;
         }
     },
@@ -50,7 +48,7 @@ export const SecureStorage = {
                 await SecureStore.deleteItemAsync(key);
             }
         } catch (error) {
-            console.error('SecureStorage removeItem error:', error);
+            // Error silently ignored
         }
     },
 
@@ -68,7 +66,7 @@ export const SecureStorage = {
                 }
             }
         } catch (error) {
-            console.error('SecureStorage clear error:', error);
+            // Error silently ignored
         }
     }
 };
@@ -79,7 +77,7 @@ export const LocalStorage = {
         try {
             await AsyncStorage.setItem(key, value);
         } catch (error) {
-            console.error('LocalStorage setItem error:', error);
+            // Error silently ignored
         }
     },
 
@@ -87,7 +85,6 @@ export const LocalStorage = {
         try {
             return await AsyncStorage.getItem(key);
         } catch (error) {
-            console.error('LocalStorage getItem error:', error);
             return null;
         }
     },
@@ -96,7 +93,7 @@ export const LocalStorage = {
         try {
             await AsyncStorage.removeItem(key);
         } catch (error) {
-            console.error('LocalStorage removeItem error:', error);
+            // Error silently ignored
         }
     },
 
@@ -104,7 +101,7 @@ export const LocalStorage = {
         try {
             await AsyncStorage.clear();
         } catch (error) {
-            console.error('LocalStorage clear error:', error);
+            // Error silently ignored
         }
     }
 };
