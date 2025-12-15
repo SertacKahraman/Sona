@@ -8,7 +8,8 @@
     <meta name="description" content="Sona Kullanım Koşulları - Uygulama kullanım şartları ve kuralları.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -16,175 +17,331 @@
             box-sizing: border-box;
         }
 
+        :root {
+            --primary: #4CAF50;
+            --primary-light: #66D9A1;
+            --secondary: #667eea;
+            --dark: #1a1a2e;
+            --darker: #0f0f1a;
+            --light: #f8f9fa;
+        }
+
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            background: #f8f9fa;
-            color: #333;
+            background: var(--dark);
+            color: rgba(255, 255, 255, 0.9);
             line-height: 1.7;
         }
 
-        .header {
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            padding: 40px 20px;
-            text-align: center;
+        /* Navbar */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 100;
+            background: rgba(26, 26, 46, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
         }
 
-        .header a {
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 24px;
+            font-weight: 800;
             color: white;
             text-decoration: none;
-            font-size: 14px;
-            opacity: 0.9;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--primary-light), var(--primary));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+        }
+
+        .back-btn {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .back-btn:hover {
+            color: var(--secondary);
+        }
+
+        /* Header */
+        .header {
+            padding: 140px 40px 60px;
+            text-align: center;
+            background: linear-gradient(180deg, var(--dark) 0%, #1e1e3f 100%);
+            position: relative;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(102, 126, 234, 0.1) 0%, transparent 70%);
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            pointer-events: none;
+        }
+
+        .header-icon {
+            font-size: 60px;
+            margin-bottom: 20px;
         }
 
         .header h1 {
-            color: white;
-            font-size: 32px;
-            margin: 20px 0 10px;
+            font-size: 42px;
+            font-weight: 800;
+            margin-bottom: 12px;
+            background: linear-gradient(135deg, #fff 0%, rgba(255, 255, 255, 0.8) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
         .header .date {
-            color: rgba(255, 255, 255, 0.8);
+            color: rgba(255, 255, 255, 0.5);
             font-size: 14px;
         }
 
+        /* Content */
         .content {
             max-width: 800px;
-            margin: -30px auto 40px;
-            padding: 40px;
-            background: white;
-            border-radius: 20px;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            margin: -30px auto 60px;
+            padding: 50px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 24px;
+            position: relative;
         }
 
         h2 {
-            color: #667eea;
-            font-size: 22px;
-            margin: 30px 0 15px;
-            padding-bottom: 10px;
-            border-bottom: 2px solid #EDE7F6;
+            font-size: 24px;
+            font-weight: 700;
+            margin: 40px 0 20px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--secondary);
+        }
+
+        h2:first-child {
+            margin-top: 0;
         }
 
         h3 {
-            color: #333;
             font-size: 18px;
-            margin: 20px 0 10px;
+            font-weight: 600;
+            margin: 25px 0 12px;
+            color: white;
         }
 
-        p,
-        li {
-            color: #555;
+        p {
+            color: rgba(255, 255, 255, 0.7);
             font-size: 16px;
-            margin-bottom: 12px;
+            margin-bottom: 16px;
         }
 
         ul {
-            padding-left: 20px;
-            margin-bottom: 15px;
+            padding-left: 24px;
+            margin-bottom: 20px;
+        }
+
+        li {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+
+        strong {
+            color: white;
+        }
+
+        a {
+            color: var(--secondary);
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        /* Info Boxes */
+        .info-box {
+            background: rgba(102, 126, 234, 0.1);
+            border: 1px solid rgba(102, 126, 234, 0.2);
+            border-radius: 16px;
+            padding: 24px;
+            margin: 24px 0;
+        }
+
+        .info-box p {
+            margin-bottom: 8px;
+            color: rgba(255, 255, 255, 0.85);
+        }
+
+        .info-box p:last-child {
+            margin-bottom: 0;
         }
 
         .warning-box {
-            background: #FFF3E0;
-            border-left: 4px solid #FF9800;
-            padding: 20px;
-            border-radius: 0 10px 10px 0;
-            margin: 20px 0;
+            background: rgba(255, 152, 0, 0.1);
+            border: 1px solid rgba(255, 152, 0, 0.2);
+            border-radius: 16px;
+            padding: 24px;
+            margin: 24px 0;
+        }
+
+        .warning-box p {
+            color: rgba(255, 255, 255, 0.85);
+            margin-bottom: 8px;
         }
 
         .danger-box {
-            background: #FFEBEE;
-            border-left: 4px solid #F44336;
-            padding: 20px;
-            border-radius: 0 10px 10px 0;
-            margin: 20px 0;
+            background: rgba(244, 67, 54, 0.1);
+            border: 1px solid rgba(244, 67, 54, 0.2);
+            border-radius: 16px;
+            padding: 24px;
+            margin: 24px 0;
         }
 
-        .info-box {
-            background: #E3F2FD;
-            border-left: 4px solid #2196F3;
-            padding: 20px;
-            border-radius: 0 10px 10px 0;
-            margin: 20px 0;
+        .danger-box p {
+            color: rgba(255, 255, 255, 0.85);
+            margin-bottom: 8px;
         }
 
-        .highlight-box {
-            background: #EDE7F6;
-            border-left: 4px solid #667eea;
-            padding: 15px 20px;
-            border-radius: 0 10px 10px 0;
-            margin: 20px 0;
+        .emergency-box {
+            background: linear-gradient(135deg, rgba(244, 67, 54, 0.15), rgba(233, 30, 99, 0.15));
+            border: 2px solid rgba(244, 67, 54, 0.3);
+            border-radius: 20px;
+            padding: 30px;
+            margin: 24px 0;
+            text-align: center;
+        }
+
+        .emergency-box h4 {
+            color: #ff6b6b;
+            margin-bottom: 16px;
+            font-size: 18px;
+        }
+
+        .emergency-box p {
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .emergency-number {
+            display: inline-block;
+            background: rgba(244, 67, 54, 0.2);
+            color: #ff6b6b;
+            padding: 10px 24px;
+            border-radius: 30px;
+            margin: 8px;
+            font-weight: 700;
+            border: 1px solid rgba(244, 67, 54, 0.3);
         }
 
         .emoji {
             margin-right: 8px;
         }
 
+        /* Footer */
         .footer {
+            background: var(--darker);
+            padding: 40px;
             text-align: center;
-            padding: 30px;
-            color: #999;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .footer p {
+            color: rgba(255, 255, 255, 0.4);
             font-size: 14px;
         }
 
         .footer a {
-            color: #667eea;
-            text-decoration: none;
+            color: rgba(255, 255, 255, 0.6);
+            margin: 0 12px;
         }
 
-        .back-link {
-            display: inline-block;
-            margin-top: 30px;
-            padding: 12px 24px;
-            background: #667eea;
+        .btn-back {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 14px 28px;
+            background: linear-gradient(135deg, var(--secondary), #764ba2);
             color: white;
             text-decoration: none;
-            border-radius: 8px;
+            border-radius: 12px;
             font-weight: 600;
+            margin-top: 40px;
+            transition: all 0.3s;
         }
 
-        .emergency-box {
-            background: linear-gradient(135deg, #FFEBEE, #FCE4EC);
-            border: 2px solid #F44336;
-            padding: 25px;
-            border-radius: 15px;
-            margin: 20px 0;
-            text-align: center;
-        }
-
-        .emergency-box h4 {
-            color: #C62828;
-            margin-bottom: 15px;
-        }
-
-        .emergency-number {
-            display: inline-block;
-            background: #F44336;
-            color: white;
-            padding: 8px 20px;
-            border-radius: 20px;
-            margin: 5px;
-            font-weight: 600;
+        .btn-back:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+            text-decoration: none;
         }
 
         @media (max-width: 600px) {
-            .content {
-                margin: -20px 15px 30px;
-                padding: 25px;
+            .navbar {
+                padding: 15px 20px;
+            }
+
+            .header {
+                padding: 120px 20px 40px;
             }
 
             .header h1 {
-                font-size: 26px;
+                font-size: 32px;
+            }
+
+            .content {
+                margin: -20px 15px 40px;
+                padding: 30px 20px;
             }
         }
     </style>
 </head>
 
 <body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <a href="index.html" class="logo">
+            <div class="logo-icon">💕</div>
+            Sona
+        </a>
+        <a href="index.html" class="back-btn">
+            ← Ana Sayfa
+        </a>
+    </nav>
+
+    <!-- Header -->
     <div class="header">
-        <a href="index.html">← Ana Sayfa</a>
-        <h1>📜 Kullanım Koşulları</h1>
+        <div class="header-icon">📜</div>
+        <h1>Kullanım Koşulları</h1>
         <p class="date">Son Güncelleme: 21 Kasım 2024</p>
     </div>
 
+    <!-- Content -->
     <div class="content">
         <h2>1. Kabul</h2>
         <p>Sona İlişki Koçu uygulamasını ("Uygulama") kullanarak bu Kullanım Koşullarını kabul etmiş olursunuz.</p>
@@ -206,9 +363,9 @@
         <div class="emergency-box">
             <h4>⚠️ Şu durumlarda DERHAL profesyonel yardım alın:</h4>
             <p>İntihar düşünceleri • Kendine zarar verme • Fiziksel/duygusal şiddet • Ciddi depresyon/anksiyete</p>
-            <p style="margin-top: 15px;"><strong>Acil Hatlar:</strong></p>
-            <span class="emergency-number">182 - Psikolojik Destek</span>
-            <span class="emergency-number">183 - ALO Şiddet Hattı</span>
+            <p style="margin-top: 20px;"><strong>Acil Hatlar:</strong></p>
+            <span class="emergency-number">📞 182 - Psikolojik Destek</span>
+            <span class="emergency-number">📞 183 - ALO Şiddet Hattı</span>
         </div>
 
         <h2>4. Kullanıcı Sorumlulukları</h2>
@@ -296,18 +453,19 @@
         <h2>12. Ayrılabilirlik</h2>
         <p>Herhangi bir madde geçersiz olursa, diğer maddeler geçerli kalır.</p>
 
-        <div class="highlight-box" style="margin-top: 30px;">
+        <div class="info-box" style="margin-top: 40px;">
             <p><strong>Son Not:</strong> Bu koşulları kabul ederek, Sona'nın bir destek aracı olduğunu ve profesyonel
                 yardımın yerini tutmadığını anladığınızı onaylarsınız.</p>
         </div>
 
-        <a href="index.html" class="back-link">← Ana Sayfaya Dön</a>
+        <a href="index.html" class="btn-back">← Ana Sayfaya Dön</a>
     </div>
 
-    <div class="footer">
+    <!-- Footer -->
+    <footer class="footer">
         <p>© 2024 Sona | <a href="privacy.html">Gizlilik Politikası</a> | <a
                 href="mailto:sertackahraman2@gmail.com">İletişim</a></p>
-    </div>
+    </footer>
 </body>
 
 </html>
