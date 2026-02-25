@@ -159,8 +159,7 @@ expo-app/
 ├── assets/                        # Görseller
 ├── docs/                          # Dokümantasyon
 │   ├── PRIVACY_POLICY.md
-│   ├── TERMS_OF_SERVICE.md
-│   └── SECURITY_CHECKLIST.md
+│   └── TERMS_OF_SERVICE.md
 ├── .env                           # Environment variables (GİZLİ!)
 ├── .env.example                   # Environment şablonu
 ├── app.json                       # Expo yapılandırması
@@ -182,9 +181,6 @@ expo-app/
 - API anahtarları `.env` dosyasında
 - `.env` dosyası `.gitignore`'da
 - Production'da EAS Secrets kullanılır
-
-### Detaylı Bilgi
-Güvenlik kontrol listesi için: [SECURITY_CHECKLIST.md](./SECURITY_CHECKLIST.md)
 
 ---
 
@@ -216,12 +212,5 @@ Bu proje özel mülkiyettir. Tüm hakları saklıdır.
 
 ---
 
-## 🙏 Teşekkürler
-
-- Google Gemini AI
-- Expo Team
-- React Native Community
-
----
 
 **Sona ile ilişkilerinizi güçlendirin! 💕**
