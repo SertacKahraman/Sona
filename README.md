@@ -1,10 +1,10 @@
 # 🔐 Sona - Güvenli İlişki Koçu Uygulaması
 
 <p align="center">
-  <img src="https://github.com/user-attachments/assets/17e13db6-cd72-449e-9d45-47af54455cc1" width="220" alt="onboarding" />
-  <img src="https://github.com/user-attachments/assets/a8bd5700-040b-41bb-a544-ab6754795748" width="220" alt="anasayfa" />
-  <img src="https://github.com/user-attachments/assets/dc896056-5c73-4be1-a5b6-28ea0c02b9af" width="220" alt="chat" />
-  <img src="https://github.com/user-attachments/assets/d42fab48-2f3f-421e-81c6-3b2a18e908c7" width="220" alt="profil" />
+  <img src="https://github.com/user-attachments/assets/17e13db6-cd72-449e-9d45-47af54455cc1" width="200" alt="onboarding" />
+  <img src="https://github.com/user-attachments/assets/a8bd5700-040b-41bb-a544-ab6754795748" width="200" alt="anasayfa" />
+  <img src="https://github.com/user-attachments/assets/dc896056-5c73-4be1-a5b6-28ea0c02b9af" width="200" alt="chat" />
+  <img src="https://github.com/user-attachments/assets/d42fab48-2f3f-421e-81c6-3b2a18e908c7" width="200" alt="profil" />
 </p>
 
 ## 📱 Uygulama Hakkında
