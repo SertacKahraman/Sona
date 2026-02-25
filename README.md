@@ -1,4 +1,11 @@
 # 🔐 Sona - Güvenli İlişki Koçu Uygulaması
+![onboarding](https://github.com/user-attachments/assets/17e13db6-cd72-449e-9d45-47af54455cc1)
+
+![anasayfa](https://github.com/user-attachments/assets/a8bd5700-040b-41bb-a544-ab6754795748)
+
+![chat](https://github.com/user-attachments/assets/dc896056-5c73-4be1-a5b6-28ea0c02b9af)
+
+![profil](https://github.com/user-attachments/assets/d42fab48-2f3f-421e-81c6-3b2a18e908c7)
 
 ## 📱 Uygulama Hakkında
 
