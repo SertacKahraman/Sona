@@ -107,11 +107,6 @@ eas submit --platform ios
 eas submit --platform android
 \`\`\`
 
-### Önemli Notlar
-- ⚠️ Production build öncesi `eas.json` dosyasındaki bilgileri güncelle
-- ⚠️ API anahtarını EAS Secrets ile yönet
-- ⚠️ Apple Developer ve Google Play Console hesapları gerekli
-
 ---
 
 ## 🔧 Teknoloji Stack
